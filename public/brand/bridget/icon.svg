@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 110" role="img" aria-label="BRIDGEt">
+  <text
+    x="40"
+    y="78"
+    text-anchor="middle"
+    fill="#0A1D3D"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="78"
+    font-weight="600"
+  >B</text>
+  <path fill="#C9A227" d="M8 88C30 108 50 108 72 88C50 102 30 102 8 88Z"/>
+</svg>

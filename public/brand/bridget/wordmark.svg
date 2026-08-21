@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 160" role="img" aria-label="BRIDGEt">
+  <text
+    x="12"
+    y="118"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="108"
+    font-weight="600"
+    fill="#0A1D3D"
+    letter-spacing="1"
+  >BRIDGE</text>
+  <text
+    x="548"
+    y="118"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="86"
+    font-style="italic"
+    font-weight="500"
+    fill="#0072CE"
+  >t</text>
+  <rect x="552" y="128" width="42" height="5" rx="2.5" fill="#C9A227"/>
+</svg>

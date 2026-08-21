@@ -1,0 +1,107 @@
+/* =============================================================================
+   INSUREitALL 3D shadow snippets
+   Navy-tinted layers: tight contact + mid lift + soft ambient.
+   Copy a class onto a surface. Prefer .card-elevated for hover raise.
+   ============================================================================= */
+
+@theme {
+  --shadow-elevation-1:
+    0 1px 2px rgba(10, 29, 61, 0.06),
+    0 3px 8px rgba(10, 29, 61, 0.05);
+  --shadow-elevation-2:
+    0 2px 4px rgba(10, 29, 61, 0.07),
+    0 10px 24px rgba(10, 29, 61, 0.09);
+  --shadow-elevation-3:
+    0 4px 8px rgba(10, 29, 61, 0.09),
+    0 20px 48px rgba(10, 29, 61, 0.16);
+  --shadow-elevation-brand:
+    0 2px 4px rgba(10, 29, 61, 0.16),
+    0 12px 28px rgba(0, 114, 206, 0.22);
+  --shadow-elevation-brand-edge: 0 2px 6px rgba(10, 29, 61, 0.25);
+  --shadow-inset: inset 0 1px 2px rgba(10, 29, 61, 0.05);
+  --shadow-hover:
+    0 2px 4px rgba(10, 29, 61, 0.06),
+    0 10px 20px rgba(10, 29, 61, 0.1),
+    0 28px 56px -12px rgba(10, 29, 61, 0.22);
+}
+
+@utility shadow-elevation-1 {
+  box-shadow: var(--shadow-elevation-1);
+}
+@utility shadow-elevation-2 {
+  box-shadow: var(--shadow-elevation-2);
+}
+@utility shadow-elevation-3 {
+  box-shadow: var(--shadow-elevation-3);
+}
+@utility shadow-elevation-brand {
+  box-shadow: var(--shadow-elevation-brand);
+}
+@utility shadow-elevation-brand-edge {
+  box-shadow: var(--shadow-elevation-brand-edge);
+}
+@utility shadow-inset {
+  box-shadow: var(--shadow-inset);
+}
+
+/*
+  Snippet — resting card
+
+  class="card-elevated rounded-3xl bg-elevated p-6"
+
+  box-shadow:
+    0 1px 1px rgba(10, 29, 61, 0.04),
+    0 4px 10px rgba(10, 29, 61, 0.06),
+    0 14px 32px -8px rgba(10, 29, 61, 0.14);
+*/
+
+.card-elevated {
+  box-shadow:
+    0 1px 1px rgba(10, 29, 61, 0.04),
+    0 4px 10px rgba(10, 29, 61, 0.06),
+    0 14px 32px -8px rgba(10, 29, 61, 0.14);
+  transition:
+    transform 240ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 240ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/*
+  Snippet — hover raise
+
+  transform: translateY(-6px);
+  box-shadow:
+    0 2px 4px rgba(10, 29, 61, 0.06),
+    0 10px 20px rgba(10, 29, 61, 0.1),
+    0 28px 56px -12px rgba(10, 29, 61, 0.22);
+*/
+
+.card-elevated:hover,
+.raise:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-hover);
+}
+
+/*
+  Snippet — primary button rest / hover
+
+  box-shadow:
+    0 1px 2px rgba(10, 29, 61, 0.18),
+    0 4px 12px rgba(0, 114, 206, 0.2);
+
+  hover:
+    0 2px 4px rgba(10, 29, 61, 0.22),
+    0 10px 18px rgba(10, 29, 61, 0.16),
+    0 22px 40px rgba(0, 114, 206, 0.28);
+*/
+
+.shadow-btn {
+  box-shadow:
+    0 1px 2px rgba(10, 29, 61, 0.18),
+    0 4px 12px rgba(0, 114, 206, 0.2);
+}
+.shadow-btn:hover {
+  box-shadow:
+    0 2px 4px rgba(10, 29, 61, 0.22),
+    0 10px 18px rgba(10, 29, 61, 0.16),
+    0 22px 40px rgba(0, 114, 206, 0.28);
+}
