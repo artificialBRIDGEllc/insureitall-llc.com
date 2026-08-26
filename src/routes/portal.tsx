@@ -1,4 +1,6 @@
-export default function PortalComingSoon() {
+import { component$ } from "@builder.io/qwik";
+
+export default component$(() => {
   return (
     <div
       style={{
@@ -20,4 +22,4 @@ export default function PortalComingSoon() {
       </h2>
     </div>
   );
-}
+});
