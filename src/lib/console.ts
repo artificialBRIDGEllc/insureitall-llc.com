@@ -244,7 +244,7 @@ export const CONSENT_ROWS = [
     label: "Health info in lead records",
     value: "Blocked by design",
     tone: "alert" as const,
-    note: "BRIDGEt transcripts never store PHI. Optional doctor/medication notes exist only on a needs-analysis form the consumer typed, visible to staff — not to the LLM.",
+    note: "Voice stores Safe Harbor text only (45 CFR 164.514(b)(2)) — no audio. The 18 identifiers are stripped; leftover SSN/phone/email drops the turn. Doctor/medication notes stay on the needs-analysis form, not in the LLM loop.",
   },
 ];
 

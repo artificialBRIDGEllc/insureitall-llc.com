@@ -9,6 +9,7 @@ import {
   HIPAA_NEVER,
   HIPAA_ORG,
   HIPAA_RIGHTS,
+  HIPAA_SAFE_HARBOR,
 } from "@/lib/hipaa";
 import { pageHead } from "@/lib/seo";
 import { PHONE_DISPLAY } from "@/lib/utils";
@@ -84,6 +85,24 @@ function HipaaPage() {
             We do not claim a HIPAA “certification” — none exists. We claim the
             controls below, which you can inspect on this site.
           </p>
+        </section>
+
+        <section className="mt-12 space-y-4 text-sm leading-relaxed text-ink">
+          <h2 className="font-display text-2xl text-navy">
+            Safe Harbor de-identification
+          </h2>
+          <p>
+            If a BRIDGEt conversation is kept for product improvement, it is
+            text only. Audio is never stored. Each turn is run through HIPAA
+            Safe Harbor (45 CFR 164.514(b)(2)) before it is written. Expert
+            determination and limited data sets are not used. We do not keep a
+            key that could put the identifiers back.
+          </p>
+          <ol className="list-decimal space-y-1 pl-5">
+            {HIPAA_SAFE_HARBOR.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ol>
         </section>
 
         <div className="mt-10 grid gap-6 lg:grid-cols-2">

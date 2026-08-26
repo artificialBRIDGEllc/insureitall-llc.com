@@ -3,6 +3,13 @@ import { useEffect, useRef, useState } from "react";
 import { BridgetMark, BridgetWordmark } from "@/components/bridget-wordmark";
 import { CallLink } from "@/components/call-link";
 import { BRIDGET_AVATAR } from "@/lib/bridget-assets";
+import {
+  beginMic,
+  startBridgetVoice,
+  stopBridgetVoice,
+  subscribeBridgetVoice,
+  type BridgetVoiceState,
+} from "@/lib/bridget-voice";
 import { IDENT_SESSION_KEY } from "@/lib/ident";
 import { PHONE_DISPLAY } from "@/lib/utils";
 import { track } from "@/lib/track";
@@ -24,10 +31,19 @@ export function BridgetCopilot() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const [open, setOpen] = useState(false);
   const [intro, setIntro] = useState(false);
+  const [voice, setVoice] = useState<BridgetVoiceState>({
+    phase: "idle",
+    mode: "listening",
+    error: null,
+    errorKind: null,
+  });
   const userTouched = useRef(false);
   const closeTimer = useRef<number>(0);
   const line = GREETINGS[pathname] ?? GREETINGS["/bridget"];
   const hidden = pathname.startsWith("/portal") || pathname.startsWith("/console");
+  const live = voice.phase === "connecting" || voice.phase === "live";
+
+  useEffect(() => subscribeBridgetVoice(setVoice), []);
 
   useEffect(() => {
     try {
@@ -90,7 +106,28 @@ export function BridgetCopilot() {
     });
   }
 
+  async function talk() {
+    touch();
+    setOpen(true);
+    track("widget_cta", { cta: "talk" });
+    if (live) {
+      await stopBridgetVoice();
+      return;
+    }
+    const mic = beginMic();
+    await startBridgetVoice(pathname, mic);
+  }
+
   if (hidden) return null;
+
+  const talkLabel =
+    voice.phase === "connecting"
+      ? "Connecting…"
+      : voice.phase === "live"
+        ? "End conversation"
+        : voice.phase === "error"
+          ? "Try again"
+          : "Talk with me";
 
   return (
     <div className="bridget-dock">
@@ -105,7 +142,13 @@ export function BridgetCopilot() {
             <BridgetMark invert className="text-4xl" />
             <div className="min-w-0">
               <BridgetWordmark invert className="text-lg" />
-              <p className="text-[11px] text-elevated/70">Advocate · not a licensed agent</p>
+              <p className="text-[11px] text-elevated/70">
+                {voice.phase === "live"
+                  ? voice.mode === "speaking"
+                    ? "Speaking · not a licensed agent"
+                    : "Listening · not a licensed agent"
+                  : "Advocate · not a licensed agent"}
+              </p>
             </div>
             <button
               type="button"
@@ -117,22 +160,41 @@ export function BridgetCopilot() {
             </button>
           </div>
           <div className="space-y-3 p-4 text-sm text-ink">
-            <p>{intro ? "Hey — I’m right here if the alphabet soup starts spinning." : line}</p>
+            <p>
+              {voice.phase === "live"
+                ? voice.mode === "speaking"
+                  ? "I’m on it — give me a second."
+                  : "I’m listening. Speak naturally."
+                : intro
+                  ? "Hey — I’m right here if the alphabet soup starts spinning."
+                  : line}
+            </p>
+            {voice.error ? (
+              <div
+                className="rounded-xl bg-soft px-3 py-2 text-xs text-navy"
+                role="alert"
+              >
+                <p className="font-medium">
+                  {voice.errorKind?.startsWith("mic-")
+                    ? "Microphone"
+                    : "Voice"}
+                </p>
+                <p className="mt-1">{voice.error}</p>
+              </div>
+            ) : null}
             <p className="text-xs text-muted">
               I don’t enroll. I don’t take health details. When you’re ready, a
               licensed agent compares plans we actually offer in your area.
             </p>
             <div className="flex flex-wrap gap-2">
-              <Link
-                to="/bridget"
+              <button
+                type="button"
                 className="rounded-xl bg-blue px-3 py-2 text-xs font-medium text-elevated shadow-elevation-brand"
-                onClick={() => {
-                  track("widget_cta", { cta: "talk" });
-                  setOpen(false);
-                }}
+                onClick={() => void talk()}
+                disabled={voice.phase === "connecting"}
               >
-                Talk with me
-              </Link>
+                {talkLabel}
+              </button>
               <CallLink
                 className="rounded-xl bg-navy px-3 py-2 text-xs font-medium text-elevated"
                 onClick={() => track("widget_cta", { cta: "call" })}

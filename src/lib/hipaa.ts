@@ -30,6 +30,13 @@ export const HIPAA_CONTROLS: HipaaControl[] = [
     cfr: "45 CFR 164.514 · de-identification / minimum necessary",
   },
   {
+    id: "safe-harbor",
+    title: "Safe Harbor strip before training",
+    where: "BRIDGEt voice transcript",
+    proof: "Individual-level text is stored only after the 18 identifiers in 45 CFR 164.514(b)(2) are removed. Audio is never stored (voiceprints are identifiers). 5-digit ZIP is reduced to 3 digits, or dropped if the area is under 20,000 people. Ages 90+ are grouped. No re-identification key is kept.",
+    cfr: "45 CFR 164.514(b)(2) · Safe Harbor",
+  },
+  {
     id: "staff-gate",
     title: "Staff desk is team-email only",
     where: "/console",
@@ -105,6 +112,27 @@ export const HIPAA_RIGHTS = [
     d: "You may send a needs analysis with zip and phone only. Doctor and medication fields are optional.",
   },
 ];
+
+export const HIPAA_SAFE_HARBOR = [
+  "Names",
+  "Places smaller than a state (street, city, county, 5-digit ZIP)",
+  "Dates except year, and ages 90+",
+  "Phone numbers",
+  "Fax numbers",
+  "Email addresses",
+  "Social Security numbers",
+  "Medical record numbers",
+  "Health plan / Medicare Beneficiary Identifiers",
+  "Account numbers",
+  "Certificate and license numbers",
+  "Vehicle identifiers and plates",
+  "Device identifiers and serial numbers",
+  "Web URLs",
+  "IP addresses",
+  "Biometrics, including voiceprints — we do not keep audio",
+  "Full-face photographs",
+  "Any other unique identifying number or code — no re-identification key",
+] as const;
 
 export const HIPAA_ORG = {
   entity: SITE_LEGAL,

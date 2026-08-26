@@ -2,23 +2,25 @@
 
 **Parties:** artificialBRIDGE LLC (Contractor) · INSUREitALL LLC (Client)
 **Amends:** Independent Contractor Agreement and Statement of Work No. 1, each dated 25 August 2026
-**Status:** DRAFT — Item A must be resolved before signature. Not legal advice.
+**Status:** DRAFT — Item A should be resolved before signature. Not legal advice.
 
 ---
 
-## A. Contractor notice address — BLOCKER
+## A. Contractor notice address and mailbox — resolve before signature
 
-ICA §18 makes email notice effective at "the addresses on the invoice." The Contractor signature block currently reads mlang@team-iia.com, which matches the Client-side invoice prefix (IIA).
+**Resolved:** the parties are not affiliated. Ryan Butterfield is on the INSUREitALL side only and holds no artificialBRIDGE role. This is an arm's-length engagement, not a related-party transaction.
+
+**Remaining issue:** team-iia.com is Client's domain, and the Contractor signature block reads mlang@team-iia.com. ICA §18 makes email notice effective at "the addresses on the invoice."
 
 **Change:** Contractor's signature block and notice address become an artificialBRIDGE-controlled address (lang@theartificialbridge.com or equivalent).
 
-Why, in order of seriousness:
+Three reasons, in order of practical seriousness:
 
-1. **Notice channel.** A Contractor whose notice address sits on the Client's domain has handed the Client control of its own notice channel. Every §5, §13, and License §5 notice runs through it.
-2. **ICA §1.** §1 recites that Contractor is not an employee or agent and "controls manner and means." A Client-domain email is standard integration evidence against exactly that recital.
-3. **Diligence.** Related-party revenue is discounted to zero in a financing diligence review, and undisclosed related-party revenue reads as a traction misrepresentation. Disclosed proactively, this is a design partner. Found by a diligence team, it is a credibility problem.
+1. **Client controls the mailbox.** Client administers that domain. It can read, suspend, or revoke the account at will, and it disappears entirely if the relationship ends. Every §5, §13, and License §5 notice would run through a channel the counterparty owns — including a notice terminating that counterparty.
+2. **Contractor confidentiality.** ICA §7 obliges each party to protect the other's non-public business information. Contractor material that transits or rests in Client's mail system is difficult to characterize as protected, and Contractor cannot assert control over it.
+3. **ICA §1 independence.** §1 recites that Contractor is not an employee or agent and "controls manner and means." A Client-issued mailbox is ordinary integration evidence against that recital. It does not by itself defeat 1099 status, but it is the first thing an auditor or opposing counsel points at.
 
-**Related open question — resolve alongside.** The packet README lists cco-confirmation.md as Ryan Butterfield providing TPMO / states / TCPA sign-off. If Butterfield is both artificialBRIDGE-affiliated and INSUREitALL's compliance sign-off, the arm's-length character of the License, the ICA §1 recitals, and Exhibit BAA §7's authority warranty all need re-examination, and the relationship should be disclosed in any data room.
+**Separate but related — Contractor's own operations.** Any artificialBRIDGE business conducted from that mailbox (investor correspondence, vendor accounts, credentials, service logins, this contract packet) sits on infrastructure Client administers. That is a continuity and confidentiality exposure independent of this Agreement, and it invites an avoidable question during financing diligence. Migrating artificialBRIDGE business to an artificialBRIDGE-controlled domain is worth doing regardless of what this Agreement says.
 
 ## B. ICA §12 — insurance timing
 
