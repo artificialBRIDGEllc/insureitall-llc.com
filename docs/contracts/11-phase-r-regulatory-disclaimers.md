@@ -31,7 +31,7 @@ This exhibit packages the disclaimer work already built into a **strict operatin
 | **AUDIT** | Any URL already live (Client’s current site, a staging host, a prior vendor build, or a site Client asks the Agent to review) | Findings log + severity. **No copy change** until the log exists. |
 | **BUILD** | Greenfield or remediation after AUDIT | Source-lock + gates R0–R16 |
 
-The Agent **MUST** run AUDIT on every existing website in scope **before** BUILD. Protocol and worksheet: [09a-site-compliance-audit.md](09a-site-compliance-audit.md).
+The Agent **MUST** run AUDIT on every existing website in scope **before** BUILD. Protocol and worksheet: [11a-site-compliance-audit.md](11a-site-compliance-audit.md).
 
 ---
 
@@ -100,7 +100,7 @@ Static 14 / 14 **stays** until Ryan marks zip-level **Yes** on the CCO form. Zip
 **The Agent MUST:**
 
 1. Crawl the live site (home, plan pages, lead/contact forms, chat/widget, footer, legal, sitemap).  
-2. Fill [09a-site-compliance-audit.md](09a-site-compliance-audit.md) — one row per finding, with URL + exact snippet.  
+2. Fill [11a-site-compliance-audit.md](11a-site-compliance-audit.md) — one row per finding, with URL + exact snippet.  
 3. Score each finding **Critical / Major / Minor / Pass**.  
 4. **Not** “fix as you go.” Critical/Major stay open until Client (CCO) accepts the log.  
 5. If the engagement is **audit-only**, stop after the log. If it is **build**, map each open finding to R1–R16 and remediate only after RA is filed.
@@ -257,8 +257,8 @@ These are the Phase R artifacts from SOW No. 1. The Agent maintains them; it doe
 | AI | `/ai-disclosure` |
 | Leave-site | `src/lib/leaving.ts` · `/leaving` |
 | AB legal | `src/lib/ab-legal.ts` · `/ab/*` |
-| This phase | `docs/contracts/09-phase-r-regulatory-disclaimers.md` |
-| Existing-site audit protocol | `docs/contracts/09a-site-compliance-audit.md` |
+| This phase | `docs/contracts/11-phase-r-regulatory-disclaimers.md` |
+| Existing-site audit protocol | `docs/contracts/11a-site-compliance-audit.md` |
 | CCO form | `docs/cco-confirmation.md` |
 
 ---

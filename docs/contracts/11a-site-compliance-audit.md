@@ -1,6 +1,6 @@
 # Exhibit R-A — Existing website compliance audit
 
-**Parent:** [Exhibit R](09-phase-r-regulatory-disclaimers.md) · Gate **RA**  
+**Parent:** [Exhibit R](11-phase-r-regulatory-disclaimers.md) · Gate **RA**  
 **Use:** every **already-live** website in an agent build contract — Client’s current site, a prior vendor, staging, ads landers, GHL/funnel pages, chat widgets.  
 **Mode:** AUDIT only until this worksheet is filed. Then BUILD maps findings to R1–R16.
 
