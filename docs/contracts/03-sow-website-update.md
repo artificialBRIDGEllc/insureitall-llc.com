@@ -3,6 +3,7 @@
 **Agreement:** Independent Contractor Agreement dated 25 August 2026  
 **Client:** INSUREitALL LLC  
 **Contractor:** artificialBRIDGE LLC  
+**Authorized Client signer:** Ryan Butterfield, CEO (`rmbutterfield@team-iia.com`) — full authority to bind Client.  
 **SOW date:** 25 August 2026  
 **Invoice:** IIA-2026-0825  
 **Due:** 9 September 2026 (Net 15)
@@ -25,6 +26,7 @@ Payment: invoice IIA-2026-0825, **Net 15**, 1.5%/month late fee as in the ICA.
 - Public pages in the navy / cream / gold system using Client logos
 - Home, contact, lead, needs analysis, Medicare Basics (including the plan-type table)
 - TPMO, non-affiliation, 41-state list, phone-first CTAs
+- **Phase R (Exhibit R)** — strict operating phase for regulatory disclaimers; gates R0–R16; blocks acceptance if any gate fails
 - Legal pages as **educational copy** (privacy, HIPAA proof, GLBA, security, AI, accessibility, terms)
 - Ident with skip / optional sound
 - GitHub / Vercel path notes
@@ -58,5 +60,13 @@ Production persistence and mail need Client’s `DATABASE_URL` and Resend (or eq
 
 beneFIT, extra products, assignment, patent indemnity, or post-acceptance redesign = new SOW and new fee.
 
-**Contractor:** ______________________  Date: __________  
-**Client:** ______________________  Date: __________
+**Contractor**  
+Name: Michael Lang  
+Title: Managing Member, artificialBRIDGE LLC  
+Date: __________  
+
+**Client**  
+Name: Ryan Butterfield  
+Title: CEO, INSUREitALL LLC  
+Email: rmbutterfield@team-iia.com  
+Date: __________

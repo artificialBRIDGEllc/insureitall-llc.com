@@ -2,8 +2,8 @@
 
 **Effective date:** 25 August 2026  
 **Contractor:** artificialBRIDGE LLC, a Wyoming **single-member** limited liability company (“Contractor”). One member. No parent. Not a licensed insurance agency.  
-**Client:** INSUREitALL LLC (“Client”)  
-**Related:** SOW No. 1 · Design Partner License · Invoice IIA-2026-0825  
+**Client:** INSUREitALL LLC (“Client”). **Authorized signer:** Ryan Butterfield, CEO (`rmbutterfield@team-iia.com`), with full authority to bind Client.  
+**Related:** SOW No. 1 · Design Partner License · Invoice IIA-2026-0825 · **Exhibit R (Phase R — Regulatory Disclaimers)** · Exhibit BAA  
 
 Not legal advice. Counsel should review before signature. Electronic signatures are valid.
 
@@ -49,6 +49,8 @@ PHI that a consumer types on the site (optional doctor names, medication names, 
 ## 8. Compliance copy
 
 Educational and TPMO-adjacent copy is not legal advice, not a CMS certification, and not a HIPAA certification. Client’s compliance officer (or acting CCO) remains responsible for carrier and CMS representations, including organization/product counts, TCPA consent, and non-affiliation.
+
+**Exhibit R (Phase R)** is a **strict operating phase**. The Agent executing the build MUST complete gates R0–R16 before SOW acceptance. Disclaimer strings are source-locked in `src/lib/compliance.ts`. The Agent MUST NOT paraphrase TPMO, TCPA, or non-affiliation. Client changes those strings only through `docs/cco-confirmation.md`.
 
 Licensed Systems do not enroll anyone. They are not Medicare, CMS, or a licensed agent.
 
@@ -114,14 +116,20 @@ Notices: email is enough if sent to the addresses on the invoice (or updated in 
 
 This is the entire agreement about this engagement. It replaces prior oral deals about this website. Changes must be in writing (email accepted if both sides confirm). If a clause is unenforceable, the rest stands. Waiver of one breach is not waiver of the next. Headings are for reading only. Counterparts and electronic signatures are effective.
 
+**Authority.** Ryan Butterfield, CEO, represents he has full power and authority to bind INSUREitALL LLC to this Agreement, each SOW, the Design Partner License, and Exhibit BAA. Michael Lang, Managing Member, represents he has full power and authority to bind artificialBRIDGE LLC. No further corporate approval is required for this engagement.
+
 **Contractor**  
 artificialBRIDGE LLC  
+I have authority to bind artificialBRIDGE LLC.  
 Signature: ______________________  Date: __________  
-Name / title: [Michael Lang, Managing Member]  
-Email: [mlang@team-iia.com]
+Name: Michael Lang  
+Title: Managing Member  
+Email: lang@theartificialbridge.com
 
 **Client**  
 INSUREitALL LLC  
+I have authority to bind INSUREitALL LLC.  
 Signature: ______________________  Date: __________  
-Name / title: ______________________  
-Email: ______________________
+Name: Ryan Butterfield  
+Title: CEO  
+Email: rmbutterfield@team-iia.com

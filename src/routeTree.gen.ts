@@ -33,6 +33,7 @@ import { Route as TermsRouteImport } from './routes/terms'
 import { Route as AbIndexRouteImport } from './routes/ab/index'
 import { Route as AbPrivacyRouteImport } from './routes/ab/privacy'
 import { Route as AbTermsRouteImport } from './routes/ab/terms'
+import { Route as ApiBridgetVoiceRouteImport } from './routes/api/bridget-voice'
 import { Route as ConsoleIndexRouteImport } from './routes/console/index'
 import { Route as ConsoleAuditRouteImport } from './routes/console/audit'
 import { Route as ConsoleConsentRouteImport } from './routes/console/consent'
@@ -167,6 +168,11 @@ const AbTermsRoute = AbTermsRouteImport.update({
   path: '/terms',
   getParentRoute: () => AbRoute,
 } as any)
+const ApiBridgetVoiceRoute = ApiBridgetVoiceRouteImport.update({
+  id: '/api/bridget-voice',
+  path: '/api/bridget-voice',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ConsoleIndexRoute = ConsoleIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -257,6 +263,7 @@ export interface FileRoutesByFullPath {
   '/terms': typeof TermsRoute
   '/ab/privacy': typeof AbPrivacyRoute
   '/ab/terms': typeof AbTermsRoute
+  '/api/bridget-voice': typeof ApiBridgetVoiceRoute
   '/console/audit': typeof ConsoleAuditRoute
   '/console/consent': typeof ConsoleConsentRoute
   '/console/debt': typeof ConsoleDebtRoute
@@ -293,6 +300,7 @@ export interface FileRoutesByTo {
   '/terms': typeof TermsRoute
   '/ab/privacy': typeof AbPrivacyRoute
   '/ab/terms': typeof AbTermsRoute
+  '/api/bridget-voice': typeof ApiBridgetVoiceRoute
   '/console/audit': typeof ConsoleAuditRoute
   '/console/consent': typeof ConsoleConsentRoute
   '/console/debt': typeof ConsoleDebtRoute
@@ -333,6 +341,7 @@ export interface FileRoutesById {
   '/terms': typeof TermsRoute
   '/ab/privacy': typeof AbPrivacyRoute
   '/ab/terms': typeof AbTermsRoute
+  '/api/bridget-voice': typeof ApiBridgetVoiceRoute
   '/console/audit': typeof ConsoleAuditRoute
   '/console/consent': typeof ConsoleConsentRoute
   '/console/debt': typeof ConsoleDebtRoute
@@ -374,6 +383,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/ab/privacy'
     | '/ab/terms'
+    | '/api/bridget-voice'
     | '/console/audit'
     | '/console/consent'
     | '/console/debt'
@@ -410,6 +420,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/ab/privacy'
     | '/ab/terms'
+    | '/api/bridget-voice'
     | '/console/audit'
     | '/console/consent'
     | '/console/debt'
@@ -449,6 +460,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/ab/privacy'
     | '/ab/terms'
+    | '/api/bridget-voice'
     | '/console/audit'
     | '/console/consent'
     | '/console/debt'
@@ -487,6 +499,7 @@ export interface RootRouteChildren {
   SecurityRoute: typeof SecurityRoute
   TeamRoute: typeof TeamRoute
   TermsRoute: typeof TermsRoute
+  ApiBridgetVoiceRoute: typeof ApiBridgetVoiceRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
 }
 
@@ -660,6 +673,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AbTermsRouteImport
       parentRoute: typeof AbRoute
     }
+    '/api/bridget-voice': {
+      id: '/api/bridget-voice'
+      path: '/api/bridget-voice'
+      fullPath: '/api/bridget-voice'
+      preLoaderRoute: typeof ApiBridgetVoiceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/console/': {
       id: '/console/'
       path: '/'
@@ -832,6 +852,7 @@ const rootRouteChildren: RootRouteChildren = {
   SecurityRoute: SecurityRoute,
   TeamRoute: TeamRoute,
   TermsRoute: TermsRoute,
+  ApiBridgetVoiceRoute: ApiBridgetVoiceRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
 }
 export const routeTree = rootRouteImport

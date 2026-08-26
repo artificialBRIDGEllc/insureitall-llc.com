@@ -11,7 +11,7 @@ Material defects only. Cosmetic preference is not a defect. 7-day window, then c
 
 - [x] Client logos, navy/cream/gold, phone-first header/footer
 - [x] Home, contact, lead (TCPA), needs analysis, Medicare Basics
-- [x] TPMO counts (14 / 14), non-affiliation, 41-state list
+- [x] **Phase R (Exhibit R + R-A)** — audit-before-edit on existing hosts; source-locked TPMO; TCPA server-side; leave-site; HIPAA/GLBA/AI; no SSN/MBI
 - [x] Ident on home (skip, optional sound, reduced-motion)
 - [x] Privacy, HIPAA map, GLBA, security, terms, AI, accessibility
 - [x] Leave-site notice before fileBRIDGE
@@ -36,7 +36,7 @@ Material defects only. Cosmetic preference is not a defect. 7-day window, then c
 
 ## Client to finish
 
-1. Sign ICA → SOW → License → optional BAA. Remit $5,000.
+1. Sign ICA → SOW → License → **Exhibit R** → optional BAA. Remit $5,000.
 2. Vercel: root = repo root. Set `DATABASE_URL` (Neon) and Resend if leads should persist and email.
 3. **Ryan Butterfield** signs [docs/cco-confirmation.md](cco-confirmation.md) (TPMO 14/14, states, TCPA). Zip-level counts replace the static 14 when he says so (`src/lib/compliance.ts`).
 4. Optional: point `filebridge.theartificialbridge.com` at this app (`/portal`).
@@ -45,5 +45,14 @@ Material defects only. Cosmetic preference is not a defect. 7-day window, then c
 
 Accepted as delivered unless a **material** defect list arrives within 7 days.
 
-**Client:** ______________________  Date: __________  
-**Contractor:** ______________________  Date: __________
+**Client**  
+Name: Ryan Butterfield  
+Title: CEO, INSUREitALL LLC (authorized to bind)  
+Email: rmbutterfield@team-iia.com  
+Date: __________  
+
+**Contractor**  
+Name: Michael Lang  
+Title: Managing Member, artificialBRIDGE LLC  
+Email: lang@theartificialbridge.com  
+Date: __________

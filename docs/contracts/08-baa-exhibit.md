@@ -74,10 +74,23 @@ This exhibit covers the **existing** $5,000 SOW and $0 design-partner license. I
 
 If this exhibit and the License conflict on PHI, **this exhibit controls**. ICA indemnity, defense control, and the $5,000 cap still apply, except a party’s willful HIPAA violation.
 
+## 11. Electronic signatures
+
+This exhibit may be signed in counterparts, including by **electronic signature**. A signature transmitted as PDF, DocuSign, HelloSign, Adobe Sign, or a typed name preceded by `/s/` and sent from the signer’s email, is an original for ESIGN (15 U.S.C. § 7001) and Wyoming UETA (W.S. 40-21). Each party consents to do business electronically for this exhibit only. A fully signed PDF is the official copy.
+
 **Covered Entity — INSUREitALL LLC**  
-Signature: ______________________  Date: __________  
-Name / title: ______________________
+Ryan Butterfield, CEO, has full authority to bind INSUREitALL LLC.  
+☐ I agree this electronic signature is my legal signature on this BAA, and I have authority to bind INSUREitALL LLC.  
+/s/ Ryan Butterfield  Date: __________  
+Name: Ryan Butterfield  
+Title: CEO  
+Email: rmbutterfield@team-iia.com  
 
 **Business Associate — artificialBRIDGE LLC**  
-Signature: ______________________  Date: __________  
-Name / title: [Michael Lang, Managing Member]
+Michael Lang, Managing Member, has full authority to bind artificialBRIDGE LLC.  
+☐ I agree this electronic signature is my legal signature on this BAA, and I have authority to bind artificialBRIDGE LLC.  
+/s/ ______________________  Date: __________  
+Name: Michael Lang  
+Title: Managing Member  
+Email: lang@theartificialbridge.com  
+

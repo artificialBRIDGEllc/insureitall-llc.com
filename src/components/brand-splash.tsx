@@ -27,39 +27,41 @@ export function BrandSplash() {
   const started = useRef(false);
   const skipRef = useRef<HTMLButtonElement>(null);
 
-  const dismiss = useCallback((delay: number) => {
-    window.setTimeout(() => {
-      setLeaving(true);
-      stopIdentAudio();
-      window.setTimeout(() => {
-        setShow(false);
-        setChromeInert(false);
-        try {
-          sessionStorage.setItem(IDENT_SESSION_KEY, "1");
-        } catch {
-          /* ignore */
-        }
-        splashDone();
-      }, IDENT_LEAVE_MS);
-    }, delay);
+  const finish = useCallback(() => {
+    setShow(false);
+    setChromeInert(false);
+    try {
+      sessionStorage.setItem(IDENT_SESSION_KEY, "1");
+    } catch {
+      /* ignore */
+    }
+    splashDone();
   }, []);
+
+  const dismiss = useCallback(
+    (delay: number) => {
+      window.setTimeout(() => {
+        setLeaving(true);
+        stopIdentAudio();
+        window.setTimeout(finish, IDENT_LEAVE_MS);
+      }, delay);
+    },
+    [finish],
+  );
 
   const skip = useCallback(() => {
     if (!show || leaving) return;
     started.current = true;
     stopIdentAudio();
     setLeaving(true);
-    window.setTimeout(() => {
-      setShow(false);
-      setChromeInert(false);
-      try {
-        sessionStorage.setItem(IDENT_SESSION_KEY, "1");
-      } catch {
-        /* ignore */
-      }
-      splashDone();
-    }, 180);
-  }, [leaving, show]);
+    window.setTimeout(finish, 220);
+  }, [finish, leaving, show]);
+
+  const onMarkReady = useCallback(() => {
+    if (started.current) return;
+    started.current = true;
+    dismiss(reducedMotion() ? 700 : IDENT_HOLD_MS);
+  }, [dismiss]);
 
   useLayoutEffect(() => {
     if (!home) {
@@ -85,13 +87,6 @@ export function BrandSplash() {
   }, [home]);
 
   useLayoutEffect(() => {
-    if (!show || started.current) return;
-    started.current = true;
-    const quiet = reducedMotion();
-    dismiss(quiet ? 400 : IDENT_HOLD_MS);
-  }, [dismiss, show]);
-
-  useLayoutEffect(() => {
     if (!show) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -113,23 +108,18 @@ export function BrandSplash() {
       aria-label="INSUREitALL intro"
     >
       <div className="ident-wash" />
+      <div className="ident-grain" />
       <div className="ident-vignette" />
-      <div className="ident-call ident-call-run" aria-hidden>
+      <div className="ident-call" aria-hidden>
         <span className="ident-pulse" />
         <span className="ident-pulse ident-pulse-late" />
-        <span className="ident-presence" />
       </div>
       <div className="ident-goldline" />
       <div className="ident-frame">
-        <IdentMark play />
+        <IdentMark play onReady={onMarkReady} />
       </div>
       <div className="ident-controls">
-        <button
-          ref={skipRef}
-          type="button"
-          className="ident-skip"
-          onClick={skip}
-        >
+        <button ref={skipRef} type="button" className="ident-skip" onClick={skip}>
           Skip intro
         </button>
         {reducedMotion() ? null : (

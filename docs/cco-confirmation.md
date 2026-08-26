@@ -86,6 +86,8 @@ Check that these stay off the public pages:
 I am the acting CCO (or designee) for INSUREitALL LLC. The items I marked Confirm may stay on the site. The items I marked Change replace `src/lib/compliance.ts` (and matching copy) on the next deploy. I remain responsible for carrier and CMS representations.
 
 **Name:** Ryan Butterfield  
-**Title:** ______________________  
+**Title:** CEO  
+**Role on this form:** acting CCO  
+**Email:** rmbutterfield@team-iia.com  
 **Date:** __________  
 **Signature:** ______________________

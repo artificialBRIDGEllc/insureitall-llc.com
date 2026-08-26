@@ -1,9 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
 const LAYERS = [
-  { id: "monogram", src: "/brand/ident/monogram.svg" },
   { id: "swoosh", src: "/brand/ident/swoosh.svg" },
+  { id: "monogram", src: "/brand/ident/monogram.svg" },
   { id: "wordmark", src: "/brand/ident/wordmark.svg" },
   { id: "it", src: "/brand/ident/it.svg" },
   { id: "rules", src: "/brand/ident/rules.svg" },
@@ -35,14 +35,23 @@ export function IdentMark({
   className?: string;
   onReady?: () => void;
 }) {
+  const [run, setRun] = useState(false);
+
   useEffect(() => {
-    void loadIdent();
-    onReady?.();
-  }, [onReady]);
+    let live = true;
+    void loadIdent().then(() => {
+      if (!live) return;
+      setRun(play);
+      onReady?.();
+    });
+    return () => {
+      live = false;
+    };
+  }, [play, onReady]);
 
   return (
     <div
-      className={cn("ident-stage", play && "ident-run", compact && "ident-compact", className)}
+      className={cn("ident-stage", run && "ident-run", compact && "ident-compact", className)}
       aria-hidden
     >
       {LAYERS.map((layer) => (

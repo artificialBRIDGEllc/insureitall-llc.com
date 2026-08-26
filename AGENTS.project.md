@@ -72,6 +72,16 @@ Must remain true:
 
 Staff emails: `team-iia.com`, `insureitallins.com`, `insureitall-llc.com`, `insureitall.com` (`src/lib/staff.ts`).
 
+## Phase R (mandatory)
+
+Regulatory disclaimers are a **strict operating phase**. Full contract: `docs/contracts/09-phase-r-regulatory-disclaimers.md`.
+
+- Source lock: `src/lib/compliance.ts` — TPMO, counts, non-affiliation, states, TCPA. **Do not paraphrase.**
+- Render TPMO with `<TpmoDisclaimer />`. Footer on every marketing page.
+- TCPA enforced **server-side**. No SSN/MBI fields. Leave-site `/leaving` before fileBRIDGE.
+- Counts change only from a signed `docs/cco-confirmation.md`. Static 14/14 until Ryan marks zip-level Yes.
+- **Audit first** if a site is already live: `docs/contracts/09a-site-compliance-audit.md`. File `docs/audits/AUD-YYYYMMDD-<host>.md`. Do not change TPMO/TCPA until the log exists.
+
 ---
 
 ## How to change things

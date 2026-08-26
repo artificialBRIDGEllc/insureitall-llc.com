@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { BrandSplash } from "@/components/brand-splash";
+import { HideElevenLabs } from "@/components/hide-elevenlabs";
 import { BridgetCopilot } from "@/components/bridget-copilot";
 import { FeedbackBeacon } from "@/components/feedback-beacon";
 import { JsonLd } from "@/components/json-ld";
@@ -13,6 +14,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
       <a href="#main" className="skip-link">
         Skip to content
       </a>
+      <HideElevenLabs />
       <JsonLd data={ORG_JSON_LD} />
       <BrandSplash />
       <FeedbackBeacon />

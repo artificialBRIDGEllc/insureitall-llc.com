@@ -1,6 +1,6 @@
 import { AB_LEGAL, AB_NAME, AB_ORIGIN, AB_PRODUCT, FILEBRIDGE_PUBLIC } from "@/lib/ab";
 
-export const AB_EMAIL = "build@theartificialbridge.com";
+export const AB_EMAIL = "lang@theartificialbridge.com";
 export const AB_FORMATION = "Wyoming single-member limited liability company";
 export const AB_EFFECTIVE = "25 August 2026";
 

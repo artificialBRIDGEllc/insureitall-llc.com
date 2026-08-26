@@ -149,8 +149,17 @@ Licensed Systems are educational. They do not enroll. They are not Medicare, CMS
 
 As deployed. ICA §§9–11 apply, including the **$5,000 cap**, copyright-only Contractor indemnity, defense control, and no patent indemnity.
 
-**Licensor (artificialBRIDGE LLC):** ______________________  Date: __________  
-**Licensee (INSUREitALL LLC):** ______________________  Date: __________
+**Licensor — artificialBRIDGE LLC**  
+Name: Michael Lang  
+Title: Managing Member  
+Email: lang@theartificialbridge.com  
+Date: __________  
+
+**Licensee — INSUREitALL LLC**  
+Name: Ryan Butterfield  
+Title: CEO (authorized to bind Licensee)  
+Email: rmbutterfield@team-iia.com  
+Date: __________
 
 ---
 
