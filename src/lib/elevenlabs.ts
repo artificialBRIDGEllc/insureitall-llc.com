@@ -12,7 +12,7 @@ const fromNode =
     : "";
 
 export const ELEVENLABS_AGENT_ID =
-  fromVite || fromNode || "agent_6601kzn3vz92fpztgt92sp2er7rb";
+  fromVite || fromNode || "agent_0501m0dpjakhe87b3tfptxgnwmjy";
 
 export const ELEVENLABS_WIDGET_SRC =
   "https://unpkg.com/@elevenlabs/convai-widget-embed";
