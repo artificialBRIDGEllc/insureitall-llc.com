@@ -1,11 +1,18 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BridgetOrbit } from "@/components/bridget-orbit";
 import { BridgetWordmark } from "@/components/bridget-wordmark";
 import { CallLink } from "@/components/call-link";
 import { CtaBand } from "@/components/cta-band";
 import { SiteShell } from "@/components/site-shell";
 import { Button } from "@/components/ui/button";
+import {
+  beginMic,
+  startBridgetVoice,
+  stopBridgetVoice,
+  subscribeBridgetVoice,
+  type BridgetVoiceState,
+} from "@/lib/bridget-voice";
 import { pageHead } from "@/lib/seo";
 import { PHONE_DISPLAY } from "@/lib/utils";
 
@@ -42,7 +49,16 @@ const steps = [
 function BridgetPage() {
   const [i, setI] = useState(0);
   const [answers, setAnswers] = useState<string[]>([]);
+  const [voice, setVoice] = useState<BridgetVoiceState>({
+    phase: "idle",
+    mode: "listening",
+    error: null,
+    errorKind: null,
+  });
   const done = i >= steps.length;
+  const live = voice.phase === "connecting" || voice.phase === "live";
+
+  useEffect(() => subscribeBridgetVoice(setVoice), []);
 
   return (
     <SiteShell>
@@ -62,6 +78,40 @@ function BridgetPage() {
           <div className="mt-8 w-full">
             <BridgetOrbit />
           </div>
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+            <Button
+              type="button"
+              variant="blue"
+              disabled={voice.phase === "connecting"}
+              onClick={() => {
+                if (live) void stopBridgetVoice();
+                else {
+                  const mic = beginMic();
+                  void startBridgetVoice("/bridget", mic);
+                }
+              }}
+            >
+              {voice.phase === "connecting"
+                ? "Connecting…"
+                : voice.phase === "live"
+                  ? "End conversation"
+                  : voice.phase === "error"
+                    ? "Try again"
+                    : "Talk with me"}
+            </Button>
+            <Button asChild variant="outline">
+              <CallLink>Call {PHONE_DISPLAY}</CallLink>
+            </Button>
+          </div>
+          {voice.error ? (
+            <p className="mt-3 max-w-xl text-sm text-mist" role="alert">
+              {voice.error}
+            </p>
+          ) : voice.phase === "live" ? (
+            <p className="mt-3 text-sm text-mist">
+              {voice.mode === "speaking" ? "BRIDGEt is talking." : "I’m listening."}
+            </p>
+          ) : null}
           <p className="mt-6 max-w-xl text-sm text-elevated/60">
             BRIDGEt is a Medicare advocate, not a licensed insurance agent, and is not
             connected with or endorsed by the U.S. Government or the federal

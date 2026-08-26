@@ -2,18 +2,15 @@ import { useEffect } from "react";
 
 const SELECTOR = [
   "elevenlabs-convai",
-  "[class*='el-convai']",
-  "[id*='elevenlabs']",
-  "iframe[src*='elevenlabs']",
-  "iframe[src*='convai']",
   "script[src*='convai-widget']",
+  "script[data-iia-convai]",
 ].join(",");
 
 function strip() {
   document.querySelectorAll(SELECTOR).forEach((node) => node.remove());
 }
 
-/** Keeps the vendor bubble off the page. Voice, if used later, goes through BRIDGEt chrome. */
+/** Vendor bubble only. Do not strip WebRTC audio used by Talk with me. */
 export function HideElevenLabs() {
   useEffect(() => {
     strip();

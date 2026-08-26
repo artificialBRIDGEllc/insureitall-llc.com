@@ -10,7 +10,8 @@ export type FeedbackEvent =
   | "widget_open"
   | "widget_cta"
   | "audit_complete"
-  | "lead_kind";
+  | "lead_kind"
+  | "voice_transcript";
 
 function clientKey() {
   try {

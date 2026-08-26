@@ -23,7 +23,7 @@ Not legal advice. Have counsel review before you send.
 
 ## Pre-signature blockers
 
-1. **Contractor notice address** is on the Client domain (mlang@team-iia.com). Change it, and settle the related-party question around the CCO sign-off. See [10](10-amendment-no-1-ica-sow.md) Item A.
+1. **Contractor notice address / mailbox.** Related-party question is **resolved** (Ryan Butterfield is INSUREitALL-only; arm's-length). Remaining: Contractor notice still sits on Client's domain (`mlang@team-iia.com`). Move to `lang@theartificialbridge.com`. See [10](10-amendment-no-1-ica-sow.md) Item A.
 2. **License §4 states that deidentified data is the consideration** for a $0 license — in-kind remuneration for PHI access. Decouple it. See [09](09-amendment-no-1-license.md) Item D.
 3. **Exhibit BAA names INSUREitALL as a HIPAA covered entity.** A Medicare agency generally is not one. Confirm status and pick the right instrument; obtain carrier BAA deidentification language. See [09](09-amendment-no-1-license.md) Item G.
 4. **ICA §12 is a present-tense insurance representation.** Bind tech E&O and cyber, or amend to a 30-day obligation. See [10](10-amendment-no-1-ica-sow.md) Item B.

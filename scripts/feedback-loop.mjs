@@ -4,6 +4,7 @@
  */
 
 import { containsForbiddenId } from "./commercial-guard.mjs";
+import { safeHarborText } from "./hipaa-safe-harbor.mjs";
 
 export const FEEDBACK_EVENTS = [
   "page_view",
@@ -11,6 +12,7 @@ export const FEEDBACK_EVENTS = [
   "widget_cta",
   "audit_complete",
   "lead_kind",
+  "voice_transcript",
 ];
 
 const PATHS = new Set([
@@ -41,10 +43,25 @@ const AUDIT_ENUMS = {
   facility: ["yes", "no", "unsure"],
 };
 
-const EMAIL_IN_TEXT = /[^\s@]+@[^\s@]+\.[^\s@]{2,}/;
-const PHONE_IN_TEXT = /\b(?:\+?1[\s.-]?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}\b/;
+const EMAIL_IN_TEXT = /[^\s@]+@[^\s@]+\.[^\s@]{2,}/g;
+const PHONE_IN_TEXT = /\b(?:\+?1[\s.-]?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}\b/g;
 
 const slots = new Map();
+
+function looksIdentifying(value) {
+  const text = String(value ?? "");
+  if (!text) return false;
+  if (containsForbiddenId(text)) return true;
+  EMAIL_IN_TEXT.lastIndex = 0;
+  PHONE_IN_TEXT.lastIndex = 0;
+  if (EMAIL_IN_TEXT.test(text) || PHONE_IN_TEXT.test(text)) return true;
+  return false;
+}
+
+/** Safe Harbor 45 CFR 164.514(b)(2). Never keep audio. */
+export function redactTranscript(value) {
+  return safeHarborText(value);
+}
 
 export function takeFeedbackSlot(key, { now = Date.now(), windowMs = 10 * 60 * 1000, max = 80 } = {}) {
   const row = slots.get(key);
@@ -63,14 +80,6 @@ export function sanitizePath(value) {
   if (path.length > 80) return "";
   if (!PATHS.has(path)) return "";
   return path;
-}
-
-function looksIdentifying(value) {
-  const text = String(value ?? "");
-  if (!text) return false;
-  if (containsForbiddenId(text)) return true;
-  if (EMAIL_IN_TEXT.test(text) || PHONE_IN_TEXT.test(text)) return true;
-  return false;
 }
 
 export function sanitizeFeedback(input) {
@@ -94,10 +103,31 @@ export function sanitizeFeedback(input) {
       if (!allowed.includes(value)) return { ok: false, error: "drop" };
       payload[key] = value;
     }
+  } else if (event === "voice_transcript") {
+    let turns = [];
+    try {
+      turns = JSON.parse(String(raw.turns ?? "[]"));
+    } catch {
+      return { ok: false, error: "drop" };
+    }
+    if (!Array.isArray(turns) || turns.length === 0 || turns.length > 80) {
+      return { ok: false, error: "drop" };
+    }
+    const clean = [];
+    for (const turn of turns) {
+      const role = turn?.role === "agent" ? "agent" : turn?.role === "user" ? "user" : "";
+      const text = redactTranscript(turn?.text);
+      if (!role || !text) continue;
+      clean.push({ role, text });
+    }
+    if (!clean.length) return { ok: false, error: "drop" };
+    payload = { n: String(clean.length), turns: JSON.stringify(clean) };
   }
 
-  const blob = `${event} ${path} ${JSON.stringify(payload)}`;
-  if (looksIdentifying(blob)) return { ok: false, error: "drop" };
+  if (event !== "voice_transcript") {
+    const blob = `${event} ${path} ${JSON.stringify(payload)}`;
+    if (looksIdentifying(blob)) return { ok: false, error: "drop" };
+  }
 
   return { ok: true, data: { event, path, payload } };
 }
