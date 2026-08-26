@@ -259,20 +259,13 @@ export async function startBridgetVoice(pagePath: string, micPromise?: Promise<M
 
   const { Conversation } = await import("@elevenlabs/client");
   const agentId = token.agentId || ELEVENLABS_AGENT_ID;
-  let drop = "";
-  let retrying = false;
 
   const shared = {
-    overrides: {
-      agent: { firstMessage: FIRST },
-    },
-    dynamicVariables: {
-      page: pagePath,
-    },
     onConnect: () => {
       emit({ phase: "live", error: null, errorKind: null });
       try {
-        session?.sendContextualUpdate(`${KICKOFF} Page: ${transcriptPath}.`);
+        session?.setMicMuted(false);
+        session?.sendContextualUpdate(`${KICKOFF} ${FIRST} Page: ${transcriptPath}.`);
       } catch {
         /* agent may already be speaking */
       }
@@ -289,12 +282,11 @@ export async function startBridgetVoice(pagePath: string, micPromise?: Promise<M
     onDisconnect: (details?: unknown) => {
       session = null;
       flushTranscript();
-      if (retrying) return;
-      if (state.phase === "connecting") {
-        drop = disconnectNote(details) || drop;
+      if (getBridgetVoiceState().phase === "connecting") {
+        fail("agent", disconnectNote(details) || DROP);
         return;
       }
-      if (state.phase !== "error") {
+      if (getBridgetVoiceState().phase !== "error") {
         emit({ phase: "idle", mode: "listening", error: null, errorKind: null });
       }
     },
@@ -306,30 +298,18 @@ export async function startBridgetVoice(pagePath: string, micPromise?: Promise<M
     },
   };
 
-  async function open(opts: { signedUrl: string; connectionType: "websocket" } | { agentId: string; connectionType: "websocket" | "webrtc" }) {
-    const next = (await Conversation.startSession({
-      ...shared,
-      ...opts,
-    } as Parameters<typeof Conversation.startSession>[0])) as Session;
-    try {
-      next.setMicMuted(false);
-    } catch {
-      /* session may already be live */
-    }
-    return next;
-  }
-
   try {
-    if (token.signedUrl) {
-      session = await open({ signedUrl: token.signedUrl, connectionType: "websocket" });
-    } else {
-      try {
-        session = await open({ agentId, connectionType: "websocket" });
-      } catch (first) {
-        drop = first instanceof Error ? first.message : drop;
-        session = await open({ agentId, connectionType: "webrtc" });
-      }
-    }
+    session = token.signedUrl
+      ? ((await Conversation.startSession({
+          signedUrl: token.signedUrl,
+          connectionType: "websocket",
+          ...shared,
+        } as Parameters<typeof Conversation.startSession>[0])) as Session)
+      : ((await Conversation.startSession({
+          agentId,
+          connectionType: "webrtc",
+          ...shared,
+        } as Parameters<typeof Conversation.startSession>[0])) as Session);
   } catch (err) {
     session = null;
     const kind = classifyMicError(err);
@@ -341,33 +321,14 @@ export async function startBridgetVoice(pagePath: string, micPromise?: Promise<M
     return;
   }
 
-  let outcome = await waitForPhase(5000);
-  if (outcome === "timeout" && getBridgetVoiceState().phase === "connecting" && !token.signedUrl) {
-    retrying = true;
-    const current = session;
-    session = null;
-    try {
-      await current?.endSession();
-    } catch {
-      /* ignore */
-    }
-    retrying = false;
-    try {
-      session = await open({ agentId, connectionType: "webrtc" });
-    } catch (err) {
-      fail("agent", err instanceof Error ? `${DROP} ${err.message}` : DROP);
-      return;
-    }
-    outcome = await waitForPhase(5000);
-  }
-
-  if (getBridgetVoiceState().phase === "connecting") {
+  const outcome = await waitForPhase(8000);
+  if (outcome !== "live" && getBridgetVoiceState().phase === "connecting") {
     try {
       await session?.endSession();
     } catch {
       /* ignore */
     }
     session = null;
-    fail("agent", drop ? `${DROP} (${drop})` : DROP);
+    fail("agent", DROP);
   }
 }
