@@ -55,6 +55,9 @@ const MIC: Record<BridgetVoiceErrorKind, string> = {
   agent: "Could not start BRIDGEt’s voice.",
 };
 
+const DROP =
+  "Voice connected then closed before BRIDGEt could speak. Tap Try again. If it keeps dropping, this Vercel project needs ELEVENLABS_API_KEY so the session can use a signed URL.";
+
 let session: Session | null = null;
 let turns: Turn[] = [];
 let transcriptPath = "/";
@@ -180,6 +183,39 @@ export function beginMic(): Promise<MediaStream> {
   });
 }
 
+function waitForPhase(ms: number) {
+  return new Promise<"live" | "error" | "timeout">((resolve) => {
+    if (state.phase === "live") return resolve("live");
+    if (state.phase === "error") return resolve("error");
+    let unsub = () => {};
+    const timer = window.setTimeout(() => {
+      unsub();
+      resolve(timeoutSafe());
+    }, ms);
+    unsub = subscribeBridgetVoice((s) => {
+      if (s.phase === "live" || s.phase === "error") {
+        window.clearTimeout(timer);
+        unsub();
+        resolve(s.phase);
+      }
+    });
+  });
+}
+
+function timeoutSafe(): "live" | "error" | "timeout" {
+  if (state.phase === "live") return "live";
+  if (state.phase === "error") return "error";
+  return "timeout";
+}
+
+function disconnectNote(details: unknown) {
+  if (!details || typeof details !== "object") return "";
+  const row = details as { reason?: string; message?: string };
+  if (row.reason === "error" && row.message) return row.message;
+  if (row.reason && row.reason !== "user") return row.reason;
+  return "";
+}
+
 export async function startBridgetVoice(pagePath: string, micPromise?: Promise<MediaStream>) {
   if (state.phase === "connecting" || state.phase === "live") return;
   const pending = micPromise ?? beginMic();
@@ -199,6 +235,8 @@ export async function startBridgetVoice(pagePath: string, micPromise?: Promise<M
     fail(kind);
     return;
   }
+
+  await new Promise((r) => window.setTimeout(r, 80));
 
   let token: {
     ok?: boolean;
@@ -223,17 +261,11 @@ export async function startBridgetVoice(pagePath: string, micPromise?: Promise<M
   const agentId = token.agentId || ELEVENLABS_AGENT_ID;
 
   const shared = {
-    overrides: {
-      agent: { firstMessage: FIRST },
-    },
-    dynamicVariables: {
-      page: pagePath,
-    },
     onConnect: () => {
       emit({ phase: "live", error: null, errorKind: null });
       try {
-        session?.sendContextualUpdate(`${KICKOFF} Page: ${transcriptPath}.`);
-        session?.sendUserMessage("Hi");
+        session?.setMicMuted(false);
+        session?.sendContextualUpdate(`${KICKOFF} ${FIRST} Page: ${transcriptPath}.`);
       } catch {
         /* agent may already be speaking */
       }
@@ -247,10 +279,14 @@ export async function startBridgetVoice(pagePath: string, micPromise?: Promise<M
         emit({ mode });
       }
     },
-    onDisconnect: () => {
+    onDisconnect: (details?: unknown) => {
       session = null;
       flushTranscript();
-      if (state.phase !== "error") {
+      if (getBridgetVoiceState().phase === "connecting") {
+        fail("agent", disconnectNote(details) || DROP);
+        return;
+      }
+      if (getBridgetVoiceState().phase !== "error") {
         emit({ phase: "idle", mode: "listening", error: null, errorKind: null });
       }
     },
@@ -268,13 +304,12 @@ export async function startBridgetVoice(pagePath: string, micPromise?: Promise<M
           signedUrl: token.signedUrl,
           connectionType: "websocket",
           ...shared,
-        })) as Session)
+        } as Parameters<typeof Conversation.startSession>[0])) as Session)
       : ((await Conversation.startSession({
           agentId,
           connectionType: "webrtc",
           ...shared,
-        })) as Session);
-    session.setMicMuted(false);
+        } as Parameters<typeof Conversation.startSession>[0])) as Session);
   } catch (err) {
     session = null;
     const kind = classifyMicError(err);
@@ -282,11 +317,18 @@ export async function startBridgetVoice(pagePath: string, micPromise?: Promise<M
       fail(kind);
       return;
     }
-    fail(
-      "agent",
-      err instanceof Error
-        ? err.message
-        : "Allow this origin on the agent, or turn agent auth off.",
-    );
+    fail("agent", err instanceof Error ? err.message : DROP);
+    return;
+  }
+
+  const outcome = await waitForPhase(8000);
+  if (outcome !== "live" && getBridgetVoiceState().phase === "connecting") {
+    try {
+      await session?.endSession();
+    } catch {
+      /* ignore */
+    }
+    session = null;
+    fail("agent", DROP);
   }
 }
