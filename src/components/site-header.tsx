@@ -6,14 +6,14 @@ import { useCurrentUserState } from "@/lib/auth/use-current-user";
 import { Logo } from "@/components/logo";
 import { BridgetMark } from "@/components/bridget-wordmark";
 import { CallLink } from "@/components/call-link";
+import { LeavingLink } from "@/components/leaving-link";
 import { Button } from "@/components/ui/button";
 import { HOURS, PHONE_DISPLAY } from "@/lib/utils";
 import { isStaffUser } from "@/lib/staff";
 
 const nav = [
   { to: "/needs-analysis", label: "Needs Analysis" },
-  { to: "/screener", label: "Benefits Screener" },
-  { to: "/compare", label: "Plan Compare" },
+  { to: "/compare", label: "Plan Choice Audit" },
   { to: "/bridget", label: "BRIDGEt" },
   { to: "/medicare-basics", label: "Medicare Basics" },
   { to: "/contact", label: "Contact" },
@@ -28,8 +28,8 @@ function AuthSlot() {
     return (
       <div className="hidden items-center gap-3 lg:flex">
         {isStaffUser(user) ? (
-          <Link to="/team" className="text-sm font-medium text-navy hover:text-blue">
-            Team
+          <Link to="/console" className="text-sm font-medium text-navy hover:text-blue">
+            Console
           </Link>
         ) : null}
         <UserButton />
@@ -37,12 +37,9 @@ function AuthSlot() {
     );
   }
   return (
-    <Link
-      to="/portal"
-      className="hidden text-sm font-medium text-muted hover:text-navy lg:inline"
-    >
-      Portal
-    </Link>
+    <LeavingLink className="hidden text-sm font-medium text-muted hover:text-navy lg:inline">
+      fileBRIDGE
+    </LeavingLink>
   );
 }
 
@@ -51,10 +48,10 @@ function StaffMobileLink() {
   if (!isStaffUser(user)) return null;
   return (
     <Link
-      to="/team"
+      to="/console"
       className="rounded-xl px-3 py-3 text-base font-medium text-navy hover:bg-soft"
     >
-      Team
+      Console
     </Link>
   );
 }
@@ -127,11 +124,12 @@ export function SiteHeader() {
               ))}
               <SignedOut>
                 <Link
-                  to="/portal"
+                  to="/leaving"
+                  search={{ to: "filebridge" }}
                   className="rounded-xl px-3 py-3 text-base font-medium text-navy hover:bg-soft"
                   onClick={() => setOpen(false)}
                 >
-                  Portal
+                  fileBRIDGE (leaves this site)
                 </Link>
               </SignedOut>
               <SignedIn>

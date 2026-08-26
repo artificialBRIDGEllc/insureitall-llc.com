@@ -1,4 +1,5 @@
-/** Carrier-audit copy. Source: Ryan Butterfield, acting CCO, 2026-08-20. */
+/** Carrier-audit copy. Source: Ryan Butterfield, acting CCO, 2026-08-20.
+ *  Confirm / replace on docs/cco-confirmation.md before treating counts as zip-level. */
 
 export const TPMO_ORG_COUNT = 14;
 

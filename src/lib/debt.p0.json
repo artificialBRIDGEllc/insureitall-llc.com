@@ -1,0 +1,105 @@
+{
+  "playbooks": [
+    {
+      "id": "cutout-rollback",
+      "title": "Die-cut / behind-the-page BRIDGEt came back",
+      "firesWhen": "src/components/bridget-cutout.tsx or src/hooks/use-parallax.ts exists, or PageDieCut / diecut-stage appears in src/",
+      "verify": "npm run debt:strict exits 0. /bridget shows the locked bust in the clay orbit with no page hole.",
+      "doneWhen": "Those files are gone and no die-cut class or component remains.",
+      "steps": [
+        "Delete src/components/bridget-cutout.tsx. Do not leave a stub export or a commented copy.",
+        "Delete src/hooks/use-parallax.ts if it returned with the cutout.",
+        "Search src/ for PageDieCut, diecut-stage, bridget-cutout, and mix-blend-mode used as a page hole. Remove every hit from site-shell, styles.css, and any route.",
+        "Keep BRIDGEt as the locked bust in BridgetOrbit via BRIDGET_AVATAR.figure (320×480). Do not add a white outline, statue-in-a-window, or behind-the-page frame.",
+        "Leave BrandSplash / IdentMark as the only first-load motion. Do not pair a cutout with a door overlay.",
+        "Run npm run debt:strict, then load /bridget and confirm the six clay items still surround her."
+      ]
+    },
+    {
+      "id": "door-transition",
+      "title": "Door page transition came back",
+      "firesWhen": "A DoorTransition symbol exists anywhere under src/",
+      "verify": "npm run debt:strict exits 0. Route changes are instant. Ident splash still plays once per tab session.",
+      "doneWhen": "DoorTransition is absent from src/ and no route-change overlay remains.",
+      "steps": [
+        "Search src/ for DoorTransition. Remove the component, its import, and any <DoorTransition /> in site-shell or a layout.",
+        "Remove any door PNG/WebP overlay, clip-path doorway, or full-screen route wipe. Do not replace it with another transition.",
+        "Keep BrandSplash (INSUREitALL ident + ring pickup) as the only first-load motion. It uses sessionStorage key iia-ident-seen.",
+        "Confirm reduced-motion still skips the ident and that /bridget, /compare, and /contact paint without a wipe.",
+        "Run npm run debt:strict."
+      ]
+    },
+    {
+      "id": "legal-pages",
+      "title": "Required legal or brand-lock file is missing",
+      "firesWhen": "privacy, terms, AI disclosure, accessibility, HIPAA proof, GLBA notice, bridget-assets.ts, or compliance.ts is gone",
+      "verify": "npm run debt:strict exits 0. Footer links 200 on /privacy, /hipaa, /glba, /terms, /ai-disclosure, /accessibility.",
+      "doneWhen": "Required legal files exist and the footer names Privacy, HIPAA & PHI, GLBA Privacy Notice, Terms, AI use, and Accessibility.",
+      "steps": [
+        "Restore the missing file from git. Do not invent a one-line placeholder — copy the last good public page.",
+        "src/routes/privacy.tsx — public Privacy Policy. Keep NPN 20114179, Tampa address, TPMO/HIPAA language, and a section that links to /ai-disclosure.",
+        "src/routes/terms.tsx — public Terms. BRIDGEt is not a licensed agent and does not enroll. Phone-first contact stays (972) 525-2700.",
+        "src/routes/ai-disclosure.tsx — public AI-use page. State she is a non-licensed advocate, no PHI in the widget, no plan recommendations that bind a carrier.",
+        "src/routes/accessibility.tsx — public accessibility statement (WCAG 2.2 intent, how to request another format).",
+        "src/routes/hipaa.tsx — public HIPAA control map. Do not call it a certification. Keep the live product controls.",
+        "src/lib/hipaa.ts — control copy used by /hipaa. Keep it aligned with what the product actually does.",
+        "src/routes/glba.tsx — GLBA / NAIC 672 privacy notice. Sharing table must stay honest: no lead sales, no affiliate marketing.",
+        "src/lib/glba.ts — copy for /glba. Keep share rows aligned with actual practice.",
+        "src/lib/bridget-assets.ts — BRIDGET_AVATAR.figure, .bust, .mark must point at the locked public/brand/bridget files. Other components import this constant; do not hardcode paths.",
+        "src/lib/compliance.ts — TPMO, consent, and licensed-state copy. Footer and compare/screener pages depend on it.",
+        "Confirm SiteFooter still links Privacy, HIPAA & PHI, GLBA Privacy Notice, Terms, AI use, and Accessibility. Then npm run debt:strict."
+      ],
+      "files": {
+        "src/routes/privacy.tsx": [
+          "Restore src/routes/privacy.tsx from git (last good public Privacy Policy).",
+          "Keep NPN 20114179, 3550 Buschwood Park Dr Ste 180 Tampa FL 33618, and TPMO/HIPAA language.",
+          "Keep an AI / BRIDGEt section that links to /ai-disclosure.",
+          "Confirm the footer Privacy link hits this route, then npm run debt:strict."
+        ],
+        "src/routes/terms.tsx": [
+          "Restore src/routes/terms.tsx from git (last good public Terms).",
+          "State that INSUREitALL is a licensed agency (NPN 20114179) and BRIDGEt is not a licensed agent and does not enroll.",
+          "Keep phone-first contact at (972) 525-2700.",
+          "Confirm the footer Terms link hits this route, then npm run debt:strict."
+        ],
+        "src/routes/ai-disclosure.tsx": [
+          "Restore src/routes/ai-disclosure.tsx from git.",
+          "Disclose that BRIDGEt is a non-licensed Medicare advocate / LLM facade. No PHI in the widget. No binding plan recommendation.",
+          "Link it from Privacy and from the footer as AI use.",
+          "Run npm run debt:strict."
+        ],
+        "src/routes/accessibility.tsx": [
+          "Restore src/routes/accessibility.tsx from git.",
+          "Keep WCAG 2.2 intent, keyboard/focus notes, and how to request another format (phone or info@team-iia.com).",
+          "Confirm the footer Accessibility link hits this route, then npm run debt:strict."
+        ],
+        "src/routes/hipaa.tsx": [
+          "Restore src/routes/hipaa.tsx and src/lib/hipaa.ts from git.",
+          "This is the public control map, not a HIPAA certificate. Do not add a certified badge.",
+          "Keep the Privacy Official as info@team-iia.com and the no-MBI / no-SSN rules.",
+          "Confirm the footer HIPAA & PHI link hits this route, then npm run debt:strict."
+        ],
+        "src/routes/glba.tsx": [
+          "Restore src/routes/glba.tsx and src/lib/glba.ts from git.",
+          "Keep the federal-style sharing table. We do not sell leads or share with other TPMOs.",
+          "Confirm the footer GLBA Privacy Notice link hits this route, then npm run debt:strict."
+        ],
+        "src/routes/security.tsx": [
+          "Restore src/routes/security.tsx and src/lib/isp.ts from git.",
+          "This is the NAIC 673 written program plus BAA policy. Do not list unsigned vendors as signed.",
+          "Confirm the footer Information Security link hits this route, then npm run debt:strict."
+        ],
+        "src/lib/bridget-assets.ts": [
+          "Restore src/lib/bridget-assets.ts with BRIDGET_AVATAR.figure, .bust, and .mark pointing at public/brand/bridget.",
+          "Update BridgetOrbit, the widget, and any mark lockup to import BRIDGET_AVATAR — do not hardcode /brand/bridget/avatar-*.",
+          "Run npm run debt:strict."
+        ],
+        "src/lib/compliance.ts": [
+          "Restore src/lib/compliance.ts (TPMO, consent, licensed states).",
+          "Do not ship compare, screener, or the footer without it — required statements live here.",
+          "Run npm run debt:strict."
+        ]
+      }
+    }
+  ]
+}

@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, type FormEvent } from "react";
 import { CtaBand } from "@/components/cta-band";
 import { AreaField, Field, SelectField } from "@/components/field";
+import { Honeypot } from "@/components/honeypot";
 import { LeadConsent } from "@/components/lead-consent";
 import { PageHero } from "@/components/page-hero";
 import { SiteShell } from "@/components/site-shell";
@@ -9,24 +10,39 @@ import { Button } from "@/components/ui/button";
 import { useCurrentUserState } from "@/lib/auth/use-current-user";
 import { savePortalProfile } from "@/lib/portal";
 import { submitOpsRequest } from "@/lib/ops";
+import { track } from "@/lib/track";
+import { pageHead } from "@/lib/seo";
 import { PHONE_HREF } from "@/lib/utils";
 
-export const Route = createFileRoute("/needs-analysis")({ component: NeedsPage });
+export const Route = createFileRoute("/needs-analysis")({
+  component: NeedsPage,
+  head: () =>
+    pageHead({
+      title: "Medicare needs analysis",
+      description:
+        "Start with doctors, medications, and budget if you want. A licensed INSUREitALL agent uses this to listen — not to push a plan. Never a Medicare number or SSN.",
+      path: "/needs-analysis",
+    }),
+});
 
 function NeedsPage() {
   const [sent, setSent] = useState(false);
   const [savedToFile, setSavedToFile] = useState(false);
   const [consent, setConsent] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const { user } = useCurrentUserState();
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (!consent) return;
+    if (!consent || busy) return;
     const form = new FormData(e.currentTarget);
     const zip = String(form.get("zip") ?? "");
     const doctors = String(form.get("doctors") ?? "");
     const medications = String(form.get("meds") ?? "");
     const budget = String(form.get("budget") ?? "");
+    setBusy(true);
+    setError(null);
     try {
       await submitOpsRequest({
         data: {
@@ -37,10 +53,20 @@ function NeedsPage() {
           doctors,
           medications,
           budget,
+          website: String(form.get("website") ?? ""),
+          consent: true,
         },
       });
-    } catch {
-      /* still thank them */
+      track("lead_kind", { kind: "needs" });
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "";
+      setError(
+        message && !message.toLowerCase().includes("unexpected")
+          ? message
+          : "We couldn’t save that. Call us and we’ll take it from here.",
+      );
+      setBusy(false);
+      return;
     }
     if (user) {
       try {
@@ -59,6 +85,7 @@ function NeedsPage() {
         setSavedToFile(false);
       }
     }
+    setBusy(false);
     setSent(true);
   }
 
@@ -67,7 +94,7 @@ function NeedsPage() {
       <PageHero
         eyebrow="Needs analysis"
         title="Start with what matters to you."
-        lede="Doctors, medications, budget. We use this so an agent can listen — not to push a plan. Signed in? We also save it to your portal file so it stays with you. No-cost, no-obligation."
+        lede="Doctors, medications, budget — only if you want. We use this so a licensed agent can listen, not to push a plan. Never type a Medicare number or Social Security number. No-cost, no-obligation."
       />
       <main className="mx-auto max-w-xl px-4 py-12 sm:px-6">
         {sent ? (
@@ -90,10 +117,15 @@ function NeedsPage() {
             </Button>
           </div>
         ) : (
-          <form onSubmit={onSubmit} className="space-y-4 rounded-3xl bg-elevated p-6 shadow-card">
+          <form onSubmit={onSubmit} className="relative space-y-4 rounded-3xl bg-elevated p-6 shadow-card">
+            <Honeypot />
             <Field label="Zip code" name="zip" required inputMode="numeric" autoComplete="postal-code" />
-            <AreaField label="Doctors you want to keep" name="doctors" rows={2} />
-            <AreaField label="Medications" name="meds" rows={2} />
+            <AreaField label="Doctors you want to keep (optional)" name="doctors" rows={2} />
+            <AreaField label="Medications (optional)" name="meds" rows={2} />
+            <p className="text-xs text-muted">
+              Names only, and only if you want to. Never a Medicare number or Social
+              Security number. Those stay off this site.
+            </p>
             <SelectField label="Monthly budget comfort" name="budget" defaultValue="unsure">
               <option value="low">Keep premiums as low as possible</option>
               <option value="mid">Balance premium and copays</option>
@@ -103,8 +135,13 @@ function NeedsPage() {
             <Field label="Phone (so we can follow up)" name="phone" type="tel" autoComplete="tel" required />
             <Field label="Email" name="email" type="email" autoComplete="email" required />
             <LeadConsent id="needs-consent" checked={consent} onChange={setConsent} />
-            <Button type="submit" className="w-full" size="lg" variant="blue" disabled={!consent}>
-              Send to an agent
+            {error ? (
+              <p className="text-sm text-alert" role="alert">
+                {error}
+              </p>
+            ) : null}
+            <Button type="submit" className="w-full" size="lg" variant="blue" disabled={!consent || busy}>
+              {busy ? "Sending…" : "Send to an agent"}
             </Button>
             <p className="text-center text-sm">
               {user ? (

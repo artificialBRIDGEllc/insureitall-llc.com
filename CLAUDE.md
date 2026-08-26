@@ -1,6 +1,6 @@
 # INSUREitALL website — current state
 
-Last aligned: 21 Aug 2026. Preview app is the **TanStack Start** tree at repo root. GitHub: [copperlang2007/insureitall-website](https://github.com/copperlang2007/insureitall-website). Open visual PR: [#49](https://github.com/copperlang2007/insureitall-website/pull/49) (`elite-bridget-ident`). A dedicated **portals** PR is next — do not rebuild `/portal` or `/team` in this visual track unless asked.
+Last aligned: 25 Aug 2026 (SOW No. 1 accepted for delivery). Preview app is the **TanStack Start** tree at repo root. GitHub: [copperlang2007/insureitall-website](https://github.com/copperlang2007/insureitall-website). Staff admin: **`/console`**. `/team` redirects there. Consumer file is **fileBRIDGE** at `/portal` (third-party; IIA uses `/leaving`).
 
 This file is the site map for Claude. Agent operating rules live in `AGENTS.project.md` (this workspace) / `AGENTS.md` on GitHub.
 
@@ -29,7 +29,7 @@ Live marketing domains historically: insureitallins.com / insureitall-llc.com.
 - Auth: existing Grok/Better-auth wiring (`src/lib/auth/`)
 - Fonts: **Fraunces** (display) + **Inter** (body)
 - Icons: lucide-react
-- Motion: CSS only (hover raise, ident, widget pop, clay bob). Respect `prefers-reduced-motion`.
+- Motion: CSS only (hover raise, ident, widget pop, clay bob). Ident auto-plays on `/` once per session (`iia-ident-v11`) with Skip intro + optional Play sound. Escape skips. `prefers-reduced-motion` short-circuits. Never gates `/portal` or inner pages.
 
 ### Dual trees (do not mix blindly)
 
@@ -63,7 +63,7 @@ Official lockups: `public/brand/insureitall-*.svg` (primary / wordmark / monogra
 
 ## BRIDGEt (locked)
 
-Medicare **advocate**, not a licensed agent, not a plan, not affiliated with CMS/Medicare. Facade LLM — training has not shipped. No PHI in the widget. She never enrolls. She walks people to a licensed agent.
+Medicare **advocate**, not a licensed agent, not a plan, not affiliated with CMS/Medicare. We may use information consumers share (never SSN or Medicare numbers) to train BRIDGEt or improve the site. She never enrolls. She walks people to a licensed agent.
 
 **Voice:** older sister you trust. Laid-back, wise, humor then on-task.
 
@@ -91,7 +91,7 @@ Six polymer-clay objects around her. Tap for her take. Hover/focus raise.
 
 ### Ident splash
 
-`BrandSplash` + `IdentMark`. Official lockup SVG `public/brand/insureitall-ident.svg`. Beats: swoosh wipe → IIA rise → wordmark → “it” land → gold rules extend → tagline. ~2.5s at the site tempo, then fade. Session key: `iia-ident-seen`. Luxury navy/gold wash, grain, vignette. **Silent** — do not autoplay ring audio.
+`BrandSplash` + `IdentMark`. Lockup layers in `public/brand/ident/*.svg`. Gold ring → stamp monogram → wipe wordmark → “it” pop → rules → tagline. ~4.4s hold, 0.7s fade. Session key: `iia-ident-v11`. Auto-plays on `/` only. Skip intro + Escape. Sound is opt-in (`Play sound`). Rest of the page is `inert` until it closes.
 
 ### Copilot widget
 
@@ -109,18 +109,27 @@ Six polymer-clay objects around her. Tap for her take. Hover/focus raise.
 |---|---|
 | `/` | Navy hero, phone card, plan types, FAQ, **Welcome home.** portal band, BRIDGEt teaser |
 | `/needs-analysis` | Guided needs flow → licensed agent |
-| `/screener` | Anonymous benefits screener (no name, no phone) |
+| `/screener` | Redirects home. **beneFIT held** — not on this site, next billing phase. |
 | `/compare` | Plan **types**, not every plan in a zip. TPMO limits apply |
 | `/bridget` | Advocate + clay orbit + 3-question warm-up |
 | `/medicare-basics` | Original / Advantage / Supplement / Part D, jargon down |
 | `/contact` | Phone, email, HQ |
 | `/lead` | Call-back request + TCPA consent |
 | `/privacy` | Privacy policy |
-| `/portal` | **Consumer** coverage file (no cost). Not for agents/agencies |
-| `/team` | **INSUREitALL staff only** (email domain allow-list) |
-| `/login` | Auth entry |
+| `/hipaa` | **HIPAA & PHI** — public control map (not a certificate) |
+| `/glba` | **GLBA Privacy Notice** — NAIC 672 sharing table |
+| `/security` | **NAIC 673** written ISP + BAA policy |
+| `/terms` | Terms of use |
+| `/ai-disclosure` | How BRIDGEt / AI is used — not an agent, no PHI |
+| `/accessibility` | Accessibility statement |
+| `/portal` | **artificialBRIDGE** beneficiary app — file, **express scoped consent** to INSUREitALL, share codes. Not an IIA product. |
+| `/ab` `/ab/privacy` `/ab/terms` | Wyoming single-member LLC entity, privacy, terms for fileBRIDGE |
+| `/console` | Staff desk — lead lifecycle (new → enrolled → disenrolled), usage, sessions, consent, audit, debt |
+| `/team` | Redirects to `/console` |
+| `/leaving` | Third-party notice before fileBRIDGE |
+| `/login` | Goes through `/leaving` then fileBRIDGE |
 
-Nav (header): Needs Analysis, Benefits Screener, Plan Compare, BRIDGEt, Medicare Basics, Contact. Phone CTA always present.
+Nav (header): Needs Analysis, Plan Choice Audit, BRIDGEt, Medicare Basics, Contact. Phone CTA always present.
 
 Home kicker under the consumer-portal paragraph: italic Fraunces **Welcome home.** (class `.welcome-home`).
 
@@ -128,7 +137,7 @@ Home kicker under the consumer-portal paragraph: italic Fraunces **Welcome home.
 
 ## Compliance (non-negotiable)
 
-Source of TPMO counts: Ryan Butterfield, acting CCO, 2026-08-20. Static until he confirms zip-level product counts.
+Source of TPMO counts: Ryan Butterfield, acting CCO, 2026-08-20. Static until he signs `docs/cco-confirmation.md` with zip-level product counts.
 
 - `TPMO_DISCLAIMER` — 14 organizations / 14 products, not every plan, send leftovers to Medicare.gov / 1-800-MEDICARE / SHIP
 - `NON_AFFILIATION` — not connected with or endorsed by the U.S. Government or federal Medicare program
@@ -141,30 +150,45 @@ Copy lives in `src/lib/compliance.ts`. Footer always renders TPMO via `TpmoDiscl
 
 ---
 
-## Portal split (as built vs. next PR)
+## Portal split
 
-**Now (included so `/portal` does not 404):**
-
-- `/portal` — consumer file (zip, doctors, medications, budget, notes). Account required.
-- `/team` — staff ops inbox. `isStaffUser` via `team-iia.com`, `insureitallins.com`, `insureitall-llc.com`, `insureitall.com`.
-- Migrations `0002_portal.sql`, `0003_portal_shares.sql`, `0004_ops_requests.sql`.
-
-**Next (separate PR, do not start unless asked):** real consumer vs. ops portal productization — auth hardening, sharing, inbound request workflow, no agency/agent tenancy.
+- `/portal` — consumer. Signed out: marketing + create account. Signed in: app shell (`/portal`, `/portal/file`, `/portal/share`, `/portal/help`). File is zip, doctors, medications, budget, notes. Share codes are revocable. Staff open codes on `/console/leads`.
+- `/console` — BRIDGEt Console. Overview KPIs, lead desk, usage, sessions, consent/retention, audit log. Live inbound from `ops_requests`. Usage metrics are illustrative until ElevenLabs analytics is wired. Staff emails: `team-iia.com`, `insureitallins.com`, `insureitall-llc.com`, `insureitall.com`. `/team` redirects here.
+- Migrations `0002_portal.sql`, `0003_portal_shares.sql`, `0004_ops_requests.sql`, `0005_ops_lead_status.sql`.
 
 ---
 
 ## File map (elite layer)
 
 ```
+src/lib/plan-audit.ts               Plan Choice Audit compute (cms-app 2026 figures)
+src/lib/medicare-2026.ts             CMS dollar anchors
+src/components/plan-type-table.tsx   Advantage / Supplement / Part D type table
+src/lib/hipaa.ts                    HIPAA control map (public proof)
+src/lib/glba.ts                     GLBA / NAIC 672 privacy notice copy
+src/lib/isp.ts                      NAIC 673 information-security program + BAA policy
+scripts/lead-alert.mjs              team webhook/email on new lead (no PHI in the alert)
+scripts/env-validate.mjs            Vercel env format + Resend cluster checks
+npm run env:check                   validate env (no secret values logged)
+emails/                             paste-ready Resend dashboard templates
+scripts/commercial-guard.mjs        lead validation + rate limit + MBI/SSN reject
+public/robots.txt
+public/sitemap.xml
+src/lib/debt.ledger.json            named debt items (scanner source of truth)
+src/lib/debt.p0.json                P0 restore playbooks (numbered steps)
+scripts/debt-scan.mjs               automated gates (`npm run debt`)
 src/components/brand-splash.tsx      first-load ident
 src/components/ident-mark.tsx        SVG ident runner
 src/components/bridget-orbit.tsx     clay frustrations
 src/components/bridget-copilot.tsx   site widget
 src/components/bridget-wordmark.tsx  BRIDGE + t + smile
 src/components/call-link.tsx         tel: + pickup ring
-src/components/site-shell.tsx        header, splash, footer, widget
+src/components/portal/shell.tsx     consumer app chrome
+src/components/portal/welcome.tsx    signed-out portal landing
 src/lib/ring.ts                      pickup audio
-src/lib/compliance.ts                TPMO / consent / states
+docs/neon-nerd.md                  Neon catalog + Wyoming LLC tax schedule (0009)
+migrations/0009_wy_llc_license_tax.sql
+src/lib/wy-llc-tax.ts              W.S. 17-29-209 floor $60 / rate 0.0002
 src/styles.css                       tokens, ident, clay, widget, welcome-home
 src/styles/shadows.css               3D elevation snippets
 public/brand/insureitall-ident.svg

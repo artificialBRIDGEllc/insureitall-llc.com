@@ -2,17 +2,19 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { BridgetMark, BridgetWordmark } from "@/components/bridget-wordmark";
 import { CallLink } from "@/components/call-link";
+import { BRIDGET_AVATAR } from "@/lib/bridget-assets";
+import { IDENT_SESSION_KEY } from "@/lib/ident";
 import { PHONE_DISPLAY } from "@/lib/utils";
+import { track } from "@/lib/track";
 
 const GREETINGS: Record<string, string> = {
   "/": "I’m your Medicare advocate. Want a calm first pass before you call?",
-  "/compare": "This page is plan types — not every plan in your zip. I can walk the tradeoffs.",
-  "/screener": "Anonymous, two minutes. I’ll stay with you. No name, no phone.",
+  "/compare": "This is a type-level audit — gained, sacrificed, watch. Not every plan in your zip. A licensed agent takes it from here.",
   "/needs-analysis": "Tell me what matters. Then a licensed agent compares what’s actually offered.",
   "/lead": "I’ll get you to a real person. I never enroll anyone.",
   "/bridget": "I’m BRIDGEt, your Medicare advocate. Humor, then the next right step.",
   "/contact": "Call, or leave a number. I’ll make sure a licensed agent gets it.",
-  "/medicare-basics": "Original, Advantage, Supplement, Part D — I’ll keep the jargon off the table.",
+  "/medicare-basics": "Parts A–D and the type table. When you’re ready, the Plan Choice Audit walks the trade-offs.",
 };
 
 const GREETED = "iia-widget-greeted";
@@ -25,6 +27,7 @@ export function BridgetCopilot() {
   const userTouched = useRef(false);
   const closeTimer = useRef<number>(0);
   const line = GREETINGS[pathname] ?? GREETINGS["/bridget"];
+  const hidden = pathname.startsWith("/portal") || pathname.startsWith("/console");
 
   useEffect(() => {
     try {
@@ -42,6 +45,7 @@ export function BridgetCopilot() {
       openTimer = window.setTimeout(() => {
         setOpen(true);
         setIntro(true);
+        track("widget_open");
         try {
           sessionStorage.setItem(GREETED, "1");
         } catch {
@@ -56,7 +60,7 @@ export function BridgetCopilot() {
     };
 
     try {
-      if (sessionStorage.getItem("iia-ident-seen") && !document.querySelector(".ident-splash")) {
+      if (sessionStorage.getItem(IDENT_SESSION_KEY) && !document.querySelector(".ident-splash")) {
         start();
       }
     } catch {
@@ -79,8 +83,14 @@ export function BridgetCopilot() {
 
   function toggle() {
     touch();
-    setOpen((v) => !v);
+    setOpen((v) => {
+      const next = !v;
+      if (next) track("widget_open");
+      return next;
+    });
   }
+
+  if (hidden) return null;
 
   return (
     <div className="bridget-dock">
@@ -116,17 +126,26 @@ export function BridgetCopilot() {
               <Link
                 to="/bridget"
                 className="rounded-xl bg-blue px-3 py-2 text-xs font-medium text-elevated shadow-elevation-brand"
-                onClick={() => setOpen(false)}
+                onClick={() => {
+                  track("widget_cta", { cta: "talk" });
+                  setOpen(false);
+                }}
               >
                 Talk with me
               </Link>
-              <CallLink className="rounded-xl bg-navy px-3 py-2 text-xs font-medium text-elevated">
+              <CallLink
+                className="rounded-xl bg-navy px-3 py-2 text-xs font-medium text-elevated"
+                onClick={() => track("widget_cta", { cta: "call" })}
+              >
                 Call {PHONE_DISPLAY}
               </CallLink>
               <Link
                 to="/lead"
                 className="rounded-xl border border-border px-3 py-2 text-xs font-medium text-navy"
-                onClick={() => setOpen(false)}
+                onClick={() => {
+                  track("widget_cta", { cta: "callback" });
+                  setOpen(false);
+                }}
               >
                 Call me back
               </Link>
@@ -148,7 +167,7 @@ export function BridgetCopilot() {
         <span className="bridget-launcher-ring" aria-hidden />
         <span className="bridget-launcher-ring bridget-launcher-ring-late" aria-hidden />
         <span className="bridget-launcher-face">
-          <img src="/brand/bridget/avatar-bust.png" alt="" />
+          <img src={BRIDGET_AVATAR.bust} alt="" width={128} height={128} />
         </span>
         <span className="bridget-launcher-name">BRIDGEt</span>
       </button>

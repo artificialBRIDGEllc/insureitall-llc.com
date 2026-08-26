@@ -6,20 +6,18 @@ import { CallLink } from "@/components/call-link";
 import { CtaBand } from "@/components/cta-band";
 import { SiteShell } from "@/components/site-shell";
 import { Button } from "@/components/ui/button";
+import { pageHead } from "@/lib/seo";
 import { PHONE_DISPLAY } from "@/lib/utils";
 
 export const Route = createFileRoute("/bridget")({
   component: BridgetPage,
-  head: () => ({
-    meta: [
-      { title: "BRIDGEt — Your Medicare advocate | INSUREitALL" },
-      {
-        name: "description",
-        content:
-          "BRIDGEt is your Medicare advocate. Humor when it helps, straight talk when it matters. She never enrolls you — she walks you to a licensed agent when you’re ready.",
-      },
-    ],
-  }),
+  head: () =>
+    pageHead({
+      title: "BRIDGEt — Your Medicare advocate",
+      description:
+        "BRIDGEt is your Medicare advocate. Humor when it helps, straight talk when it matters. She never enrolls you — she walks you to a licensed agent when you’re ready.",
+      path: "/bridget",
+    }),
 });
 
 const steps = [

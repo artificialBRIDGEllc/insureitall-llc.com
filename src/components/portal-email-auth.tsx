@@ -9,7 +9,7 @@ export function PortalEmailAuth({
   callbackURL?: string;
 }) {
   const [mode, setMode] = useState<"signup" | "signin">(
-    callbackURL === "/team" ? "signin" : "signup",
+    callbackURL === "/team" || callbackURL === "/console" ? "signin" : "signup",
   );
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);

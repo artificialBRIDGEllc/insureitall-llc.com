@@ -153,9 +153,10 @@ export function TeamShareLookup() {
 
   return (
     <div className="card-elevated rounded-3xl bg-elevated p-6 sm:p-8">
-        <h3 className="font-display text-2xl text-navy">Open a consumer file</h3>
+        <h3 className="font-display text-2xl text-navy">Open a beneficiary file</h3>
         <p className="mt-1 text-sm text-ink">
-          INSUREitALL team only. Enter the code the consumer gave you.
+          artificialBRIDGE portal. Access is scoped by the beneficiary’s express
+          consent. Fields they did not grant will be blank.
         </p>
         <form onSubmit={open} className="mt-4 flex flex-col gap-3 sm:flex-row">
           <div className="flex-1">
@@ -164,7 +165,7 @@ export function TeamShareLookup() {
               name="share-code"
               value={code}
               onChange={(e) => setCode(e.target.value.toUpperCase())}
-              placeholder="IIA-XXXXXX"
+              placeholder="AB-XXXXXX"
               autoComplete="off"
             />
           </div>
@@ -176,9 +177,14 @@ export function TeamShareLookup() {
         {opened ? (
           <div className="mt-6 space-y-2 rounded-2xl bg-soft p-5 text-sm text-ink">
             <p className="text-xs font-semibold tracking-[0.14em] text-blue uppercase">
-              Shared for a {opened.audience}
+              artificialBRIDGE file · {opened.audience}
               {opened.label ? ` · ${opened.label}` : ""}
             </p>
+            {opened.withheld.length > 0 ? (
+              <p className="text-xs text-muted">
+                Not consented: {opened.withheld.join(", ")}
+              </p>
+            ) : null}
             <p>
               <span className="font-medium text-navy">Zip:</span> {opened.zip || "—"}
             </p>

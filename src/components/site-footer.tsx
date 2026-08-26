@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { Logo } from "@/components/logo";
 import { TpmoDisclaimer } from "@/components/tpmo-disclaimer";
 import { LICENSED_STATES_LINE } from "@/lib/compliance";
-import { HQ_CITY, HQ_LINE1, HQ_LINE2, PHONE_DISPLAY, PHONE_HREF } from "@/lib/utils";
+import { HQ_CITY, HQ_LINE1, HQ_LINE2, HOURS, PHONE_DISPLAY, PHONE_HREF, TTY } from "@/lib/utils";
 
 export function SiteFooter() {
   return (
@@ -21,6 +21,9 @@ export function SiteFooter() {
           <a href={PHONE_HREF} className="mt-3 block text-lg font-medium text-elevated">
             {PHONE_DISPLAY}
           </a>
+          <p className="mt-1 text-sm text-elevated/70">
+            {HOURS} · {TTY}
+          </p>
           <p className="mt-2 text-sm text-elevated/70">
             By calling, you will be connected to a licensed insurance agent. Calls
             are recorded and monitored for quality, training, and compliance.
@@ -44,10 +47,7 @@ export function SiteFooter() {
                 <Link to="/needs-analysis">Needs Analysis</Link>
               </li>
               <li>
-                <Link to="/screener">Benefits Screener</Link>
-              </li>
-              <li>
-                <Link to="/compare">Plan Compare</Link>
+                <Link to="/compare">Plan Choice Audit</Link>
               </li>
               <li>
                 <Link to="/medicare-basics">Medicare Basics</Link>
@@ -59,7 +59,9 @@ export function SiteFooter() {
                 <Link to="/lead">Request a call back</Link>
               </li>
               <li>
-                <Link to="/portal">Client portal</Link>
+                <Link to="/leaving" search={{ to: "filebridge" }}>
+                  fileBRIDGE (third-party)
+                </Link>
               </li>
             </ul>
           </div>
@@ -69,9 +71,30 @@ export function SiteFooter() {
               withNonAffiliation
               className="mt-3 text-elevated/60"
             />
-            <p className="mt-3 text-xs text-elevated/70">
+            <p className="mt-3 flex flex-col gap-2 text-xs text-elevated/70">
               <Link to="/privacy" className="underline underline-offset-2">
                 Privacy Policy
+              </Link>
+              <Link to="/ab/privacy" className="underline underline-offset-2">
+                fileBRIDGE privacy (artificialBRIDGE LLC)
+              </Link>
+              <Link to="/hipaa" className="underline underline-offset-2">
+                HIPAA & PHI
+              </Link>
+              <Link to="/glba" className="underline underline-offset-2">
+                GLBA Privacy Notice
+              </Link>
+              <Link to="/security" className="underline underline-offset-2">
+                Information Security
+              </Link>
+              <Link to="/terms" className="underline underline-offset-2">
+                Terms of Use
+              </Link>
+              <Link to="/ai-disclosure" className="underline underline-offset-2">
+                AI Disclosure
+              </Link>
+              <Link to="/accessibility" className="underline underline-offset-2">
+                Accessibility
               </Link>
             </p>
           </div>

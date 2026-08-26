@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>{{RECEIVED_TITLE}}</title>
+</head>
+<body style="margin:0;padding:0;background:#F7F4EE;">
+  <div style="display:none;max-height:0;overflow:hidden;opacity:0;">{{PREVIEW}}</div>
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#F7F4EE;padding:24px 12px;">
+    <tr>
+      <td align="center">
+        <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#0A1D3D;border-radius:24px 24px 0 0;">
+          <tr>
+            <td style="padding:28px 32px 8px;font-family:Georgia,'Times New Roman',serif;color:#F7F4EE;font-size:22px;letter-spacing:0.04em;">{{SITE_NAME}}</td>
+          </tr>
+          <tr>
+            <td style="padding:0 32px 20px;font-family:Georgia,'Times New Roman',serif;color:#C9A227;font-size:13px;letter-spacing:0.16em;text-transform:uppercase;">{{RECEIVED_TITLE}}</td>
+          </tr>
+        </table>
+        <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#ffffff;">
+          <tr><td style="height:3px;background:#C9A227;font-size:0;line-height:0;">&nbsp;</td></tr>
+          <tr>
+            <td style="padding:28px 32px 8px;font-family:Georgia,'Times New Roman',serif;color:#0A1D3D;font-size:26px;line-height:1.25;">{{RECEIVED_TITLE}}</td>
+          </tr>
+          <tr>
+            <td style="padding:0 32px 28px;font-family:Arial,Helvetica,sans-serif;color:#1a2332;font-size:16px;line-height:1.55;">
+              <p style="margin:0 0 16px;">{{GREETING}}</p>
+              <p style="margin:0 0 16px;">We have your {{KIND_LOWER}}. {{RECEIVED_BODY}}</p>
+              <p style="margin:0 0 20px;">{{RECEIVED_SOONER}}</p>
+              <p style="margin:0 0 20px;">
+                <a href="{{PHONE_HREF}}" style="display:inline-block;background:#0072CE;color:#ffffff;text-decoration:none;padding:12px 20px;border-radius:999px;font-size:14px;">{{CALL_CTA}}</a>
+              </p>
+              <p style="margin:0 0 8px;color:#6b7280;font-size:13px;">{{HOURS}} · {{TTY}}. {{RECORDING}}</p>
+              <p style="margin:0;color:#6b7280;font-size:13px;">{{STOP_LINE}}</p>
+            </td>
+          </tr>
+        </table>
+        <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#0A1D3D;border-radius:0 0 24px 24px;">
+          <tr>
+            <td style="padding:20px 32px;font-family:Arial,Helvetica,sans-serif;color:#D6EBF8;font-size:12px;line-height:1.5;">
+              {{FOOTER_LICENSE}} · NPN {{NPN}} · {{HQ}}<br />
+              {{PHONE_DISPLAY}} · {{TTY}} · {{HOURS}}<br />
+              {{NON_AFFILIATION}}
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

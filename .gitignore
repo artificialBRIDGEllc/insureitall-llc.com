@@ -10,3 +10,4 @@ attachments
 .env
 .env.local
 .pglite
+debt/latest.json

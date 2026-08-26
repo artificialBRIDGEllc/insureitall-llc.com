@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { BRIDGET_AVATAR } from "@/lib/bridget-assets";
 import { cn } from "@/lib/utils";
 
 const items = [
@@ -79,8 +80,11 @@ export function BridgetOrbit() {
         ))}
         <div className="clay-figure">
           <img
-            src="/brand/bridget/avatar-clean.png"
+            src={BRIDGET_AVATAR.figure}
             alt="BRIDGEt, your Medicare advocate"
+            width={720}
+            height={960}
+            decoding="async"
           />
         </div>
       </div>

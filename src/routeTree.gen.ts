@@ -10,22 +10,61 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AbRouteImport } from './routes/ab'
+import { Route as AccessibilityRouteImport } from './routes/accessibility'
+import { Route as AiDisclosureRouteImport } from './routes/ai-disclosure'
 import { Route as BridgetRouteImport } from './routes/bridget'
 import { Route as CompareRouteImport } from './routes/compare'
+import { Route as ConsoleRouteImport } from './routes/console'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as GlbaRouteImport } from './routes/glba'
+import { Route as HipaaRouteImport } from './routes/hipaa'
 import { Route as LeadRouteImport } from './routes/lead'
+import { Route as LeavingRouteImport } from './routes/leaving'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as MedicareBasicsRouteImport } from './routes/medicare-basics'
 import { Route as NeedsAnalysisRouteImport } from './routes/needs-analysis'
 import { Route as PortalRouteImport } from './routes/portal'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as ScreenerRouteImport } from './routes/screener'
+import { Route as SecurityRouteImport } from './routes/security'
 import { Route as TeamRouteImport } from './routes/team'
+import { Route as TermsRouteImport } from './routes/terms'
+import { Route as AbIndexRouteImport } from './routes/ab/index'
+import { Route as AbPrivacyRouteImport } from './routes/ab/privacy'
+import { Route as AbTermsRouteImport } from './routes/ab/terms'
+import { Route as ConsoleIndexRouteImport } from './routes/console/index'
+import { Route as ConsoleAuditRouteImport } from './routes/console/audit'
+import { Route as ConsoleConsentRouteImport } from './routes/console/consent'
+import { Route as ConsoleDebtRouteImport } from './routes/console/debt'
+import { Route as ConsoleLeadsRouteImport } from './routes/console/leads'
+import { Route as ConsoleSessionsRouteImport } from './routes/console/sessions'
+import { Route as ConsoleUsageRouteImport } from './routes/console/usage'
+import { Route as PortalIndexRouteImport } from './routes/portal/index'
+import { Route as PortalAgencyRouteImport } from './routes/portal/agency'
+import { Route as PortalFileRouteImport } from './routes/portal/file'
+import { Route as PortalHelpRouteImport } from './routes/portal/help'
+import { Route as PortalShareRouteImport } from './routes/portal/share'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AbRoute = AbRouteImport.update({
+  id: '/ab',
+  path: '/ab',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AccessibilityRoute = AccessibilityRouteImport.update({
+  id: '/accessibility',
+  path: '/accessibility',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AiDisclosureRoute = AiDisclosureRouteImport.update({
+  id: '/ai-disclosure',
+  path: '/ai-disclosure',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BridgetRoute = BridgetRouteImport.update({
@@ -38,14 +77,34 @@ const CompareRoute = CompareRouteImport.update({
   path: '/compare',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ConsoleRoute = ConsoleRouteImport.update({
+  id: '/console',
+  path: '/console',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GlbaRoute = GlbaRouteImport.update({
+  id: '/glba',
+  path: '/glba',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HipaaRoute = HipaaRouteImport.update({
+  id: '/hipaa',
+  path: '/hipaa',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LeadRoute = LeadRouteImport.update({
   id: '/lead',
   path: '/lead',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LeavingRoute = LeavingRouteImport.update({
+  id: '/leaving',
+  path: '/leaving',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -78,10 +137,95 @@ const ScreenerRoute = ScreenerRouteImport.update({
   path: '/screener',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SecurityRoute = SecurityRouteImport.update({
+  id: '/security',
+  path: '/security',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TeamRoute = TeamRouteImport.update({
   id: '/team',
   path: '/team',
   getParentRoute: () => rootRouteImport,
+} as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AbIndexRoute = AbIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AbRoute,
+} as any)
+const AbPrivacyRoute = AbPrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => AbRoute,
+} as any)
+const AbTermsRoute = AbTermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => AbRoute,
+} as any)
+const ConsoleIndexRoute = ConsoleIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ConsoleRoute,
+} as any)
+const ConsoleAuditRoute = ConsoleAuditRouteImport.update({
+  id: '/audit',
+  path: '/audit',
+  getParentRoute: () => ConsoleRoute,
+} as any)
+const ConsoleConsentRoute = ConsoleConsentRouteImport.update({
+  id: '/consent',
+  path: '/consent',
+  getParentRoute: () => ConsoleRoute,
+} as any)
+const ConsoleDebtRoute = ConsoleDebtRouteImport.update({
+  id: '/debt',
+  path: '/debt',
+  getParentRoute: () => ConsoleRoute,
+} as any)
+const ConsoleLeadsRoute = ConsoleLeadsRouteImport.update({
+  id: '/leads',
+  path: '/leads',
+  getParentRoute: () => ConsoleRoute,
+} as any)
+const ConsoleSessionsRoute = ConsoleSessionsRouteImport.update({
+  id: '/sessions',
+  path: '/sessions',
+  getParentRoute: () => ConsoleRoute,
+} as any)
+const ConsoleUsageRoute = ConsoleUsageRouteImport.update({
+  id: '/usage',
+  path: '/usage',
+  getParentRoute: () => ConsoleRoute,
+} as any)
+const PortalIndexRoute = PortalIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalAgencyRoute = PortalAgencyRouteImport.update({
+  id: '/agency',
+  path: '/agency',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalFileRoute = PortalFileRouteImport.update({
+  id: '/file',
+  path: '/file',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalHelpRoute = PortalHelpRouteImport.update({
+  id: '/help',
+  path: '/help',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalShareRoute = PortalShareRouteImport.update({
+  id: '/share',
+  path: '/share',
+  getParentRoute: () => PortalRoute,
 } as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: '/api/auth/$',
@@ -91,111 +235,258 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/ab': typeof AbRouteWithChildren
+  '/accessibility': typeof AccessibilityRoute
+  '/ai-disclosure': typeof AiDisclosureRoute
   '/bridget': typeof BridgetRoute
   '/compare': typeof CompareRoute
+  '/console': typeof ConsoleRouteWithChildren
   '/contact': typeof ContactRoute
+  '/glba': typeof GlbaRoute
+  '/hipaa': typeof HipaaRoute
   '/lead': typeof LeadRoute
+  '/leaving': typeof LeavingRoute
   '/login': typeof LoginRoute
   '/medicare-basics': typeof MedicareBasicsRoute
   '/needs-analysis': typeof NeedsAnalysisRoute
-  '/portal': typeof PortalRoute
+  '/portal': typeof PortalRouteWithChildren
   '/privacy': typeof PrivacyRoute
   '/screener': typeof ScreenerRoute
+  '/security': typeof SecurityRoute
   '/team': typeof TeamRoute
+  '/terms': typeof TermsRoute
+  '/ab/privacy': typeof AbPrivacyRoute
+  '/ab/terms': typeof AbTermsRoute
+  '/console/audit': typeof ConsoleAuditRoute
+  '/console/consent': typeof ConsoleConsentRoute
+  '/console/debt': typeof ConsoleDebtRoute
+  '/console/leads': typeof ConsoleLeadsRoute
+  '/console/sessions': typeof ConsoleSessionsRoute
+  '/console/usage': typeof ConsoleUsageRoute
+  '/portal/agency': typeof PortalAgencyRoute
+  '/portal/file': typeof PortalFileRoute
+  '/portal/help': typeof PortalHelpRoute
+  '/portal/share': typeof PortalShareRoute
+  '/ab/': typeof AbIndexRoute
+  '/console/': typeof ConsoleIndexRoute
+  '/portal/': typeof PortalIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/accessibility': typeof AccessibilityRoute
+  '/ai-disclosure': typeof AiDisclosureRoute
   '/bridget': typeof BridgetRoute
   '/compare': typeof CompareRoute
   '/contact': typeof ContactRoute
+  '/glba': typeof GlbaRoute
+  '/hipaa': typeof HipaaRoute
   '/lead': typeof LeadRoute
+  '/leaving': typeof LeavingRoute
   '/login': typeof LoginRoute
   '/medicare-basics': typeof MedicareBasicsRoute
   '/needs-analysis': typeof NeedsAnalysisRoute
-  '/portal': typeof PortalRoute
   '/privacy': typeof PrivacyRoute
   '/screener': typeof ScreenerRoute
+  '/security': typeof SecurityRoute
   '/team': typeof TeamRoute
+  '/terms': typeof TermsRoute
+  '/ab/privacy': typeof AbPrivacyRoute
+  '/ab/terms': typeof AbTermsRoute
+  '/console/audit': typeof ConsoleAuditRoute
+  '/console/consent': typeof ConsoleConsentRoute
+  '/console/debt': typeof ConsoleDebtRoute
+  '/console/leads': typeof ConsoleLeadsRoute
+  '/console/sessions': typeof ConsoleSessionsRoute
+  '/console/usage': typeof ConsoleUsageRoute
+  '/portal/agency': typeof PortalAgencyRoute
+  '/portal/file': typeof PortalFileRoute
+  '/portal/help': typeof PortalHelpRoute
+  '/portal/share': typeof PortalShareRoute
+  '/ab': typeof AbIndexRoute
+  '/console': typeof ConsoleIndexRoute
+  '/portal': typeof PortalIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/ab': typeof AbRouteWithChildren
+  '/accessibility': typeof AccessibilityRoute
+  '/ai-disclosure': typeof AiDisclosureRoute
   '/bridget': typeof BridgetRoute
   '/compare': typeof CompareRoute
+  '/console': typeof ConsoleRouteWithChildren
   '/contact': typeof ContactRoute
+  '/glba': typeof GlbaRoute
+  '/hipaa': typeof HipaaRoute
   '/lead': typeof LeadRoute
+  '/leaving': typeof LeavingRoute
   '/login': typeof LoginRoute
   '/medicare-basics': typeof MedicareBasicsRoute
   '/needs-analysis': typeof NeedsAnalysisRoute
-  '/portal': typeof PortalRoute
+  '/portal': typeof PortalRouteWithChildren
   '/privacy': typeof PrivacyRoute
   '/screener': typeof ScreenerRoute
+  '/security': typeof SecurityRoute
   '/team': typeof TeamRoute
+  '/terms': typeof TermsRoute
+  '/ab/privacy': typeof AbPrivacyRoute
+  '/ab/terms': typeof AbTermsRoute
+  '/console/audit': typeof ConsoleAuditRoute
+  '/console/consent': typeof ConsoleConsentRoute
+  '/console/debt': typeof ConsoleDebtRoute
+  '/console/leads': typeof ConsoleLeadsRoute
+  '/console/sessions': typeof ConsoleSessionsRoute
+  '/console/usage': typeof ConsoleUsageRoute
+  '/portal/agency': typeof PortalAgencyRoute
+  '/portal/file': typeof PortalFileRoute
+  '/portal/help': typeof PortalHelpRoute
+  '/portal/share': typeof PortalShareRoute
+  '/ab/': typeof AbIndexRoute
+  '/console/': typeof ConsoleIndexRoute
+  '/portal/': typeof PortalIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/ab'
+    | '/accessibility'
+    | '/ai-disclosure'
     | '/bridget'
     | '/compare'
+    | '/console'
     | '/contact'
+    | '/glba'
+    | '/hipaa'
     | '/lead'
+    | '/leaving'
     | '/login'
     | '/medicare-basics'
     | '/needs-analysis'
     | '/portal'
     | '/privacy'
     | '/screener'
+    | '/security'
     | '/team'
+    | '/terms'
+    | '/ab/privacy'
+    | '/ab/terms'
+    | '/console/audit'
+    | '/console/consent'
+    | '/console/debt'
+    | '/console/leads'
+    | '/console/sessions'
+    | '/console/usage'
+    | '/portal/agency'
+    | '/portal/file'
+    | '/portal/help'
+    | '/portal/share'
+    | '/ab/'
+    | '/console/'
+    | '/portal/'
     | '/api/auth/$'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/accessibility'
+    | '/ai-disclosure'
     | '/bridget'
     | '/compare'
     | '/contact'
+    | '/glba'
+    | '/hipaa'
     | '/lead'
+    | '/leaving'
     | '/login'
     | '/medicare-basics'
     | '/needs-analysis'
-    | '/portal'
     | '/privacy'
     | '/screener'
+    | '/security'
     | '/team'
+    | '/terms'
+    | '/ab/privacy'
+    | '/ab/terms'
+    | '/console/audit'
+    | '/console/consent'
+    | '/console/debt'
+    | '/console/leads'
+    | '/console/sessions'
+    | '/console/usage'
+    | '/portal/agency'
+    | '/portal/file'
+    | '/portal/help'
+    | '/portal/share'
+    | '/ab'
+    | '/console'
+    | '/portal'
     | '/api/auth/$'
   id:
     | '__root__'
     | '/'
+    | '/ab'
+    | '/accessibility'
+    | '/ai-disclosure'
     | '/bridget'
     | '/compare'
+    | '/console'
     | '/contact'
+    | '/glba'
+    | '/hipaa'
     | '/lead'
+    | '/leaving'
     | '/login'
     | '/medicare-basics'
     | '/needs-analysis'
     | '/portal'
     | '/privacy'
     | '/screener'
+    | '/security'
     | '/team'
+    | '/terms'
+    | '/ab/privacy'
+    | '/ab/terms'
+    | '/console/audit'
+    | '/console/consent'
+    | '/console/debt'
+    | '/console/leads'
+    | '/console/sessions'
+    | '/console/usage'
+    | '/portal/agency'
+    | '/portal/file'
+    | '/portal/help'
+    | '/portal/share'
+    | '/ab/'
+    | '/console/'
+    | '/portal/'
     | '/api/auth/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AbRoute: typeof AbRouteWithChildren
+  AccessibilityRoute: typeof AccessibilityRoute
+  AiDisclosureRoute: typeof AiDisclosureRoute
   BridgetRoute: typeof BridgetRoute
   CompareRoute: typeof CompareRoute
+  ConsoleRoute: typeof ConsoleRouteWithChildren
   ContactRoute: typeof ContactRoute
+  GlbaRoute: typeof GlbaRoute
+  HipaaRoute: typeof HipaaRoute
   LeadRoute: typeof LeadRoute
+  LeavingRoute: typeof LeavingRoute
   LoginRoute: typeof LoginRoute
   MedicareBasicsRoute: typeof MedicareBasicsRoute
   NeedsAnalysisRoute: typeof NeedsAnalysisRoute
-  PortalRoute: typeof PortalRoute
+  PortalRoute: typeof PortalRouteWithChildren
   PrivacyRoute: typeof PrivacyRoute
   ScreenerRoute: typeof ScreenerRoute
+  SecurityRoute: typeof SecurityRoute
   TeamRoute: typeof TeamRoute
+  TermsRoute: typeof TermsRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
 }
 
@@ -206,6 +497,27 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ab': {
+      id: '/ab'
+      path: '/ab'
+      fullPath: '/ab'
+      preLoaderRoute: typeof AbRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/accessibility': {
+      id: '/accessibility'
+      path: '/accessibility'
+      fullPath: '/accessibility'
+      preLoaderRoute: typeof AccessibilityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ai-disclosure': {
+      id: '/ai-disclosure'
+      path: '/ai-disclosure'
+      fullPath: '/ai-disclosure'
+      preLoaderRoute: typeof AiDisclosureRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/bridget': {
@@ -222,6 +534,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CompareRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/console': {
+      id: '/console'
+      path: '/console'
+      fullPath: '/console'
+      preLoaderRoute: typeof ConsoleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/contact': {
       id: '/contact'
       path: '/contact'
@@ -229,11 +548,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/glba': {
+      id: '/glba'
+      path: '/glba'
+      fullPath: '/glba'
+      preLoaderRoute: typeof GlbaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hipaa': {
+      id: '/hipaa'
+      path: '/hipaa'
+      fullPath: '/hipaa'
+      preLoaderRoute: typeof HipaaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/lead': {
       id: '/lead'
       path: '/lead'
       fullPath: '/lead'
       preLoaderRoute: typeof LeadRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/leaving': {
+      id: '/leaving'
+      path: '/leaving'
+      fullPath: '/leaving'
+      preLoaderRoute: typeof LeavingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -278,12 +618,131 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ScreenerRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/security': {
+      id: '/security'
+      path: '/security'
+      fullPath: '/security'
+      preLoaderRoute: typeof SecurityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/team': {
       id: '/team'
       path: '/team'
       fullPath: '/team'
       preLoaderRoute: typeof TeamRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ab/': {
+      id: '/ab/'
+      path: '/'
+      fullPath: '/ab/'
+      preLoaderRoute: typeof AbIndexRouteImport
+      parentRoute: typeof AbRoute
+    }
+    '/ab/privacy': {
+      id: '/ab/privacy'
+      path: '/privacy'
+      fullPath: '/ab/privacy'
+      preLoaderRoute: typeof AbPrivacyRouteImport
+      parentRoute: typeof AbRoute
+    }
+    '/ab/terms': {
+      id: '/ab/terms'
+      path: '/terms'
+      fullPath: '/ab/terms'
+      preLoaderRoute: typeof AbTermsRouteImport
+      parentRoute: typeof AbRoute
+    }
+    '/console/': {
+      id: '/console/'
+      path: '/'
+      fullPath: '/console/'
+      preLoaderRoute: typeof ConsoleIndexRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
+    '/console/audit': {
+      id: '/console/audit'
+      path: '/audit'
+      fullPath: '/console/audit'
+      preLoaderRoute: typeof ConsoleAuditRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
+    '/console/consent': {
+      id: '/console/consent'
+      path: '/consent'
+      fullPath: '/console/consent'
+      preLoaderRoute: typeof ConsoleConsentRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
+    '/console/debt': {
+      id: '/console/debt'
+      path: '/debt'
+      fullPath: '/console/debt'
+      preLoaderRoute: typeof ConsoleDebtRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
+    '/console/leads': {
+      id: '/console/leads'
+      path: '/leads'
+      fullPath: '/console/leads'
+      preLoaderRoute: typeof ConsoleLeadsRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
+    '/console/sessions': {
+      id: '/console/sessions'
+      path: '/sessions'
+      fullPath: '/console/sessions'
+      preLoaderRoute: typeof ConsoleSessionsRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
+    '/console/usage': {
+      id: '/console/usage'
+      path: '/usage'
+      fullPath: '/console/usage'
+      preLoaderRoute: typeof ConsoleUsageRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
+    '/portal/': {
+      id: '/portal/'
+      path: '/'
+      fullPath: '/portal/'
+      preLoaderRoute: typeof PortalIndexRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/agency': {
+      id: '/portal/agency'
+      path: '/agency'
+      fullPath: '/portal/agency'
+      preLoaderRoute: typeof PortalAgencyRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/file': {
+      id: '/portal/file'
+      path: '/file'
+      fullPath: '/portal/file'
+      preLoaderRoute: typeof PortalFileRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/help': {
+      id: '/portal/help'
+      path: '/help'
+      fullPath: '/portal/help'
+      preLoaderRoute: typeof PortalHelpRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/share': {
+      id: '/portal/share'
+      path: '/share'
+      fullPath: '/portal/share'
+      preLoaderRoute: typeof PortalShareRouteImport
+      parentRoute: typeof PortalRoute
     }
     '/api/auth/$': {
       id: '/api/auth/$'
@@ -295,19 +754,84 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AbRouteChildren {
+  AbPrivacyRoute: typeof AbPrivacyRoute
+  AbTermsRoute: typeof AbTermsRoute
+  AbIndexRoute: typeof AbIndexRoute
+}
+
+const AbRouteChildren: AbRouteChildren = {
+  AbPrivacyRoute: AbPrivacyRoute,
+  AbTermsRoute: AbTermsRoute,
+  AbIndexRoute: AbIndexRoute,
+}
+
+const AbRouteWithChildren = AbRoute._addFileChildren(AbRouteChildren)
+
+interface ConsoleRouteChildren {
+  ConsoleAuditRoute: typeof ConsoleAuditRoute
+  ConsoleConsentRoute: typeof ConsoleConsentRoute
+  ConsoleDebtRoute: typeof ConsoleDebtRoute
+  ConsoleLeadsRoute: typeof ConsoleLeadsRoute
+  ConsoleSessionsRoute: typeof ConsoleSessionsRoute
+  ConsoleUsageRoute: typeof ConsoleUsageRoute
+  ConsoleIndexRoute: typeof ConsoleIndexRoute
+}
+
+const ConsoleRouteChildren: ConsoleRouteChildren = {
+  ConsoleAuditRoute: ConsoleAuditRoute,
+  ConsoleConsentRoute: ConsoleConsentRoute,
+  ConsoleDebtRoute: ConsoleDebtRoute,
+  ConsoleLeadsRoute: ConsoleLeadsRoute,
+  ConsoleSessionsRoute: ConsoleSessionsRoute,
+  ConsoleUsageRoute: ConsoleUsageRoute,
+  ConsoleIndexRoute: ConsoleIndexRoute,
+}
+
+const ConsoleRouteWithChildren =
+  ConsoleRoute._addFileChildren(ConsoleRouteChildren)
+
+interface PortalRouteChildren {
+  PortalAgencyRoute: typeof PortalAgencyRoute
+  PortalFileRoute: typeof PortalFileRoute
+  PortalHelpRoute: typeof PortalHelpRoute
+  PortalShareRoute: typeof PortalShareRoute
+  PortalIndexRoute: typeof PortalIndexRoute
+}
+
+const PortalRouteChildren: PortalRouteChildren = {
+  PortalAgencyRoute: PortalAgencyRoute,
+  PortalFileRoute: PortalFileRoute,
+  PortalHelpRoute: PortalHelpRoute,
+  PortalShareRoute: PortalShareRoute,
+  PortalIndexRoute: PortalIndexRoute,
+}
+
+const PortalRouteWithChildren =
+  PortalRoute._addFileChildren(PortalRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AbRoute: AbRouteWithChildren,
+  AccessibilityRoute: AccessibilityRoute,
+  AiDisclosureRoute: AiDisclosureRoute,
   BridgetRoute: BridgetRoute,
   CompareRoute: CompareRoute,
+  ConsoleRoute: ConsoleRouteWithChildren,
   ContactRoute: ContactRoute,
+  GlbaRoute: GlbaRoute,
+  HipaaRoute: HipaaRoute,
   LeadRoute: LeadRoute,
+  LeavingRoute: LeavingRoute,
   LoginRoute: LoginRoute,
   MedicareBasicsRoute: MedicareBasicsRoute,
   NeedsAnalysisRoute: NeedsAnalysisRoute,
-  PortalRoute: PortalRoute,
+  PortalRoute: PortalRouteWithChildren,
   PrivacyRoute: PrivacyRoute,
   ScreenerRoute: ScreenerRoute,
+  SecurityRoute: SecurityRoute,
   TeamRoute: TeamRoute,
+  TermsRoute: TermsRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
 }
 export const routeTree = rootRouteImport

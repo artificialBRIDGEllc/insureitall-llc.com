@@ -67,19 +67,23 @@ export function PortalFile() {
         autoComplete="postal-code"
       />
       <AreaField
-        label="Doctors you want to keep"
+        label="Doctors you want to keep (optional)"
         name="doctors"
         rows={2}
         value={doctors}
         onChange={(e) => setDoctors(e.target.value)}
       />
       <AreaField
-        label="Medications"
+        label="Medications (optional)"
         name="medications"
         rows={2}
         value={medications}
         onChange={(e) => setMedications(e.target.value)}
       />
+      <p className="text-xs text-muted">
+        Names only, if you want them on file with INSUREitALL. Never a Medicare
+        number or Social Security number.
+      </p>
       <SelectField
         label="Monthly budget comfort"
         name="budget"

@@ -12,10 +12,21 @@ import { CallLink } from "@/components/call-link";
 import { SiteShell } from "@/components/site-shell";
 import { TpmoDisclaimer } from "@/components/tpmo-disclaimer";
 import { Button } from "@/components/ui/button";
-import { TPMO_DISCLAIMER } from "@/lib/compliance";
+import { JsonLd } from "@/components/json-ld";
+import { BRIDGET_AVATAR } from "@/lib/bridget-assets";
+import { HOME_FAQS, faqJsonLd, pageHead } from "@/lib/seo";
 import { HOURS, PHONE_DISPLAY, TTY } from "@/lib/utils";
 
-export const Route = createFileRoute("/")({ component: Home });
+export const Route = createFileRoute("/")({
+  component: Home,
+  head: () =>
+    pageHead({
+      title: "Medicare guidance from licensed agents",
+      description:
+        "Licensed INSUREitALL agents help you understand Medicare Advantage, Supplement, and Part D. No cost, no pressure. Call +1 888-459-4842.",
+      path: "/",
+    }),
+});
 
 const plans = [
   {
@@ -35,34 +46,14 @@ const plans = [
   },
 ];
 
-const faqs = [
-  {
-    q: "Does it cost anything to talk to an agent?",
-    a: "No. There is no cost to speak with a licensed INSUREitALL agent. Our compensation comes from carriers when you enroll — never from you.",
-  },
-  {
-    q: "Will I be pressured to enroll?",
-    a: "No. We start by listening. Agents do not work from sales scripts or quotas that push one plan. You enroll only when you are ready.",
-  },
-  {
-    q: "Which carriers and plans do you offer?",
-    a: `We compare multiple carriers. ${TPMO_DISCLAIMER}`,
-  },
-  {
-    q: "What happens after I enroll?",
-    a: "A retention team stays with you for claims questions, benefit changes, and annual reviews. You are not handed off to a call center void.",
-  },
-  {
-    q: "What should I have ready when I call?",
-    a: "Your doctors, current medications, and a sense of your budget. If you have a Medicare number, keep it nearby — we will never rush you.",
-  },
-];
+const faqs = HOME_FAQS;
 
 function Home() {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
 
   return (
     <SiteShell>
+      <JsonLd data={faqJsonLd(HOME_FAQS)} />
       <section className="hero-glow relative overflow-hidden bg-navy text-elevated">
         <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-4 py-12 sm:px-6 lg:grid-cols-2 lg:py-20">
           <div>
@@ -138,31 +129,30 @@ function Home() {
         <div className="grid items-center gap-10 lg:grid-cols-2">
           <div>
             <p className="text-xs font-semibold tracking-[0.16em] text-blue uppercase">
-              No-cost, no-obligation
+              Educational · Not a quote
             </p>
             <h2 className="mt-3 font-display text-3xl text-navy sm:text-4xl">
-              See what you might be able to <em className="italic text-blue">get.</em>
+              Audit the type. Then talk to a <em className="italic text-blue">human.</em>
             </h2>
             <p className="mt-4 max-w-xl text-ink">
-              A short set of questions about your household and income — not your
-              health — checked against public program rules for food assistance, help
-              with your Medicare premium, and Extra Help with prescription costs.
-              Nothing is saved, and we never ask for your name to see results.
+              The Plan Choice Audit is a trade-off ledger for Advantage, Original
+              Medicare, and Supplement — gained, sacrificed, watch. Not every plan
+              in your zip. A licensed agent compares what is actually offered.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
               <Button asChild variant="blue">
-                <Link to="/screener">Start the Benefits Screener</Link>
+                <Link to="/compare">Run the Plan Choice Audit</Link>
               </Button>
               <Button asChild variant="outline">
-                <Link to="/compare">Compare plan types</Link>
+                <Link to="/medicare-basics">Medicare basics</Link>
               </Button>
             </div>
           </div>
           <div className="rounded-3xl bg-soft p-8">
-            <p className="font-display text-xl text-navy">Takes about two minutes.</p>
-            <p className="mt-2 text-ink">No personal information required.</p>
+            <p className="font-display text-xl text-navy">Takes a few minutes.</p>
+            <p className="mt-2 text-ink">No Medicare number. No enrollment.</p>
             <ul className="mt-6 space-y-3 text-sm text-ink">
-              {["Household size", "Income range", "Public program hints"].map((t) => (
+              {["What you have now", "Doctors, drugs, travel", "Gained / sacrificed / watch"].map((t) => (
                 <li key={t} className="flex items-center gap-2">
                   <Check className="size-4 text-blue" />
                   {t}
@@ -292,25 +282,26 @@ function Home() {
         <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-2">
           <div>
             <p className="text-xs font-semibold tracking-[0.16em] text-mist uppercase">
-              Consumer portal · No cost
+              fileBRIDGE · artificialBRIDGE
             </p>
             <h2 className="mt-3 font-display text-3xl sm:text-4xl">
               Continuity when the <em className="italic">relationship changes.</em>
             </h2>
             <p className="mt-4 leading-relaxed text-elevated/80">
-              Open to any consumer — not agents, not agencies. No-cost to sign up
-              or use. Your coverage file stays with you. INSUREitALL team
-              members work inbound requests in a separate, scoped ops workspace.
+              A beneficiary app owned and operated by artificialBRIDGE LLC — not by
+              INSUREitALL. You may grant this agency access, field by field, and
+              revoke it anytime. Lives at filebridge.theartificialbridge.com
             </p>
             <p className="welcome-home">Welcome home.</p>
           </div>
           <div className="flex flex-col items-start gap-4 rounded-3xl bg-elevated/8 p-8">
             <p className="text-sm text-elevated/80">
-              No invitation required. Create an account and start your file
-              today.
+              Express consent. Scoped fields. Not an enrollment.
             </p>
             <Button asChild size="lg" variant="soft">
-              <Link to="/portal">Create a no-cost account</Link>
+              <Link to="/leaving" search={{ to: "filebridge" }}>
+                Open fileBRIDGE
+              </Link>
             </Button>
           </div>
         </div>
@@ -320,8 +311,10 @@ function Home() {
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="card-elevated flex flex-col items-center gap-6 rounded-3xl bg-elevated p-8 text-center">
             <img
-              src="/brand/bridget/avatar-bust.png"
+              src={BRIDGET_AVATAR.bust}
               alt="BRIDGEt"
+              width={128}
+              height={128}
               className="size-32 rounded-full bg-navy object-cover object-top shadow-elevation-2"
             />
             <div className="max-w-xl">

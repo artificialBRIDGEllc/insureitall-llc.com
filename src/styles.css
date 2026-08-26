@@ -771,3 +771,41 @@
     transform: none !important;
   }
 }
+
+/* artificialBRIDGE portal — playbook: theartificialbridge.com/brand
+   Midnight + Manrope. fileBRIDGE lives on filebridge.theartificialbridge.com */
+.ab-portal {
+  --ab-bg: #070c1a;
+  --ab-surface: #101a31;
+  --ab-ink: #eaf0fb;
+  --ab-ink-2: #afbed8;
+  --ab-ink-3: #8494b4;
+  --ab-accent: #4f8bf7;
+  --ab-border: #1f2c4a;
+  min-height: 100dvh;
+  background: var(--ab-bg);
+  color: var(--ab-ink);
+  font-family: Manrope, ui-sans-serif, system-ui, sans-serif;
+}
+.ab-portal .console-app { background: var(--ab-bg); }
+.ab-portal .console-sidebar {
+  background: #0a1020;
+  color: var(--ab-ink);
+  border-right: 1px solid var(--ab-border);
+}
+.ab-portal .console-nav-item { color: var(--ab-ink-2); }
+.ab-portal .console-nav-item.is-on,
+.ab-portal .console-nav-item:hover { color: var(--ab-ink); background: #16223d; }
+.ab-portal .console-card {
+  background: var(--ab-surface);
+  border: 1px solid var(--ab-border);
+  color: var(--ab-ink-2);
+}
+.ab-portal h1, .ab-portal h2, .ab-portal h3 { color: var(--ab-ink); font-weight: 800; letter-spacing: -0.03em; }
+.ab-lockup { display: inline-flex; align-items: center; gap: 0.7rem; color: var(--ab-ink); }
+.ab-word { display: flex; flex-direction: column; line-height: 1; }
+.ab-lo { font-weight: 300; font-size: 0.78rem; letter-spacing: -0.02em; }
+.ab-hi { font-weight: 800; font-size: 0.95rem; letter-spacing: -0.03em; }
+.ab-tag { margin-top: 0.25rem; font-size: 0.58rem; letter-spacing: 0.28em; text-transform: lowercase; color: var(--ab-ink-3); }
+.ab-product { font-weight: 800; letter-spacing: -0.03em; }
+.ab-product .lo { font-weight: 300; }

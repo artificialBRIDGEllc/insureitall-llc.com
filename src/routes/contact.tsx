@@ -4,9 +4,19 @@ import { CallLink } from "@/components/call-link";
 import { PageHero } from "@/components/page-hero";
 import { SiteShell } from "@/components/site-shell";
 import { Button } from "@/components/ui/button";
+import { pageHead } from "@/lib/seo";
 import { HQ_CITY, HQ_LINE1, HQ_LINE2, HOURS, PHONE_DISPLAY, TTY } from "@/lib/utils";
 
-export const Route = createFileRoute("/contact")({ component: ContactPage });
+export const Route = createFileRoute("/contact")({
+  component: ContactPage,
+  head: () =>
+    pageHead({
+      title: "Contact a licensed Medicare agent",
+      description:
+        "Call INSUREitALL at +1 888-459-4842. Licensed agents, Monday–Friday 9am–6pm ET, TTY 711. Tampa office. No scripts, no pressure.",
+      path: "/contact",
+    }),
+});
 
 function ContactPage() {
   return (

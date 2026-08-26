@@ -1,0 +1,105 @@
+{
+  "updated": "2026-08-25",
+  "items": [
+    {
+      "id": "cutout-rollback",
+      "title": "Die-cut / behind-the-page BRIDGEt",
+      "severity": "p0",
+      "status": "resolved",
+      "area": "brand",
+      "why": "Layout was rolled back on purpose. Restoring it breaks the elite page.",
+      "next": "Do not reintroduce bridget-cutout, PageDieCut, or diecut CSS.",
+      "clearsWhen": { "missingFile": "src/components/bridget-cutout.tsx" }
+    },
+    {
+      "id": "door-transition",
+      "title": "Door page transition",
+      "severity": "p0",
+      "status": "resolved",
+      "area": "brand",
+      "why": "Ident splash is the only allowed first-load motion.",
+      "next": "Do not restore a door or route-change overlay.",
+      "clearsWhen": { "missingPattern": "DoorTransition" }
+    },
+    {
+      "id": "legal-pages",
+      "title": "Required legal pages",
+      "severity": "p0",
+      "status": "resolved",
+      "area": "compliance",
+      "why": "Privacy, terms, AI use, accessibility, HIPAA, GLBA, and the security program must stay public.",
+      "next": "Keep footer links and pages in sync.",
+      "clearsWhen": {
+        "filesExist": [
+          "src/routes/privacy.tsx",
+          "src/routes/terms.tsx",
+          "src/routes/ai-disclosure.tsx",
+          "src/routes/accessibility.tsx",
+          "src/routes/hipaa.tsx",
+          "src/routes/glba.tsx",
+          "src/routes/security.tsx"
+        ]
+      }
+    },
+    {
+      "id": "avatar-canon",
+      "title": "BRIDGEt face must stay locked",
+      "severity": "p1",
+      "status": "watch",
+      "area": "brand",
+      "why": "A second statue or bust splits the brand. Paths live in BRIDGET_AVATAR.",
+      "next": "Import BRIDGET_AVATAR. Do not hardcode /brand/bridget/avatar-* in JSX.",
+      "clearsWhen": { "noHardcodedAvatars": true }
+    },
+    {
+      "id": "widget-voice",
+      "title": "Preview widget is still a facade",
+      "severity": "p1",
+      "status": "open",
+      "area": "voice",
+      "why": "This preview tree greets and hands off. Signed ElevenLabs sessions live on production, not here.",
+      "next": "Do not fake a live voice session in the preview. Production uses /api/bridget.",
+      "clearsWhen": { "fileExists": "src/lib/useBridgetAgent.ts" }
+    },
+    {
+      "id": "twilio-transfer",
+      "title": "Live transfer env not on this preview",
+      "severity": "p1",
+      "status": "open",
+      "area": "ops",
+      "why": "Production /api/twilio/token returns 503 until Twilio vars are set on insureitall-website-pcgn.",
+      "next": "Set Production Twilio env on the Vercel project that serves insureitall-llc.com, then redeploy.",
+      "clearsWhen": { "fileExists": "src/routes/api/twilio/token.ts" }
+    },
+    {
+      "id": "console-usage-mock",
+      "title": "Console usage metrics are illustrative",
+      "severity": "p2",
+      "status": "open",
+      "area": "ops",
+      "why": "Inbound leads are live. Session/usage charts are sample until ElevenLabs analytics is wired.",
+      "next": "Keep the MockFlag. Do not present sample KPIs as carrier-audit fact.",
+      "clearsWhen": null
+    },
+    {
+      "id": "dual-tree",
+      "title": "Next.js artifacts tree is not the preview",
+      "severity": "p2",
+      "status": "watch",
+      "area": "infra",
+      "why": "Editing artifacts/insureitall-website does not change this preview.",
+      "next": "Change root src/ and public/ only.",
+      "clearsWhen": null
+    },
+    {
+      "id": "brand-explorations",
+      "title": "Unused BRIDGEt exploration stills",
+      "severity": "p3",
+      "status": "watch",
+      "area": "brand",
+      "why": "Clay experiments and extra statues stay on disk. The locked face is avatar-clean / avatar-bust.",
+      "next": "Do not swap the locked assets. Archive extras only with an explicit ask.",
+      "clearsWhen": null
+    }
+  ]
+}
