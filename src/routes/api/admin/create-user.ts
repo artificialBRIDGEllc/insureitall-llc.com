@@ -122,12 +122,24 @@ async function sendPasswordEmail(
   name: string,
   password: string
 ): Promise<void> {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    console.warn("RESEND_API_KEY not configured - password email not sent");
+    return;
+  }
+
   try {
-    const apiKey = process.env.RESEND_API_KEY;
-    if (!apiKey) {
-      console.warn("RESEND_API_KEY not configured - password email not sent");
-      return;
-    }
+    const consoleUrl =
+      process.env.VERCEL_URL?.startsWith("http")
+        ? process.env.VERCEL_URL
+        : `https://${process.env.VERCEL_URL || "insureitall-llc.com"}`;
+
+    const payload = {
+      from: "INSUREitALL Team <noreply@insureitall-llc.com>",
+      to: email,
+      subject: "Your INSUREitALL Console Account",
+      html: buildPasswordEmail(name, password, consoleUrl),
+    };
 
     const response = await fetch("https://api.resend.com/emails", {
       method: "POST",
@@ -135,26 +147,44 @@ async function sendPasswordEmail(
         Authorization: `Bearer ${apiKey}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        from: "INSUREitALL Team <noreply@insureitall-llc.com>",
-        to: email,
-        subject: "Your INSUREitALL Console Account",
-        html: `
-          <p>Hi ${name},</p>
-          <p>Your INSUREitALL team console account has been created.</p>
-          <p><strong>Temporary Password:</strong></p>
-          <code style="font-family: monospace; background: #f5f5f5; padding: 10px; display: block; word-break: break-all;">${password}</code>
-          <p>Please log in at <a href="${process.env.VERCEL_URL || "https://insureitall-llc.com"}/console">insureitall-llc.com/console</a> and change your password on first login.</p>
-          <p>Best regards,<br>INSUREitALL Team</p>
-        `,
-      }),
+      body: JSON.stringify(payload),
     });
 
     if (!response.ok) {
-      throw new Error(`Resend API error: ${response.statusText}`);
+      throw new Error(
+        `Email send failed: ${response.status} ${response.statusText}`
+      );
     }
   } catch (error) {
-    console.error("Error sending password email:", error);
-    throw error;
+    console.error("Password email send failed:", error);
   }
+}
+
+function buildPasswordEmail(
+  name: string,
+  password: string,
+  consoleUrl: string
+): string {
+  const encodedPassword = password.replace(/[&<>"]/g, (char) => {
+    const map: Record<string, string> = {
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+    };
+    return map[char] || char;
+  });
+
+  return `<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"></head>
+<body>
+<p>Hi ${name},</p>
+<p>Your INSUREitALL team console account has been created.</p>
+<p><strong>Temporary Password:</strong></p>
+<code style="font-family: monospace; background: #f5f5f5; padding: 10px; display: block; word-break: break-all;">${encodedPassword}</code>
+<p>Please log in at <a href="${consoleUrl}/console">Your Console</a> and change your password on first login.</p>
+<p>Best regards,<br>INSUREitALL Team</p>
+</body>
+</html>`;
 }
