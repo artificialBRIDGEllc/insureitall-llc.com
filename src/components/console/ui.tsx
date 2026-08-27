@@ -26,11 +26,9 @@ export function KpiCard({
 }) {
   return (
     <article className="console-card console-kpi p-5">
-      <p className="text-[0.68rem] font-semibold tracking-[0.14em] text-muted uppercase">{label}</p>
-      <p className="mt-3 font-sans text-3xl font-semibold tracking-tight text-navy tabular-nums sm:text-[2rem]">
-        {value}
-      </p>
-      <p className={cn("mt-2 text-xs", up ? "text-ok" : "text-muted")}>
+      <p className="text-[0.65rem] font-semibold tracking-[0.16em] text-muted uppercase">{label}</p>
+      <p className="console-kpi-value mt-3 text-[2.1rem] leading-none sm:text-[2.35rem]">{value}</p>
+      <p className={cn("mt-2.5 text-xs", up ? "font-medium text-ok" : "text-muted")}>
         {up ? `▲ ${hint}` : hint.startsWith("—") ? hint : `— ${hint}`}
       </p>
     </article>
@@ -98,8 +96,10 @@ export function FilterPill({
       type="button"
       onClick={onClick}
       className={cn(
-        "inline-flex min-h-10 items-center rounded-full px-3.5 text-sm font-medium transition-colors",
-        active ? "bg-elevated text-navy shadow-card" : "bg-surface text-muted hover:bg-soft hover:text-navy",
+        "inline-flex min-h-10 items-center rounded-full px-4 text-sm font-medium transition-colors",
+        active
+          ? "bg-navy text-elevated shadow-elevation-2 ring-1 ring-gold/40"
+          : "bg-elevated text-muted ring-1 ring-border hover:bg-soft hover:text-navy",
       )}
     >
       {children}
@@ -109,8 +109,8 @@ export function FilterPill({
 
 export function MockFlag() {
   return (
-    <p className="pointer-events-none fixed right-4 bottom-4 z-30 rounded-full bg-navy px-3 py-1.5 text-[0.7rem] font-medium text-elevated shadow-lift">
-      <span className="mr-1.5 inline-block size-1.5 rounded-full bg-blue" />
+    <p className="pointer-events-none fixed right-4 bottom-4 z-30 rounded-full bg-navy px-3.5 py-2 text-[0.7rem] font-medium text-elevated shadow-lift ring-1 ring-gold/30">
+      <span className="mr-2 inline-block size-1.5 rounded-full bg-gold" />
       Usage is illustrative — inbound leads are live
     </p>
   );
