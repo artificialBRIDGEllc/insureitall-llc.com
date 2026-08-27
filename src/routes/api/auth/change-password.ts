@@ -52,16 +52,6 @@ export const changePassword = createServerFn({
   });
 
 async function hashPasswordBcrypt(password: string): Promise<string> {
-  try {
-    const bcrypt = await import("bcrypt");
-    return await bcrypt.hash(password, 10);
-  } catch {
-    // Fallback to simple hash if bcrypt not available
-    const crypto = await import("crypto");
-    // This is NOT secure for production - bcrypt must be available
-    console.warn("⚠️ Using fallback password hash - bcrypt required for production");
-    const hash = crypto.default.createHash("sha256").update(password).digest("hex");
-    // Pad to bcrypt length for compatibility
-    return "$2b$10$" + hash.substring(0, 53);
-  }
+  const bcrypt = await import("bcrypt");
+  return await bcrypt.hash(password, 10);
 }

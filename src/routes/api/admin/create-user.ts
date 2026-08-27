@@ -22,7 +22,8 @@ export const createUserAccount = createServerFn({ method: "POST" })
     }
 
     // Validate email format
-    if (!email.includes("@")) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
       throw new Error("Invalid email address.");
     }
 
@@ -108,21 +109,6 @@ function generateTempPassword(): string {
 }
 
 async function hashPassword(password: string): Promise<string> {
-  // Try to use bcrypt if available, otherwise use fallback
-  try {
-    // Dynamic import to avoid compile errors if bcrypt not installed
-    const bcryptModule = await import("bcrypt").catch(() => null);
-    if (bcryptModule) {
-      return await bcryptModule.hash(password, 10);
-    }
-  } catch {
-    // continue to fallback
-  }
-
-  // Fallback hash - NOTE: This is NOT secure for production
-  // Install bcrypt in package.json for proper password hashing
-  const crypto = await import("crypto");
-  console.warn("⚠️ Using sha256 fallback - install bcrypt for production security");
-  const hash = crypto.default.createHash("sha256").update(password).digest("hex");
-  return "$2b$10$" + hash.substring(0, 53);
+  const bcrypt = await import("bcrypt");
+  return await bcrypt.hash(password, 10);
 }
