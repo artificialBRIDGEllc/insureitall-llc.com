@@ -2,7 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { authMiddleware } from "@/lib/auth/middleware";
 import { getUserRole, setUserRole, type UserRole } from "@/lib/auth/roles";
 import { auth } from "@/lib/auth/server";
-import { randomUUID } from "crypto";
+import { randomUUID, randomInt } from "crypto";
 
 export const createUserAccount = createServerFn({ method: "POST" })
   .middleware([authMiddleware])
@@ -83,7 +83,6 @@ export const createUserAccount = createServerFn({ method: "POST" })
   });
 
 function generateTempPassword(): string {
-  // Generate a random password with uppercase, lowercase, numbers, symbols
   const upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   const lower = "abcdefghijklmnopqrstuvwxyz";
   const nums = "0123456789";
@@ -91,16 +90,21 @@ function generateTempPassword(): string {
   const all = upper + lower + nums + symbols;
 
   let password = "";
-  password += upper[Math.floor(Math.random() * upper.length)];
-  password += lower[Math.floor(Math.random() * lower.length)];
-  password += nums[Math.floor(Math.random() * nums.length)];
-  password += symbols[Math.floor(Math.random() * symbols.length)];
+  password += upper[randomInt(upper.length)];
+  password += lower[randomInt(lower.length)];
+  password += nums[randomInt(nums.length)];
+  password += symbols[randomInt(symbols.length)];
 
   for (let i = 0; i < 8; i++) {
-    password += all[Math.floor(Math.random() * all.length)];
+    password += all[randomInt(all.length)];
   }
 
-  return password.split("").sort(() => Math.random() - 0.5).join("");
+  const chars = password.split("");
+  for (let i = chars.length - 1; i > 0; i--) {
+    const j = randomInt(i + 1);
+    [chars[i], chars[j]] = [chars[j], chars[i]];
+  }
+  return chars.join("");
 }
 
 async function hashPassword(password: string): Promise<string> {
