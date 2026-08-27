@@ -30,8 +30,9 @@ Payment: invoice IIA-2026-0825, **Net 15**, 1.5%/month late fee as in the ICA.
 - Legal pages as **educational copy** (privacy, HIPAA proof, GLBA, security, AI, accessibility, terms)
 - Ident with skip / optional sound
 - GitHub / Vercel path notes
+- **One-time SEO optimization** — on-page metadata (titles, descriptions), sitemap and robots.txt, basic structured data, and a page-speed baseline pass, applied once at delivery
 
-**On-site this phase, licensed not sold** (see Design Partner License): BRIDGEt, Plan Choice Audit, client portal, staff console. Fee for those is $0 **through 24 August 2027**. They are not assigned. After that End Date, License §6 (Wind-Down) applies — those systems come off the site.
+**On-site this phase, licensed not sold** (see Design Partner License): BRIDGEt, Plan Choice Audit, client portal, staff console. Fee for those is $0 **through 31 March 2027**. They are not assigned. After that End Date, License §6 (Wind-Down) applies — those systems come off the site.
 
 ## 4. Out of scope / not sold
 
@@ -41,6 +42,8 @@ Payment: invoice IIA-2026-0825, **Net 15**, 1.5%/month late fee as in the ICA.
 - Live ElevenLabs voice, MARx / CMS plan-finder quotes, LLM training
 - Patent indemnity, uncapped liability, additional-insured status
 - Ongoing retainer, ads, or content after acceptance
+- **Ongoing SEO** — continued optimization for organic growth and search ranking after the one-time pass in §3 — separate contract and fee
+- **Recurring operating costs** — hosting, domain registration/renewal, database, email/SMS delivery, and similar third-party service fees are not included in the $5,000 fee; Client pays those directly, unless Client and Contractor separately agree in writing to have Contractor manage them for a separately negotiated fee (see also Design Partner License §5C)
 - More than **two** revision rounds after the 7-day acceptance window (then change-order rates)
 
 ## 5. Ownership

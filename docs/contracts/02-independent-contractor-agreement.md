@@ -31,7 +31,7 @@ Each party pays its own taxes. The $5,000 is exclusive of sales or similar tax i
 
 - Client owns trademarks, logos, and copy **Client supplies** (the INSUREitALL lockups Client provided).
 - Contractor owns Contractor’s pre-existing and independently developed tools, frameworks, characters (including BRIDGEt), engines (including Plan Choice Audit and beneFIT), prompts, models, methods, clay, widget, portal/console product, and all improvements.
-- Client receives **only** the licenses in the SOW and the Design Partner License **through that License’s End Date (24 August 2027 unless ended earlier)**. **No assignment** of Contractor IP unless a writing signed by Contractor says “assignment” and names the asset. After the License End Date, Client’s remaining rights are only those in License §6 (Wind-Down).
+- Client receives **only** the licenses in the SOW and the Design Partner License **through that License’s End Date (31 March 2027 unless ended earlier)**. **No assignment** of Contractor IP unless a writing signed by Contractor says “assignment” and names the asset. After the License End Date, Client’s remaining rights are only those in License §6 (Wind-Down).
 - Work product of the website **implementation labor** is licensed to Client to run on the agreed domains under the SOW and License. It is not a work made for hire as to Contractor IP.
 
 ## 6. Client materials

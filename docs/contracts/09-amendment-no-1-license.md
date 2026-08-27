@@ -1,7 +1,7 @@
 # Amendment No. 1 — Design Partner License
 
 **Parties:** artificialBRIDGE LLC (Licensor) · INSUREitALL LLC (Licensee)
-**Amends:** Design Partner License dated 25 August 2026
+**Amends:** Design Partner License (Effective Date: the date all parties’ signatures are complete; End Date 31 March 2027)
 **Status:** DRAFT — not for signature until Items A and G are resolved. Not legal advice.
 
 Capitalized terms have the meanings given in the License. Where this Amendment conflicts with the License, this Amendment controls.
@@ -14,7 +14,7 @@ Insert after the "does not auto-renew" line:
 
 > **Ratification of prior deployment.** The parties acknowledge that Licensed Systems were first deployed on Licensee's domain on ______________ [CONFIRM ACTUAL GO-LIVE DATE], and that all use from that date forward was and is under this License, which the parties ratify as of that date.
 
-*Why:* the License is dated 25 Aug 2026 and signed later. If BRIDGEt went live earlier, uncontrolled third-party use sits outside the License and contradicts the first-use date on any USPTO filing.
+*Why:* the License's Effective Date is now the date of last signature. If BRIDGEt went live on Licensee's domain before that signature date, uncontrolled third-party use sits outside the License and contradicts the first-use date on any USPTO filing.
 
 ## B. Payment condition — add to §2
 

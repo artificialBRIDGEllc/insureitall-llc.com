@@ -9,7 +9,7 @@ Not legal advice. Have counsel review before you send.
 | [01-cover-email.md](01-cover-email.md) | Send-with note; open items to confirm |
 | [02-independent-contractor-agreement.md](02-independent-contractor-agreement.md) | 1099, IP, $5k cap including indemnity, defense control, BAA pointer, **Phase R lock** |
 | [03-sow-website-update.md](03-sow-website-update.md) | **$5,000** website only · Phase R gates block acceptance |
-| [04-design-partner-license.md](04-design-partner-license.md) | Through **24 Aug 2027**, deidentified training loop |
+| [04-design-partner-license.md](04-design-partner-license.md) | Through **31 Mar 2027**, deidentified training loop |
 | [08-baa-exhibit.md](08-baa-exhibit.md) · [08-baa-exhibit.html](08-baa-exhibit.html) | **Sign electronically.** Host Limited PHI; deidentify to train. Not identifiable training. No extra fee. ESIGN + Wyoming UETA. |
 | [09-amendment-no-1-license.md](09-amendment-no-1-license.md) | Trademark quality control (§2A), payment condition, consideration decoupling, TPMO covenants, removal certification |
 | [10-amendment-no-1-ica-sow.md](10-amendment-no-1-ica-sow.md) | Notice address, insurance timing, venue, repo of record, packet handling |

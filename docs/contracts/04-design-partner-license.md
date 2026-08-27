@@ -2,14 +2,14 @@
 
 **Licensor:** artificialBRIDGE LLC  
 **Licensee:** INSUREitALL LLC  
-**Effective date:** 25 August 2026  
-**End date:** **24 August 2027** (11:59 p.m. America/Chicago)  
-**Wind-down end:** **23 September 2027** (30 days after the End Date)  
+**Effective date:** the date all parties' signatures on this License are complete (the “Effective Date”)  
+**End date:** **31 March 2027** (11:59 p.m. Eastern Time / EST, America/New_York) (the “End Date”)  
+**Wind-down end:** **30 April 2027** (30 days after the End Date)  
 **Related:** Independent Contractor Agreement · SOW No. 1 · Invoice IIA-2026-0825  
 
 This is a **license**. It is **not a sale** and **not an assignment**. ICA indemnity and defense-control terms apply to claims about Licensed Systems.
 
-The Term is **one year**. It does **not** auto-renew.
+The Term runs from the Effective Date through the End Date. It does **not** auto-renew.
 
 ## 1. Licensed systems (this phase)
 
@@ -116,7 +116,7 @@ Licensee is responsible for its privacy notice and any consent needed to allow t
 
 ## 5. Term, end date, early end
 
-**Term:** 25 August 2026 through **24 August 2027** (the “End Date”).
+**Term:** the Effective Date (date all parties’ signatures on this License are complete) through **31 March 2027** (11:59 p.m. Eastern Time) (the “End Date”).
 
 The license **ends on the End Date** with no automatic renewal. Continued use after the End Date is not a renewal; it is unlicensed.
 
@@ -125,6 +125,18 @@ The license **ends on the End Date** with no automatic renewal. Continued use af
 **Non-renewal.** Either party may say in writing, at least 30 days before the End Date, that it will not discuss a successor license. Silence is not a renewal.
 
 **Successor license.** A new writing, with a new end date and a **new fee** (not $0 unless Licensor agrees in that writing). Phase 2 products (including beneFIT) are never added by silence.
+
+## 5A. Monthly check-in meeting
+
+During the Term, Licensor and Licensee will hold a formal check-in meeting no less than **once per calendar month**, to review Licensed Systems performance, roadmap, open items, and any requested changes. Either party may set the agenda; the meeting may be held remotely (video or phone). A missed meeting is not by itself an Early End trigger, but repeated refusal to schedule is a factor under §5’s cure provisions.
+
+## 5B. Contractor-initiated changes; billing
+
+Licensor may, at its own discretion, make changes to the site at **no charge**. Except for a change that is (a) required by a regulatory or legal requirement, or (b) necessary to maintain the site’s **general functionality** (bug fixes, security patches, uptime, and similar maintenance), any other change — including new features, redesign, or scope beyond SOW No. 1 — is **billed separately from this Agreement**, under a mutually agreed change order and fee.
+
+## 5C. Recurring operating costs
+
+Recurring costs to **operate** the site (hosting, domain registration/renewal, database, email/SMS delivery, and similar third-party service fees) are **not included** in this License or in SOW No. 1. Licensee is responsible for those costs directly, unless Licensee and Licensor separately agree in writing to have Licensor manage them for a separately negotiated fee.
 
 ## 6. What happens after the End Date (Wind-Down)
 

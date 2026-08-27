@@ -3,7 +3,7 @@
 **Covered Entity (CE):** INSUREitALL LLC  
 **Business Associate (BA):** artificialBRIDGE LLC (Wyoming single-member LLC)  
 **Effective:** [DATE signed]  
-**Ends:** with the Design Partner License End Date (**24 August 2027**), then PHI return/destroy in §8  
+**Ends:** with the Design Partner License End Date (**31 March 2027**), then PHI return/destroy in §8  
 **Related:** ICA · SOW No. 1 · Design Partner License  
 
 Not legal advice. This exhibit is the HIPAA business associate contract (45 CFR § 164.504(e)). Sign it if CE wants BA to host, support, or deidentify Limited PHI from the site. **It does not let BA train models on identifiable PHI.**

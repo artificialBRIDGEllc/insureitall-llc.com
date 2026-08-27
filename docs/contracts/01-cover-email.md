@@ -8,7 +8,7 @@ Attached are the documents for the website update we quoted at **$5,000**:
 
 1. Independent contractor agreement (1099; $5,000 liability cap including indemnity; defense control)  
 2. Statement of work No. 1 — website update, **$5,000**, Net 15  
-3. Design-partner license — BRIDGEt, Plan Choice Audit, portal, and console stay with artificialBRIDGE. You run them on your domain **through 24 August 2027**. After that they come off (30-day wind-down). You do not own them. No auto-renew.  
+3. Design-partner license — BRIDGEt, Plan Choice Audit, portal, and console stay with artificialBRIDGE. You run them on your domain **through 31 March 2027**. After that they come off (30-day wind-down). You do not own them. No auto-renew.  
 4. Amendment No. 1 to the license (quality control, payment condition, TPMO covenants)  
 5. Amendment No. 1 to the ICA / SOW (notice, insurance timing, venue, repo)  
 6. Exhibit R — strict operating phase for regulatory disclaimers (TPMO, TCPA, non-affiliation). The build agent cannot skip or paraphrase.  
