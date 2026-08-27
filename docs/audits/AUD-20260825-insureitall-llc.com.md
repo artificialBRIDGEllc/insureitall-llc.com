@@ -61,3 +61,9 @@ Name / title: Ryan Butterfield, CEO
 ## Agent sign-off (RA)
 
 Filed `docs/audits/AUD-20260825-insureitall-llc.com.md`. Do not call live Phase R PASS until F-08–F-11 are 200 on www.
+
+## Addendum — 27 Aug 2026
+
+`/portal` was simplified to a static "beneficiaryCONNECT — coming soon" placeholder (see `CLAUDE.md`); the fileBRIDGE consumer app (file/agency/share/help, sign-in gate) was removed from it. With no outbound fileBRIDGE link from Licensee's domain, **F-08 (`/leaving` 404) is superseded, not fixed** — Exhibit R gate R9 is not applicable until `/portal` links to fileBRIDGE again, at which point a `/leaving` interstitial must be built and this finding re-opened.
+
+**F-09, F-10, F-11 (`/hipaa`, `/glba`, `/ab/privacy` 404 on www) are unchanged and still open as of this addendum.** This workspace's repo contains `hipaa.tsx`, `glba.tsx`, and `ab/privacy.tsx`; whether they are live on `www.insureitall-llc.com` depends on which Vercel deployment is promoted to production, which this addendum did not re-verify. **Confirm the production deployment matches this repo's current `main` before treating Phase R as PASS or signing SOW acceptance** — this is a pre-send action item, not a completed check.

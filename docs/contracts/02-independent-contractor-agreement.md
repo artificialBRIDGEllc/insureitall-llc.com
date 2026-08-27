@@ -84,7 +84,7 @@ The cap does not apply to a party’s **fraud or willful misconduct**. It **does
 
 ## 12. Insurance
 
-Contractor will maintain commercially reasonable insurance for a solo product studio. Client is not an additional insured unless a later writing says so. Client should keep its own E&O / cyber / agency coverage for sales and TCPA.
+Contractor will obtain and maintain commercially reasonable insurance appropriate to a solo product studio, including technology errors and omissions and cyber liability, within 30 days of the Effective Date. Client is not an additional insured unless a later writing says so. Client should keep its own E&O / cyber / agency coverage for sales and TCPA.
 
 ## 13. Term and termination
 
@@ -110,7 +110,7 @@ Neither party is liable for delay caused by events beyond reasonable control (ou
 
 ## 18. General
 
-**Governing law:** Wyoming, without conflict-of-law rules. **Venue:** state or federal courts sitting in Wyoming, unless both parties agree in writing to another forum.
+**Governing law:** Wyoming, without conflict-of-law rules. **Venue:** state or federal courts sitting in Texas, unless both parties agree in writing to another forum. Notwithstanding any agreement to arbitrate, either party may seek injunctive or other equitable relief for infringement or misuse of intellectual property or trademarks in any court of competent jurisdiction.
 
 Notices: email is enough if sent to the addresses on the invoice (or updated in writing) and not bounced.
 

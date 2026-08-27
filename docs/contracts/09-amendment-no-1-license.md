@@ -2,7 +2,7 @@
 
 **Parties:** artificialBRIDGE LLC (Licensor) · INSUREitALL LLC (Licensee)
 **Amends:** Design Partner License (Effective Date: the date all parties’ signatures are complete; End Date 31 March 2027)
-**Status:** DRAFT — not for signature until Items A and G are resolved. Not legal advice.
+**Status:** **MERGED into [04-design-partner-license.md](04-design-partner-license.md).** Items A–F, H, I, J, K are folded into the base License text; do not sign this file separately. Item G (HIPAA covered-entity status) remains an **open item**, carried forward as License §4.9's open-item note — resolve it before signature, in the base License, not here. Kept for the drafting record only. Not legal advice.
 
 Capitalized terms have the meanings given in the License. Where this Amendment conflicts with the License, this Amendment controls.
 

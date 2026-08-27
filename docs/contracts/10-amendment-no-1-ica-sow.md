@@ -2,7 +2,7 @@
 
 **Parties:** artificialBRIDGE LLC (Contractor) · INSUREitALL LLC (Client)
 **Amends:** Independent Contractor Agreement and Statement of Work No. 1, each dated 25 August 2026
-**Status:** DRAFT — Item A should be resolved before signature. Not legal advice.
+**Status:** **MERGED into [02-independent-contractor-agreement.md](02-independent-contractor-agreement.md) and [03-sow-website-update.md](03-sow-website-update.md).** Item A was already resolved in the base ICA's signature block. Items B (insurance — Option 2 applied), C (venue — moved to Texas), E (repo of record — corrected), and F (studio-rate framing — addressed via the License §4 consideration decoupling) are folded into the base documents; do not sign this file separately. Item D (mutual insurance) remains a next-round item, not this round. Kept for the drafting record only. Not legal advice.
 
 ---
 

@@ -8,6 +8,8 @@
 
 Not legal advice. This exhibit is the HIPAA business associate contract (45 CFR § 164.504(e)). Sign it if CE wants BA to host, support, or deidentify Limited PHI from the site. **It does not let BA train models on identifiable PHI.**
 
+**OPEN ITEM — confirm before signature (License §4.9).** The parties have not yet confirmed whether INSUREitALL is a HIPAA covered entity, a business associate/downstream entity of a carrier, or neither. This exhibit proceeds on the working assumption that a BAA is the right instrument; if that's wrong, the correct instrument is a flow-down business associate agreement or a data processing addendum instead. Do not sign this exhibit until that status is confirmed.
+
 ## 1. Limited PHI (the only PHI in scope)
 
 Optional **doctor names**, **medication names**, and **notes** a person types (a) on insureitall-llc.com needs-analysis / lead forms, or (b) in **fileBRIDGE** (filebridge.theartificialbridge.com) after they grant INSUREitALL access to those fields. fileBRIDGE is owned and operated by BA. BA’s public privacy policy is /ab/privacy.

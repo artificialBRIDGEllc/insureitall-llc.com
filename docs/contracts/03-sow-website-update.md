@@ -10,7 +10,7 @@
 
 ## 1. What Client asked for
 
-A phone-first update of the INSUREitALL public website (insureitall-llc.com / repo `copperlang2007/insureitall-website`): implement **Client’s supplied logos**, marketing pages, TPMO-safe copy, ident, legal pages, lead forms, and deploy notes.
+A phone-first update of the INSUREitALL public website (insureitall-llc.com / repo `artificialBRIDGEllc/insureitall-llc.com`, the repository of record for this deliverable): implement **Client’s supplied logos**, marketing pages, TPMO-safe copy, ident, legal pages, lead forms, and deploy notes.
 
 ## 2. Fee (the quote)
 
@@ -32,7 +32,7 @@ Payment: invoice IIA-2026-0825, **Net 15**, 1.5%/month late fee as in the ICA.
 - GitHub / Vercel path notes
 - **One-time SEO optimization** — on-page metadata (titles, descriptions), sitemap and robots.txt, basic structured data, and a page-speed baseline pass, applied once at delivery
 
-**On-site this phase, licensed not sold** (see Design Partner License): BRIDGEt, Plan Choice Audit, client portal, staff console. Fee for those is $0 **through 31 March 2027**. They are not assigned. After that End Date, License §6 (Wind-Down) applies — those systems come off the site.
+**On-site this phase, licensed not sold** (see Design Partner License): BRIDGEt, Plan Choice Audit, staff console, and the `/portal` beneficiary-portal integration point (currently a "coming soon" placeholder — see License §1). Fee for those is $0 **through 31 March 2027**. They are not assigned. After that End Date, License §6 (Wind-Down) applies — those systems come off the site.
 
 ## 4. Out of scope / not sold
 
