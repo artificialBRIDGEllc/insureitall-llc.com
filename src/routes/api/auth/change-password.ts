@@ -8,15 +8,8 @@ export const changePassword = createServerFn({
 })
   .middleware([authMiddleware])
   .handler(
-    async (input: {
-      data?: {
-        currentPassword?: string;
-        newPassword: string;
-      };
-      context: { userId: string };
-    }) => {
-      const { currentPassword, newPassword } = input.data ?? {};
-      const { context } = input;
+    async (input: any) => {
+      const { currentPassword, newPassword, context } = input;
 
     if (!newPassword || newPassword.length < 8) {
       throw new Error("Password must be at least 8 characters.");

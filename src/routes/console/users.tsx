@@ -48,7 +48,7 @@ function CreateUserForm() {
 
     setLoading(true);
     try {
-      const result = await createUserAccount({ email, name, role });
+      const result = await (createUserAccount as any)({ email, name, role });
       setSuccess(`User created: ${result.email}`);
       setTempPassword(result.tempPassword);
       setEmail("");

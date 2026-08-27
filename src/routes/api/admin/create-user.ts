@@ -7,16 +7,8 @@ import { randomUUID } from "crypto";
 export const createUserAccount = createServerFn({ method: "POST" })
   .middleware([authMiddleware])
   .handler(
-    async (input: {
-      data?: {
-        email: string;
-        name: string;
-        role: UserRole;
-      };
-      context: { userId: string };
-    }) => {
-      const { email, name, role } = input.data ?? {};
-      const { context } = input;
+    async (input: any) => {
+      const { email, name, role, context } = input;
 
     // Check if caller is admin or super_admin
     const callerRole = await getUserRole(context.userId);
