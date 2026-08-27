@@ -1,4 +1,4 @@
-import { Link, Outlet, useRouterState } from "@tanstack/react-router";
+import { Link, Navigate, Outlet, useRouterState } from "@tanstack/react-router";
 import {
   BarChart3,
   Clock,
@@ -6,42 +6,51 @@ import {
   ListTodo,
   Menu,
   ScrollText,
+  Settings,
   Shield,
   Users,
   X,
 } from "lucide-react";
 import { useState, type ReactNode } from "react";
 import { UserButton } from "@/lib/auth/gates";
-import { useCurrentUserState } from "@/lib/auth/use-current-user";
+import { useCurrentUser, useCurrentUserState } from "@/lib/auth/use-current-user";
+import { ForcePasswordChangeGate } from "@/components/auth/force-password-change";
 import { BridgetMark } from "@/components/bridget-wordmark";
 import { Button } from "@/components/ui/button";
 import { isStaffUser } from "@/lib/staff";
 import { cn } from "@/lib/utils";
 
 const NAV = [
-  { to: "/console", label: "Overview", icon: LayoutGrid, end: true },
-  { to: "/console/leads", label: "Leads", icon: Users, end: false },
-  { to: "/console/usage", label: "Usage & feature stats", icon: BarChart3, end: false },
-  { to: "/console/sessions", label: "BRIDGEt sessions", icon: Clock, end: false },
+  { to: "/console", label: "Overview", icon: LayoutGrid, end: true, minRole: "user" as const },
+  { to: "/console/leads", label: "Leads", icon: Users, end: false, minRole: "user" as const },
+  { to: "/console/usage", label: "Usage & feature stats", icon: BarChart3, end: false, minRole: "admin" as const },
+  { to: "/console/sessions", label: "BRIDGEt sessions", icon: Clock, end: false, minRole: "admin" as const },
+  { to: "/console/users", label: "Team members", icon: Settings, end: false, minRole: "admin" as const },
 ] as const;
 
 const COMPLIANCE = [
-  { to: "/console/consent", label: "Consent & retention", icon: Shield },
-  { to: "/console/audit", label: "Audit log", icon: ScrollText },
-  { to: "/console/debt", label: "Engineering debt", icon: ListTodo },
+  { to: "/console/consent", label: "Consent & retention", icon: Shield, minRole: "admin" as const },
+  { to: "/console/audit", label: "Audit log", icon: ScrollText, minRole: "admin" as const },
+  { to: "/console/debt", label: "Engineering debt", icon: ListTodo, minRole: "super_admin" as const },
 ] as const;
+
+const ROLE_HIERARCHY = { user: 1, admin: 2, super_admin: 3 };
+function canView(userRole: string | undefined, requiredRole: string): boolean {
+  if (!userRole) return false;
+  return (ROLE_HIERARCHY[userRole as keyof typeof ROLE_HIERARCHY] || 0) >= (ROLE_HIERARCHY[requiredRole as keyof typeof ROLE_HIERARCHY] || 0);
+}
 
 function pathOn(pathname: string, to: string, end: boolean) {
   if (end) return pathname === to || pathname === `${to}/`;
   return pathname === to || pathname.startsWith(`${to}/`);
 }
 
-function SidebarNav({ onGo }: { onGo?: () => void }) {
+function SidebarNav({ onGo, userRole }: { onGo?: () => void; userRole?: string }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   return (
     <nav className="flex flex-1 flex-col gap-1 px-3 pb-6">
-      {NAV.map((item) => (
+      {NAV.filter((item) => canView(userRole, item.minRole)).map((item) => (
         <Link
           key={item.to}
           to={item.to}
@@ -52,20 +61,24 @@ function SidebarNav({ onGo }: { onGo?: () => void }) {
           {item.label}
         </Link>
       ))}
-      <p className="mt-6 mb-1 px-3 text-[0.65rem] font-semibold tracking-[0.18em] text-elevated/40 uppercase">
-        Compliance
-      </p>
-      {COMPLIANCE.map((item) => (
-        <Link
-          key={item.to}
-          to={item.to}
-          onClick={onGo}
-          className={cn("console-nav-item", pathOn(pathname, item.to, false) && "is-on")}
-        >
-          <item.icon className="size-4 shrink-0" />
-          {item.label}
-        </Link>
-      ))}
+      {COMPLIANCE.some((item) => canView(userRole, item.minRole)) && (
+        <>
+          <p className="mt-6 mb-1 px-3 text-[0.65rem] font-semibold tracking-[0.18em] text-elevated/40 uppercase">
+            Compliance
+          </p>
+          {COMPLIANCE.filter((item) => canView(userRole, item.minRole)).map((item) => (
+            <Link
+              key={item.to}
+              to={item.to}
+              onClick={onGo}
+              className={cn("console-nav-item", pathOn(pathname, item.to, false) && "is-on")}
+            >
+              <item.icon className="size-4 shrink-0" />
+              {item.label}
+            </Link>
+          ))}
+        </>
+      )}
     </nav>
   );
 }
@@ -96,12 +109,14 @@ export function ConsoleFrame({
   children: ReactNode;
 }) {
   const [open, setOpen] = useState(false);
+  const user = useCurrentUser();
+  const userRole = user?.role;
 
   return (
     <div className="console-app lg:grid lg:grid-cols-[16.25rem_1fr]">
       <aside className="console-sidebar hidden min-h-dvh flex-col lg:flex">
         <BrandLockup />
-        <SidebarNav />
+        <SidebarNav userRole={userRole} />
         <p className="px-5 pb-5 text-[0.7rem] leading-relaxed text-elevated/40">
           INSUREitALL team only. BRIDGEt is not a licensed agent.
         </p>
@@ -127,7 +142,7 @@ export function ConsoleFrame({
                 <X className="size-5" />
               </button>
             </div>
-            <SidebarNav onGo={() => setOpen(false)} />
+            <SidebarNav userRole={userRole} onGo={() => setOpen(false)} />
           </aside>
         </div>
       ) : null}
@@ -171,18 +186,22 @@ export function ConsoleGate() {
     );
   }
 
-  if (user && !isStaffUser(user) && !user.isDevFallback) {
+  if (!user) {
+    return <Navigate to="/login" />;
+  }
+
+  if (!user.role || (user.role !== 'super_admin' && user.role !== 'admin' && user.role !== 'user')) {
     return (
       <div className="grid min-h-dvh place-items-center bg-surface px-4">
         <div className="console-card max-w-md p-8">
-          <h1 className="font-display text-3xl text-navy">Team only</h1>
+          <h1 className="font-display text-3xl text-navy">Access Denied</h1>
           <p className="mt-3 text-ink">
-            This console is for INSUREitALL team members. Signed in as{" "}
+            Your account doesn't have console access. Signed in as{" "}
             {user.primaryEmail ?? user.displayName}.
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
             <Button asChild>
-              <Link to="/portal">Consumer portal</Link>
+              <Link to="/">Home</Link>
             </Button>
             <UserButton />
           </div>
@@ -191,5 +210,9 @@ export function ConsoleGate() {
     );
   }
 
-  return <Outlet />;
+  return (
+    <ForcePasswordChangeGate>
+      <Outlet />
+    </ForcePasswordChangeGate>
+  );
 }

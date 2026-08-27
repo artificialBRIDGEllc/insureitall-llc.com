@@ -40,6 +40,7 @@ import { Route as ConsoleDebtRouteImport } from './routes/console/debt'
 import { Route as ConsoleLeadsRouteImport } from './routes/console/leads'
 import { Route as ConsoleSessionsRouteImport } from './routes/console/sessions'
 import { Route as ConsoleUsageRouteImport } from './routes/console/usage'
+import { Route as ConsoleUsersRouteImport } from './routes/console/users'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 
 const IndexRoute = IndexRouteImport.update({
@@ -197,6 +198,11 @@ const ConsoleUsageRoute = ConsoleUsageRouteImport.update({
   path: '/usage',
   getParentRoute: () => ConsoleRoute,
 } as any)
+const ConsoleUsersRoute = ConsoleUsersRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => ConsoleRoute,
+} as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: '/api/auth/$',
   path: '/api/auth/$',
@@ -233,6 +239,7 @@ export interface FileRoutesByFullPath {
   '/console/leads': typeof ConsoleLeadsRoute
   '/console/sessions': typeof ConsoleSessionsRoute
   '/console/usage': typeof ConsoleUsageRoute
+  '/console/users': typeof ConsoleUsersRoute
   '/ab/': typeof AbIndexRoute
   '/console/': typeof ConsoleIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
@@ -265,6 +272,7 @@ export interface FileRoutesByTo {
   '/console/leads': typeof ConsoleLeadsRoute
   '/console/sessions': typeof ConsoleSessionsRoute
   '/console/usage': typeof ConsoleUsageRoute
+  '/console/users': typeof ConsoleUsersRoute
   '/ab': typeof AbIndexRoute
   '/console': typeof ConsoleIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
@@ -300,6 +308,7 @@ export interface FileRoutesById {
   '/console/leads': typeof ConsoleLeadsRoute
   '/console/sessions': typeof ConsoleSessionsRoute
   '/console/usage': typeof ConsoleUsageRoute
+  '/console/users': typeof ConsoleUsersRoute
   '/ab/': typeof AbIndexRoute
   '/console/': typeof ConsoleIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
@@ -336,6 +345,7 @@ export interface FileRouteTypes {
     | '/console/leads'
     | '/console/sessions'
     | '/console/usage'
+    | '/console/users'
     | '/ab/'
     | '/console/'
     | '/api/auth/$'
@@ -368,6 +378,7 @@ export interface FileRouteTypes {
     | '/console/leads'
     | '/console/sessions'
     | '/console/usage'
+    | '/console/users'
     | '/ab'
     | '/console'
     | '/api/auth/$'
@@ -402,6 +413,7 @@ export interface FileRouteTypes {
     | '/console/leads'
     | '/console/sessions'
     | '/console/usage'
+    | '/console/users'
     | '/ab/'
     | '/console/'
     | '/api/auth/$'
@@ -651,6 +663,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConsoleUsageRouteImport
       parentRoute: typeof ConsoleRoute
     }
+    '/console/users': {
+      id: '/console/users'
+      path: '/users'
+      fullPath: '/console/users'
+      preLoaderRoute: typeof ConsoleUsersRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
     '/api/auth/$': {
       id: '/api/auth/$'
       path: '/api/auth/$'
@@ -682,6 +701,7 @@ interface ConsoleRouteChildren {
   ConsoleLeadsRoute: typeof ConsoleLeadsRoute
   ConsoleSessionsRoute: typeof ConsoleSessionsRoute
   ConsoleUsageRoute: typeof ConsoleUsageRoute
+  ConsoleUsersRoute: typeof ConsoleUsersRoute
   ConsoleIndexRoute: typeof ConsoleIndexRoute
 }
 
@@ -692,6 +712,7 @@ const ConsoleRouteChildren: ConsoleRouteChildren = {
   ConsoleLeadsRoute: ConsoleLeadsRoute,
   ConsoleSessionsRoute: ConsoleSessionsRoute,
   ConsoleUsageRoute: ConsoleUsageRoute,
+  ConsoleUsersRoute: ConsoleUsersRoute,
   ConsoleIndexRoute: ConsoleIndexRoute,
 }
 
