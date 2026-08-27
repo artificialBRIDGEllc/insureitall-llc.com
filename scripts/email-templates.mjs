@@ -6,14 +6,14 @@ export const BRAND_DEFAULTS = {
   HQ: "3550 Buschwood Park Dr, Ste 180, Tampa, FL 33618",
   HOURS: "Mon–Fri 9am–6pm ET",
   TTY: "TTY 711",
-  PHONE_DISPLAY: "+1 888-459-4842",
-  PHONE_HREF: "tel:+18884594842",
+  PHONE_DISPLAY: "+1 908-827-6223",
+  PHONE_HREF: "tel:+19088276223",
   NON_AFFILIATION:
     "Insure It All is not connected with or endorsed by the U.S. Government or the federal Medicare program.",
   SITE_ORIGIN: "https://insureitall-llc.com",
   CONSOLE_URL: "https://insureitall-llc.com/console/leads",
   DESK_CTA: "Open the lead desk",
-  CALL_CTA: "Call +1 888-459-4842",
+  CALL_CTA: "Call +1 908-827-6223",
   FOOTER_LICENSE: "Licensed agents",
   RECORDING:
     "Calls are recorded for quality, training, and compliance.",

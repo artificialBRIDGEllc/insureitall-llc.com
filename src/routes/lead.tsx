@@ -19,7 +19,7 @@ export const Route = createFileRoute("/lead")({
     pageHead({
       title: "Request a call back",
       description:
-        "Leave a window that works. A licensed INSUREitALL agent will call you — no scripts, no pressure. Or call +1 888-459-4842 now.",
+        "Leave a window that works. A licensed INSUREitALL agent will call you — no scripts, no pressure. Or call +1 908-827-6223 now.",
       path: "/lead",
     }),
 });
