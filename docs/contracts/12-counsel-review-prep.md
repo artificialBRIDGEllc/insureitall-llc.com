@@ -10,15 +10,27 @@ All regulatory citations below verified against eCFR primary text (2026-08-01 sn
 
 ---
 
-## 1. The three items that actually decide this deal
+## 1. The four items that actually decide this deal
 
-Everything else is trading. These three are the deal.
+Everything else is trading. These four are the deal.
+
+### 1.0 — Who can actually bind INSUREitALL (CRITICAL — resolve before anything is signed)
+
+**This is now the first question, and it was not one a week ago.** Every document in this packet rests on a single express representation: *"Ryan Butterfield, CEO, represents he has full power and authority to bind INSUREitALL LLC to this Agreement, each SOW, the Design Partner License, and Exhibit BAA."* That representation appears in ICA §18, in the SOW and License signature blocks, and in Exhibit BAA's electronic-signature attestation.
+
+The ownership structure underneath it has changed. **Castle Creek EVI, LLC Series E now owns all of Insure It All LLC**, with Beth Asher acting as point for a 50% interest representing the original ownership as it stood before the buyout. Three things are unresolved: whether Castle Creek EVI is the Asher family vehicle, who holds the other 50%, and — the one that matters here — **whether authority to bind IIA sits with the manager of the Delaware series or with IIA's own officers.**
+
+**What MWE does:** verifies signing authority before anything else. It is the first thing a corporate associate checks and the cheapest defect to find. If the series manager holds binding authority and the CEO signs anyway, MWE either produces a corporate resolution or tells their client not to sign — and if it is missed and Ryan signs without authority, **every document in the packet is vulnerable, the BAA included.** An unenforceable BAA is not merely a commercial problem: it means PHI moved to a subcontractor without a valid § 164.502(e)(1)(ii) instrument in place.
+
+**What we do:** ask for it ourselves, in writing, before sending. Request either (a) a secretary's certificate or written consent of the members/manager authorizing Ryan Butterfield to execute this packet on behalf of Insure It All LLC, or (b) the operating agreement provision vesting that authority in the CEO. Asking is not friction — it is the single clearest signal that we are transacting at their level, and it converts a defect MWE would otherwise find into a request we made first.
+
+**Do not** paper over it by strengthening the authority representation. A representation from a person who lacks authority is worth exactly nothing, and leaning on it looks worse than the gap.
 
 ### 1.1 — BAA §2(3): de-identify-and-train (CRITICAL — this is the whole moat)
 
 **What MWE does:** strikes it. Not narrows — strikes. It costs their client nothing and removes an unquantified data-rights exposure. The packet itself flags the carrier-BAA gap in its "Still outstanding" note, which is honest and correct, and also hands them the argument.
 
-**Their strongest version of the argument, stated fairly:** a subcontractor BAA cannot grant more than the BA itself holds (45 CFR § 164.502(e)(1)(ii)). Carrier BAAs commonly permit the BA to use PHI for its own proper management and administration (§ 164.504(e)(2)(i)(A), (e)(4)) and to perform data aggregation *relating to the health care operations of the health care operations of the covered entity* (§ 164.504(e)(2)(i)(B)). Building a commercial training corpus for the subcontractor's own product is neither. And a BA may de-identify only to the extent its BAA authorizes it — that limit comes from HHS OCR de-identification guidance read against § 164.504(e)(2)(i), not from § 164.502(d), which addresses only the covered entity's own disclosure to a BA for that purpose.
+**Their strongest version of the argument, stated fairly:** a subcontractor BAA cannot grant more than the BA itself holds (45 CFR § 164.502(e)(1)(ii)). Carrier BAAs commonly permit the BA to use PHI for its own proper management and administration (§ 164.504(e)(2)(i)(A), (e)(4)) and to perform data aggregation *relating to the health care operations of the covered entity* (§ 164.504(e)(2)(i)(B)). Building a commercial training corpus for the subcontractor's own product is neither. And a BA may de-identify only to the extent its BAA authorizes it — that limit comes from HHS OCR de-identification guidance read against § 164.504(e)(2)(i), not from § 164.502(d), which addresses only the covered entity's own disclosure to a BA for that purpose.
 
 **Our position:** the grant survives, expressly, with the Safe Harbor floor in License §4.3(B) and Schedule A as the guardrail. This is the entire consideration for a $0 license on a product valued at $2,500/mo. Note the structural point in our favor: License §4 already decouples the data right from the license grant — the de-identification right is a permitted use under the applicable BA instrument, *not* the price of the license. Hold that framing; it is the reason the license is not a disguised sale of PHI, and MWE will look for that.
 
@@ -50,7 +62,7 @@ Nothing in the packet addresses this. ICA §18's integration clause is scoped to
 
 **If it is clean,** volunteer a representation to that effect. Offering it unprompted is worth more than conceding it in round two, and it neutralizes the issue at the point where it is cheapest.
 
-**Note the asymmetry:** this is the one item on this list where the downside is not a worse deal — it is a claim against artificialBRIDGE's ownership of its core IP. Treat it first.
+**Note the asymmetry:** this is the one item on this list where the downside is not a worse deal — it is a claim against artificialBRIDGE's ownership of its core IP. Treat it with §1.0 as gating.
 
 ---
 
@@ -65,6 +77,7 @@ Nothing in the packet addresses this. ICA §18's integration clause is scoped to
 | H5 | **Publicity clause is load-bearing** (ICA §15 + License §4) | Standard MWE move is to strike publicity or make it consent-required. | Do not let this pass as boilerplate. Reference availability and case-study rights are **stated consideration** for the $0 license. If §15 goes, the license is arguably gratuitous. Acceptable landing: consent not to be unreasonably withheld, with a defined review window. But say out loud that removing it reprices the license. |
 | H6 | **"Design-partner feedback" is unenforceably vague** (License §5(iii)) | Correct — §5 makes withholding feedback an Early End trigger, but §4 defines no measurable obligation. IIA cannot breach an unmeasurable duty. | **Fix before sending, in our favor.** Tie the obligation to §5A: attendance at no fewer than one meeting per calendar month, written feedback within N business days of a written request, and one reference call or case-study approval per quarter. Now the trigger has teeth and §5A does double duty. |
 | H7 | **BAA ends before the wind-down does** (BAA §8 vs. License §6) | Genuine drafting bug, and MWE will find it. The BAA ends on the License End Date (31 Mar 2027) with 30 days to return/destroy. But the License wind-down also runs to 30 Apr 2027, during which IIA may still be operating Licensed Systems — so PHI can flow while no BAA is in force. | **Fix before sending.** Extend the BAA through the later of the Wind-Down end and completion of return/destroy. Non-controversial, and finding it ourselves reads as competence. |
+| H8 | **Counterparty naming and the entity chain** | The packet names "INSUREitALL LLC" throughout. The entity is **Insure It All LLC**, a Delaware LLC (file no. 5904088) operating from Fort Lauderdale, now wholly owned by Castle Creek EVI, LLC Series E. MWE will correct the party name on sight, and may ask whether the series or a parent should be a party or a guarantor. | Correct the legal name in every signature block and defined-party line before sending; keep "INSUREitALL" only as the brand/trade name where it refers to the site. Related to §1.0 — the naming error and the authority gap read as one problem if they arrive together. |
 
 ---
 
@@ -72,12 +85,13 @@ Nothing in the packet addresses this. ICA §18's integration clause is scoped to
 
 - **M1 — Unilateral guideline changes.** License §2A.3 lets Licensor update brand and conduct guidelines on 15 days' notice, and §2A.6 makes non-conformance an Early End trigger. MWE calls this a unilateral right to amend. *Bound it:* changes prospective only, and may not materially increase Licensee's cost or obligations.
 - **M2 — Inspection scope.** §2A.4 permits capture and retention of "screenshots, recordings, and logs of the deployment." A health practice will read that as a PHI-capture right. *Fix:* expressly exclude PHI from anything captured, and subject inspection to Licensee's security policies.
-- **M3 — Ratification back to 25 Aug 2026.** License §5 ratifies pre-signature deployment. MWE will note their client ran licensed systems unlicensed for weeks. *Offer a mutual release for that period* — costs nothing, closes the gap cleanly, and is better than letting them raise it.
+- **M3 — Ratification back to 25 Aug 2026.** License §5 ratifies pre-signature deployment. MWE will note their client ran licensed systems unlicensed for weeks. *Offer a mutual release for that period* — costs nothing, closes the gap cleanly, and is better than letting them raise it. Note this compounds §1.0: the ratification is only as good as the authority of whoever ratifies it.
 - **M4 — Vendor BAA allocation is backwards.** BAA §4 says "BA still signs each vendor's own BAA (Neon, and any email/voice host)." But Neon and Resend are contracted on **artificialBRIDGE's** accounts, which makes them our second-tier subcontractors under § 164.502(e)(1)(ii) and § 164.314(a)(2)(iii) — *we* sign those BAAs, not IIA. Fix the allocation to follow the contracting party. Separately: confirm whether Neon's BAA requires a specific paid plan tier before representing that it is available.
 - **M5 — Mandatory BAA element missing.** § 164.504(e)(2)(ii) requires ten provisions, (A)–(J). Our exhibit covers all but **(H)** — "to the extent the business associate is to carry out a covered entity's obligation under this subpart, comply with the requirements of this subpart that apply to the covered entity in the performance of such obligation." Add it. Also thicken §5 by citing §§ 164.524, 164.526, and 164.528 by section rather than describing them generically, and cite § 164.314(a) alongside the Security Rule reference in §3. A complete, correctly-cited exhibit is the single cheapest way to change the tone of this review.
 - **M6 — fileBRIDGE's structure invites a question we should be able to answer.** artificialBRIDGE owns the portal, holds the beneficiary accounts, and has a direct consent relationship with the beneficiary. Two questions follow, and we want answers ready rather than improvised: (a) for accounts held directly with the consumer rather than on IIA's behalf, does the FTC Health Breach Notification Rule (16 CFR Part 318) apply, given that it expressly does not reach an entity acting as a HIPAA business associate — meaning the two regimes may split across the same product depending on the capacity in which we hold the data; (b) does a lead-generating consumer portal operated for an agency itself fall inside the TPMO definition at 42 CFR § 422.2260, which reaches entities compensated to perform lead generation as part of the chain of enrollment and expressly includes entities that are not FDRs. Neither is necessarily a problem. Both are questions a health practice asks, and "we've analyzed that" is a materially different answer than silence.
 - **M7 — Acceptance window.** SOW §6's 7-day deemed acceptance will be pushed to 15–30 days with affirmative written acceptance. Minor; concede.
 - **M8 — Assignment.** ICA §16 lets Contractor assign to a successor without consent. A regulated client will want consent, or notice plus a termination right, particularly for assignment to a competitor. Note also that assigning the BAA down a carrier chain may itself need carrier permission. Concede to notice-plus-termination-right.
+- **M9 — Do not restate the member count anywhere.** The long-standing "5,000+ clients" figure is stale; Lang does not believe IIA still has 5,000 members. It must not appear in this packet, the cover email, or any supporting material. Separately, the site's TPMO plan/organization-count representation under 42 CFR § 422.2267(e)(41) is IIA's to certify — keep it that way (License §7.1 already does), and confirm the numbers on `docs/cco-confirmation.md` are current before Phase R is called PASS.
 
 ---
 
@@ -85,16 +99,17 @@ Nothing in the packet addresses this. ICA §18's integration clause is scoped to
 
 Each of these is either a gap in our own favor or a defect that costs credibility when opposing counsel finds it first.
 
-1. **BAA:** add mandatory element § 164.504(e)(2)(ii)(H); cite §§ 164.524 / 164.526 / 164.528 by section in §5; cite § 164.314(a) in §3.
-2. **BAA §8:** extend the term through the later of the Wind-Down end and completion of return/destroy (H7).
-3. **BAA §4:** reallocate vendor BAAs to whoever contracts with the vendor (M4).
-4. **License §4.7:** affirmative model-ownership-and-survival language (H3).
-5. **License §4.8:** indefinite retention for de-identified data; keep 72-hour destruction for identifiers received in error (H4).
-6. **License §4/§5A:** make the design-partner obligation measurable so the §5(iii) trigger is enforceable (H6).
-7. **Invoice IIA-2026-0825 is dated due 9 September 2026.** An MWE review runs two to four weeks minimum. The invoice will be past due before the agreement is signed, and an already-overdue invoice attached to an unsigned agreement is a bad look and an easy point to score. Reissue with the due date keyed to signature (Net 15 from the Effective Date).
-8. **The ICA effective date is 25 August 2026 — already past.** ICA §12's 30-day insurance clock therefore runs from a date that will be a month or more stale at signature, so the representation goes stale on delivery. Either bind the coverage now (preferred — see §1.2) or key the 30 days to the date of last signature.
-9. **Two different effective dates across one engagement** (ICA: 25 Aug 2026; License: date of last signature). Reconcile or explain in the cover email before they ask.
-10. **Pull the separation and employment documents** and read the restrictive covenants and invention-assignment language (§1.3). This one gates everything else.
+1.  **Party name and signing authority** — correct "INSUREitALL LLC" to "Insure It All LLC" throughout, and request the authorizing resolution (§1.0, H8). **Gating.**
+2.  **BAA:** add mandatory element § 164.504(e)(2)(ii)(H); cite §§ 164.524 / 164.526 / 164.528 by section in §5; cite § 164.314(a) in §3.
+3.  **BAA §8:** extend the term through the later of the Wind-Down end and completion of return/destroy (H7).
+4.  **BAA §4:** reallocate vendor BAAs to whoever contracts with the vendor (M4).
+5.  **License §4.7:** affirmative model-ownership-and-survival language (H3).
+6.  **License §4.8:** indefinite retention for de-identified data; keep 72-hour destruction for identifiers received in error (H4).
+7.  **License §4/§5A:** make the design-partner obligation measurable so the §5(iii) trigger is enforceable (H6).
+8.  **Invoice IIA-2026-0825 is dated due 9 September 2026.** An MWE review runs two to four weeks minimum. The invoice will be past due before the agreement is signed, and an already-overdue invoice attached to an unsigned agreement is a bad look and an easy point to score. Reissue with the due date keyed to signature (Net 15 from the Effective Date).
+9.  **The ICA effective date is 25 August 2026 — already past.** ICA §12's 30-day insurance clock therefore runs from a date that will be a month or more stale at signature, so the representation goes stale on delivery. Either bind the coverage now (preferred — see §1.2) or key the 30 days to the date of last signature.
+10. **Two different effective dates across one engagement** (ICA: 25 Aug 2026; License: date of last signature). Reconcile or explain in the cover email before they ask.
+11. **Pull the separation and employment documents** and read the restrictive covenants and invention-assignment language (§1.3). **Gating.**
 
 ---
 
@@ -108,17 +123,19 @@ Decide this before the first call, not during it.
 
 That is the natural shape of this negotiation. MWE wants a real recovery source; we want the data rights. Both are available and they are not in conflict. Lead with the insurance — offering it before they demand it converts our weakest position into the thing we trade from.
 
-**Venue.** Wyoming law with Texas venue has no nexus to either party or the transaction: artificialBRIDGE is a Wyoming LLC, INSUREitALL is a Delaware LLC operating from Fort Lauderdale, counsel is in Chicago. Texas gets struck in round one and looks arbitrary while it stands. Preferred landing: Wyoming law and Wyoming venue. Acceptable: Delaware law and venue. **Keep the existing carve-out permitting injunctive relief for IP and trademark misuse in any court of competent jurisdiction** — that clause protects the BRIDGEt marks and is worth more than the venue itself.
+**Venue.** Wyoming law with Texas venue has no nexus to either party or the transaction: artificialBRIDGE is a Wyoming LLC, Insure It All is a Delaware LLC operating from Fort Lauderdale, counsel is in Chicago. Texas gets struck in round one and looks arbitrary while it stands. Preferred landing: Wyoming law and Wyoming venue. Acceptable: Delaware law and venue. **Keep the existing carve-out permitting injunctive relief for IP and trademark misuse in any court of competent jurisdiction** — that clause protects the BRIDGEt marks and is worth more than the venue itself.
 
 ---
 
 ## 6. Have in hand before the packet goes out
 
+- [ ] Authorizing resolution or operating-agreement provision confirming Ryan Butterfield can bind Insure It All LLC post-Castle Creek (§1.0) — **gating**
 - [ ] Separation / employment agreement and any invention-assignment document (§1.3) — **gating**
 - [ ] Tech E&O and cyber bound, certificate of insurance issued (§1.2) — **gating**
-- [ ] Carrier BAA de-identification and downstream-use language from INSUREitALL (§1.1)
+- [ ] Carrier BAA de-identification and downstream-use language from Insure It All (§1.1)
 - [ ] Neon and Resend second-tier BAAs executed on artificialBRIDGE's accounts (M4)
-- [ ] Invoice reissued with a signature-keyed due date (§4.7)
+- [ ] Invoice reissued with a signature-keyed due date (§4.8)
+- [ ] Current plan/organization counts confirmed on `docs/cco-confirmation.md`; stale member count scrubbed everywhere (M9)
 - [ ] Manual pass over /hipaa, /glba, /ab/privacy to close out Phase R
 
 Not legal advice. artificialBRIDGE should have its own counsel review this packet before it goes to MWE — the asymmetry of a solo operator negotiating unrepresented against a top-tier health practice is itself a risk factor, and it is the cheapest one on this list to remove.
