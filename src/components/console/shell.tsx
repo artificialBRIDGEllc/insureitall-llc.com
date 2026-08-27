@@ -15,7 +15,7 @@ import { useState, type ReactNode } from "react";
 import { UserButton } from "@/lib/auth/gates";
 import { useCurrentUser, useCurrentUserState } from "@/lib/auth/use-current-user";
 import { ForcePasswordChangeGate } from "@/components/auth/force-password-change";
-import { BridgetMark } from "@/components/bridget-wordmark";
+import { BRIDGET_AVATAR } from "@/lib/bridget-assets";
 import { Button } from "@/components/ui/button";
 import { isStaffUser } from "@/lib/staff";
 import { cn } from "@/lib/utils";
@@ -49,7 +49,7 @@ function SidebarNav({ onGo, userRole }: { onGo?: () => void; userRole?: string }
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   return (
-    <nav className="flex flex-1 flex-col gap-1 px-3 pb-6">
+    <nav className="flex flex-1 flex-col gap-1 overflow-y-auto px-3 pb-6">
       {NAV.filter((item) => canView(userRole, item.minRole)).map((item) => (
         <Link
           key={item.to}
@@ -85,15 +85,24 @@ function SidebarNav({ onGo, userRole }: { onGo?: () => void; userRole?: string }
 
 function BrandLockup() {
   return (
-    <Link to="/console" className="flex items-center gap-3 px-4 py-5 text-elevated">
-      <span className="grid size-9 place-items-center rounded-full bg-elevated/10">
-        <BridgetMark invert className="text-[1.15rem]" />
+    <Link to="/console" className="flex items-center gap-3 px-5 py-6 text-elevated">
+      <span className="console-bust size-10 shrink-0">
+        <img
+          src={BRIDGET_AVATAR.bust}
+          alt=""
+          width={40}
+          height={40}
+          loading="eager"
+          decoding="async"
+        />
       </span>
       <span className="leading-tight">
-        <span className="block text-sm font-semibold tracking-tight">
-          BRIDGE<span className="italic text-mist">t</span>
+        <span className="block font-display text-[0.95rem] font-semibold tracking-tight">
+          BRIDGE<span className="italic text-blue">t</span>
         </span>
-        <span className="block text-xs text-elevated/55">Console</span>
+        <span className="block text-[0.65rem] font-semibold tracking-[0.2em] text-elevated/45 uppercase">
+          Console
+        </span>
       </span>
     </Link>
   );
@@ -114,12 +123,15 @@ export function ConsoleFrame({
 
   return (
     <div className="console-app lg:grid lg:grid-cols-[16.25rem_1fr]">
-      <aside className="console-sidebar hidden min-h-dvh flex-col lg:flex">
+      <aside className="console-sidebar sticky top-0 hidden h-dvh flex-col lg:flex">
         <BrandLockup />
         <SidebarNav userRole={userRole} />
-        <p className="px-5 pb-5 text-[0.7rem] leading-relaxed text-elevated/40">
-          INSUREitALL team only. BRIDGEt is not a licensed agent.
-        </p>
+        <div className="mx-3 mb-5 rounded-xl border border-elevated/10 bg-elevated/[0.04] px-4 py-3">
+          <p className="console-eyebrow text-gold/70">INSUREitALL team only</p>
+          <p className="mt-1.5 text-[0.7rem] leading-relaxed text-elevated/45">
+            BRIDGEt is an advocate, not a licensed agent. No SSN or Medicare numbers.
+          </p>
+        </div>
       </aside>
 
       {open ? (
@@ -148,7 +160,7 @@ export function ConsoleFrame({
       ) : null}
 
       <div className="flex min-w-0 flex-col">
-        <header className="flex items-center justify-between gap-3 px-4 py-4 sm:px-8">
+        <header className="console-header flex items-center justify-between gap-3 px-4 py-4 sm:px-8">
           <div className="flex min-w-0 items-center gap-3">
             <button
               type="button"
@@ -158,7 +170,7 @@ export function ConsoleFrame({
             >
               <Menu className="size-5" />
             </button>
-            <h1 className="truncate font-sans text-2xl font-semibold tracking-tight text-navy sm:text-[1.65rem]">
+            <h1 className="truncate font-display text-2xl font-semibold tracking-tight text-navy sm:text-[1.7rem]">
               {title}
             </h1>
           </div>
@@ -169,7 +181,7 @@ export function ConsoleFrame({
             </div>
           </div>
         </header>
-        <div className="min-w-0 flex-1 px-4 pb-16 sm:px-8">{children}</div>
+        <div className="min-w-0 flex-1 px-4 pt-6 pb-16 sm:px-8">{children}</div>
       </div>
     </div>
   );
@@ -180,8 +192,13 @@ export function ConsoleGate() {
 
   if (isPending) {
     return (
-      <div className="grid min-h-dvh place-items-center bg-surface">
-        <div className="h-24 w-64 animate-pulse rounded-3xl bg-soft" />
+      <div className="console-app grid min-h-dvh place-items-center">
+        <div className="flex flex-col items-center gap-4">
+          <span className="console-bust size-14 animate-pulse">
+            <img src={BRIDGET_AVATAR.bust} alt="" width={56} height={56} />
+          </span>
+          <p className="console-eyebrow">Opening the console</p>
+        </div>
       </div>
     );
   }
@@ -192,9 +209,10 @@ export function ConsoleGate() {
 
   if (!user.role || (user.role !== 'super_admin' && user.role !== 'admin' && user.role !== 'user')) {
     return (
-      <div className="grid min-h-dvh place-items-center bg-surface px-4">
+      <div className="console-app grid min-h-dvh place-items-center px-4">
         <div className="console-card max-w-md p-8">
-          <h1 className="font-display text-3xl text-navy">Access Denied</h1>
+          <p className="console-eyebrow">INSUREitALL team only</p>
+          <h1 className="mt-2 font-display text-3xl text-navy">Access Denied</h1>
           <p className="mt-3 text-ink">
             Your account doesn't have console access. Signed in as{" "}
             {user.primaryEmail ?? user.displayName}.
