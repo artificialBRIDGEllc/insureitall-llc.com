@@ -69,12 +69,16 @@ export const createUserAccount = createServerFn({ method: "POST" })
       // Assign role
       await setUserRole(userId, role);
 
+      // Send password via email
+      await sendPasswordEmail(email, name, tempPassword).catch((err) => {
+        console.error("Failed to send password email:", err);
+      });
+
       return {
         success: true,
         userId,
         email,
-        tempPassword,
-        message: "User created. Share the temporary password with them securely.",
+        message: "User created successfully. A temporary password has been sent to their email.",
       };
     } catch (err) {
       throw new Error(
@@ -111,4 +115,46 @@ function generateTempPassword(): string {
 async function hashPassword(password: string): Promise<string> {
   const bcrypt = await import("bcrypt");
   return await bcrypt.hash(password, 10);
+}
+
+async function sendPasswordEmail(
+  email: string,
+  name: string,
+  password: string
+): Promise<void> {
+  try {
+    const apiKey = process.env.RESEND_API_KEY;
+    if (!apiKey) {
+      console.warn("RESEND_API_KEY not configured - password email not sent");
+      return;
+    }
+
+    const response = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from: "INSUREitALL Team <noreply@insureitall-llc.com>",
+        to: email,
+        subject: "Your INSUREitALL Console Account",
+        html: `
+          <p>Hi ${name},</p>
+          <p>Your INSUREitALL team console account has been created.</p>
+          <p><strong>Temporary Password:</strong></p>
+          <code style="font-family: monospace; background: #f5f5f5; padding: 10px; display: block; word-break: break-all;">${password}</code>
+          <p>Please log in at <a href="${process.env.VERCEL_URL || "https://insureitall-llc.com"}/console">insureitall-llc.com/console</a> and change your password on first login.</p>
+          <p>Best regards,<br>INSUREitALL Team</p>
+        `,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Resend API error: ${response.statusText}`);
+    }
+  } catch (error) {
+    console.error("Error sending password email:", error);
+    throw error;
+  }
 }

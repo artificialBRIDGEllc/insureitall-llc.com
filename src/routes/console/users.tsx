@@ -50,7 +50,6 @@ function CreateUserForm() {
     try {
       const result = await (createUserAccount as any)({ email, name, role });
       setSuccess(`User created: ${result.email}`);
-      setTempPassword(result.tempPassword);
       setEmail("");
       setName("");
       setRole("user");
@@ -115,17 +114,9 @@ function CreateUserForm() {
       {success && (
         <div className="rounded-lg bg-ok-soft p-3">
           <p className="text-sm text-ok font-medium">{success}</p>
-          {tempPassword && (
-            <div className="mt-3 p-3 bg-surface rounded border border-border">
-              <p className="text-xs text-muted mb-1.5">Temporary password (share securely):</p>
-              <code className="block font-mono text-sm text-navy bg-elevated p-2 rounded break-all">
-                {tempPassword}
-              </code>
-              <p className="mt-1.5 text-xs text-muted">
-                User must change this password on first login.
-              </p>
-            </div>
-          )}
+          <p className="mt-2 text-xs text-muted">
+            The user will receive a temporary password via email and must change it on first login.
+          </p>
         </div>
       )}
 
