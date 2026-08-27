@@ -10,7 +10,7 @@ GitHub: `copperlang2007/insureitall-website`. Preview is the TanStack tree at re
 
 Phone-first Medicare agency site. Licensed agents. No pressure. No scripts. BRIDGEt is the advocate on the way to a human — never the closer.
 
-Success = the live preview looks like a luxury navy/cream Medicare house, CTAs dial `+1 888-459-4842`, TPMO copy is present, BRIDGEt stays on-voice.
+Success = the live preview looks like a luxury navy/cream Medicare house, CTAs dial `+1 908-827-6223`, TPMO copy is present, BRIDGEt stays on-voice.
 
 ---
 
