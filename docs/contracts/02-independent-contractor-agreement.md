@@ -21,6 +21,8 @@ Fees are only those in the SOW. **SOW No. 1 is a fixed fee of $5,000.00 USD.** I
 
 Expenses are not billable unless Client pre-approves them in writing. The $5,000 includes ordinary tools and hosting Contractor already uses to deliver. Client’s own Vercel, DNS, database, and email vendor costs are Client’s.
 
+**Recurring operating costs.** All recurring costs to **operate** the site — hosting, domain registration and renewal, database, email/SMS delivery, and similar third-party service fees — are **not included** in this Agreement or in any SOW fee, and are Client’s to pay directly. Client and Contractor may separately agree in writing to have Contractor procure and manage those services on Client’s behalf for a **separately negotiated fee**. See SOW No. 1 §4 and Design Partner License §5C.
+
 No hourly overage without a signed change order.
 
 ## 4. Taxes
