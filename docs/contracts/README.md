@@ -8,10 +8,10 @@ Amendment No. 1 (License) and Amendment No. 1 (ICA/SOW) have been **merged into 
 
 | File | What it now includes |
 |---|---|
-| [01-cover-email.md](01-cover-email.md) | Send-with note |
-| [02-independent-contractor-agreement.md](02-independent-contractor-agreement.md) | 1099, IP, $5k cap including indemnity, defense control, BAA pointer, **Phase R lock**, 30-day insurance bind, Texas venue |
-| [03-sow-website-update.md](03-sow-website-update.md) | **$5,000** website only · one-time SEO in scope · Phase R gates block acceptance |
-| [04-design-partner-license.md](04-design-partner-license.md) | Through **31 Mar 2027** from date of last signature · ratified go-live 25 Aug 2026 · trademark quality control (§2A) · decoupled consideration · monthly check-in (§5A) · change-billing split (§5B) · recurring costs excluded (§5C) · wind-down certification · TPMO/plan-type/recording/non-affiliation covenants (§7.1–7.4) |
+| [01-cover-email.md](01-cover-email.md) | Send-with note · plain-language "roughly six months" framing · change-billing split · internal term note |
+| [02-independent-contractor-agreement.md](02-independent-contractor-agreement.md) | 1099, IP, $5k cap including indemnity, defense control, BAA pointer, **Phase R lock**, 30-day insurance bind, Texas venue · **§3 recurring operating costs excluded + manage-for-a-fee option** |
+| [03-sow-website-update.md](03-sow-website-update.md) | **$5,000** website only · one-time SEO in scope · ongoing SEO out of scope (separate contract + fee) · recurring operating costs out of scope · Phase R gates block acceptance |
+| [04-design-partner-license.md](04-design-partner-license.md) | Through **31 Mar 2027, 11:59 p.m. ET** from date of last signature · ratified go-live 25 Aug 2026 · trademark quality control (§2A) · decoupled consideration · monthly check-in (§5A) · change-billing split (§5B) · recurring costs excluded (§5C) · wind-down certification · TPMO/plan-type/recording/non-affiliation covenants (§7.1–7.4) |
 | [08-baa-exhibit.md](08-baa-exhibit.md) · [08-baa-exhibit.html](08-baa-exhibit.html) | **Sign electronically.** Subcontractor BAA — INSUREitALL is BA of the carriers, artificialBRIDGE is INSUREitALL's subcontractor. Host Limited PHI; deidentify to train. Not identifiable training. No extra fee. ESIGN + Wyoming UETA. |
 | [11-phase-r-regulatory-disclaimers.md](11-phase-r-regulatory-disclaimers.md) | **Strict operating phase.** Agent MUST pass **RA + R0–R16**. Source-locked TPMO/TCPA. No paraphrase. R9 (leave-site) currently not applicable — see note 2 below. |
 | [11a-site-compliance-audit.md](11a-site-compliance-audit.md) | **Existing websites.** Audit before edit. Severity + worksheet. Audit-only SOWs stop here. |
@@ -24,12 +24,25 @@ Amendment No. 1 (License) and Amendment No. 1 (ICA/SOW) have been **merged into 
 | [../cco-confirmation.md](../cco-confirmation.md) | Ryan Butterfield — TPMO / states / TCPA sign-off |
 | [../audits/AUD-20260825-insureitall-llc.com.md](../audits/AUD-20260825-insureitall-llc.com.md) | RA audit of the live host + 27 Aug addendum — production-deploy parity now confirmed via Vercel |
 
+## Where each commercial term lives
+
+| Term | ICA (02) | SOW No. 1 (03) | License (04) |
+|---|---|---|---|
+| Design-partner term ends 31 Mar 2027, 11:59 p.m. ET | §5 (IP rights tied to End Date) | §3 ($0 through End Date) | **§5 (operative)** · header |
+| Recurring operating costs excluded; Contractor may manage for a separate fee | **§3** | §4 | **§5C** |
+| One-time SEO in scope; ongoing SEO separate | — | **§3 (in scope) · §4 (ongoing out)** | — |
+| Formal meeting at least once per calendar month | — | — | **§5A** |
+| Contractor changes free; regulatory/legal + general-functionality carve-out, everything else billed separately | §14 (change orders) | §8 | **§5B** |
+
+**Term drafting note (deliberate).** License §5 sets a **fixed end date**, not a duration. It is not drafted as "six (6) months from the Effective Date" — a duration and a fixed date in one clause is the standard ambiguity, and a signature date after 1 Oct 2026 would make the two disagree. The fixed date controls; the "roughly six months" phrasing appears only as plain-language framing in the cover email. The term never extends past 31 Mar 2027 without a successor license under §5.
+
 ## Resolved since the last pass
 
 1. **HIPAA structure confirmed.** INSUREitALL is a business associate of the Medicare insurance carriers/plans (the covered entities), not itself a covered entity here; artificialBRIDGE is INSUREitALL's **subcontractor**. Exhibit BAA is rewritten as the subcontractor BAA 45 CFR § 164.502(e)(1)(ii) requires — see its "Still outstanding" note: INSUREitALL still needs to hand artificialBRIDGE the deidentification/downstream-use language from its own carrier BAA(s), since a subcontractor agreement can't flow down more than INSUREitALL itself is authorized to give.
 2. **Go-live date confirmed** — 25 August 2026. License §5's ratification clause is filled in.
 3. **Production deployment parity confirmed.** Vercel's production alias for `www.insureitall-llc.com` currently serves commit `13c020be034ac088bd1382102a0d539ecfde59e7` on `main` — the same commit this packet's PR branches from, which contains `/hipaa`, `/glba`, and `/ab/privacy`. Direct HTTP checks of the live URLs weren't possible from this environment (network policy blocks the domain); do one manual pass over `/hipaa`, `/glba`, `/ab/privacy` before calling Phase R fully PASS. Separately, `/portal` no longer links out to fileBRIDGE (it's a "coming soon" placeholder), so Exhibit R gate R9 (leave-site interstitial) is not applicable right now — re-open it if that integration goes live.
 4. **Invoice remit block filled in and payment method locked to wire transfer.** Bank (Coastal Community Bank, Everett WA), account name, routing, account number, and EIN are all in. Checks are not accepted — the invoice says so, so there's no remit-address placeholder to fill.
+5. **Recurring-cost exclusion now in all three documents.** It was already in SOW §4 and License §5C; ICA §3 carried only "Client's own Vercel, DNS, database, and email vendor costs are Client's" and was silent on the manage-for-a-fee option. §3 now states both.
 
 ## Pre-signature blockers — still open
 
