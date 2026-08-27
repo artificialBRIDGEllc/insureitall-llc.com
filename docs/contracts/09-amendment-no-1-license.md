@@ -2,7 +2,7 @@
 
 **Parties:** artificialBRIDGE LLC (Licensor) · INSUREitALL LLC (Licensee)
 **Amends:** Design Partner License (Effective Date: the date all parties’ signatures are complete; End Date 31 March 2027)
-**Status:** **MERGED into [04-design-partner-license.md](04-design-partner-license.md).** Items A–F, H, I, J, K are folded into the base License text; do not sign this file separately. Item G (HIPAA covered-entity status) remains an **open item**, carried forward as License §4.9's open-item note — resolve it before signature, in the base License, not here. Kept for the drafting record only. Not legal advice.
+**Status:** **MERGED into [04-design-partner-license.md](04-design-partner-license.md).** Items A–F, H, I, J, K are folded into the base License text. Item G (HIPAA covered-entity status) is **resolved**: INSUREitALL is a business associate of the insurance carriers/plans, not a covered entity here, and artificialBRIDGE is INSUREitALL's subcontractor — see License §4.9 and the rewritten Exhibit BAA (08). Do not sign this file separately. Kept for the drafting record only. Not legal advice.
 
 Capitalized terms have the meanings given in the License. Where this Amendment conflicts with the License, this Amendment controls.
 
@@ -72,7 +72,11 @@ Replace the trigger list with clauses (i), (ii), (iii as amended in D), (iv), pl
 
 > (v) uses the Licensed Marks in a manner not conforming to §2A and fails to cure or suspend within 5 business days of notice; or (vi) fails to pay Invoice IIA-2026-0825 when due.
 
-## G. §4.9 — open item, resolve before signature
+## G. §4.9 — RESOLVED: subcontractor structure confirmed
+
+INSUREitALL is a business associate of the insurance carriers/plans (the covered entities) for enrollment-related PHI, not itself a covered entity; artificialBRIDGE is INSUREitALL's subcontractor. Exhibit BAA (08) has been rewritten as a subcontractor BAA under 45 CFR § 164.502(e)(1)(ii) rather than a covered-entity-to-BA agreement. The residual action item is INSUREitALL providing the deidentification/permitted-downstream-use language from its own carrier BAA(s), since a subcontractor agreement can't grant more than INSUREitALL itself is authorized to flow down — see Exhibit BAA's "Still outstanding" note.
+
+Original drafting note (superseded by the above, kept for context):
 
 Insert at the head of §4.9:
 

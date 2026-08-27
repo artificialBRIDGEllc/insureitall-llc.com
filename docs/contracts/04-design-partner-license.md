@@ -121,7 +121,7 @@ Identifiers received in error: delete within **72 hours** of actual discovery.
 
 ### 4.9 BAA · who holds PHI
 
-**OPEN ITEM — confirm before signature.** The parties will confirm INSUREitALL's status under HIPAA (covered entity; business associate or downstream entity of a carrier; or neither) and select the correct instrument: Exhibit BAA, a subcontractor business associate agreement flowing down carrier terms, or a data processing addendum. Licensee will provide the deidentification and permitted-downstream-use language from any carrier BAA or downstream entity agreement that binds it. Until that confirmation, Exhibit BAA proceeds on the working assumption in this §4.9, but neither party should treat Exhibit BAA as the confirmed correct instrument.
+**Resolved.** Licensee (INSUREitALL) is a business associate of the Medicare insurance carriers/plans — the HIPAA covered entities — for enrollment-related PHI it handles on their behalf; it is not itself a covered entity in this relationship. Licensor (artificialBRIDGE) is Licensee's **subcontractor** for that PHI, and Exhibit BAA is drafted as the subcontractor business associate agreement 45 CFR § 164.502(e)(1)(ii) requires, not a covered-entity-to-BA agreement. Licensee will provide Licensor the deidentification and permitted-downstream-use language from Licensee's own carrier BAA(s), since a subcontractor agreement cannot grant Licensor more than Licensee itself is authorized to flow down; if a carrier BAA bars downstream deidentification for the subcontractor's own use, Exhibit BAA §2(3) needs to be narrowed accordingly.
 
 **Client (INSUREitALL) may collect Limited PHI on the site** — optional doctor names, medication names, and notes — so a licensed agent can prepare. That PHI stays in Client’s desk and portal. Lead-alert emails never include doctors, medications, or notes.
 
@@ -145,7 +145,7 @@ Licensee is responsible for its privacy notice and any consent needed to allow t
 
 The license **ends on the End Date** with no automatic renewal. Continued use after the End Date is not a renewal; it is unlicensed.
 
-**Ratification of prior deployment.** The parties acknowledge that Licensed Systems were first deployed on Licensee's domain on **[CONFIRM ACTUAL GO-LIVE DATE]**, and that all use from that date forward was and is under this License, which the parties ratify as of that date.
+**Ratification of prior deployment.** The parties acknowledge that Licensed Systems were first deployed on Licensee's domain on **25 August 2026**, and that all use from that date forward was and is under this License, which the parties ratify as of that date.
 
 **Early end (revocation).** Licensor may end the Term earlier, on written notice, if Licensee (i) claims ownership of Licensed Systems, (ii) sublicenses or white-labels, (iii) withholds the design-partner feedback and reference participation described in §4, (iv) materially breaches the ICA or this License and does not cure in 10 days, (v) uses the Licensed Marks in a manner not conforming to §2A and fails to cure or suspend within 5 business days of notice, or (vi) fails to pay Invoice IIA-2026-0825 when due. The Wind-Down in §6 then starts on the notice date instead of the End Date.
 
