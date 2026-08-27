@@ -61,3 +61,9 @@ Name / title: Ryan Butterfield, CEO
 ## Agent sign-off (RA)
 
 Filed `docs/audits/AUD-20260825-insureitall-llc.com.md`. Do not call live Phase R PASS until F-08–F-11 are 200 on www.
+
+## Addendum — 27 Aug 2026
+
+`/portal` was simplified to a static "beneficiaryCONNECT — coming soon" placeholder (see `CLAUDE.md`); the fileBRIDGE consumer app (file/agency/share/help, sign-in gate) was removed from it. With no outbound fileBRIDGE link from Licensee's domain, **F-08 (`/leaving` 404) is superseded, not fixed** — Exhibit R gate R9 is not applicable until `/portal` links to fileBRIDGE again, at which point a `/leaving` interstitial must be built and this finding re-opened.
+
+**F-09, F-10, F-11 (`/hipaa`, `/glba`, `/ab/privacy` 404 on www) are resolved.** Verified via the Vercel API (`GET` deployment for `www.insureitall-llc.com`): the production alias is currently bound to deployment `dpl_EBWSexumJdYTZ3K6iDUvMXzpPJ29`, built from `artificialBRIDGEllc/insureitall-llc.com@main` commit `13c020be034ac088bd1382102a0d539ecfde59e7` (`target: "production"`, `readyState: "READY"`) — the same commit this contract packet's PR branches from, which contains `hipaa.tsx`, `glba.tsx`, and `ab/privacy.tsx`. Direct HTTP checks of the live URLs were not possible from this environment (outbound network policy blocks `insureitall-llc.com`), so this is deployment-record confirmation, not a rendered-page check; a quick manual load of `/hipaa`, `/glba`, and `/ab/privacy` is still worth doing once before calling Phase R PASS.

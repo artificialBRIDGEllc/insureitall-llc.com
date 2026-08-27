@@ -31,7 +31,7 @@ Each party pays its own taxes. The $5,000 is exclusive of sales or similar tax i
 
 - Client owns trademarks, logos, and copy **Client supplies** (the INSUREitALL lockups Client provided).
 - Contractor owns Contractor’s pre-existing and independently developed tools, frameworks, characters (including BRIDGEt), engines (including Plan Choice Audit and beneFIT), prompts, models, methods, clay, widget, portal/console product, and all improvements.
-- Client receives **only** the licenses in the SOW and the Design Partner License **through that License’s End Date (24 August 2027 unless ended earlier)**. **No assignment** of Contractor IP unless a writing signed by Contractor says “assignment” and names the asset. After the License End Date, Client’s remaining rights are only those in License §6 (Wind-Down).
+- Client receives **only** the licenses in the SOW and the Design Partner License **through that License’s End Date (31 March 2027 unless ended earlier)**. **No assignment** of Contractor IP unless a writing signed by Contractor says “assignment” and names the asset. After the License End Date, Client’s remaining rights are only those in License §6 (Wind-Down).
 - Work product of the website **implementation labor** is licensed to Client to run on the agreed domains under the SOW and License. It is not a work made for hire as to Contractor IP.
 
 ## 6. Client materials
@@ -84,7 +84,7 @@ The cap does not apply to a party’s **fraud or willful misconduct**. It **does
 
 ## 12. Insurance
 
-Contractor will maintain commercially reasonable insurance for a solo product studio. Client is not an additional insured unless a later writing says so. Client should keep its own E&O / cyber / agency coverage for sales and TCPA.
+Contractor will obtain and maintain commercially reasonable insurance appropriate to a solo product studio, including technology errors and omissions and cyber liability, within 30 days of the Effective Date. Client is not an additional insured unless a later writing says so. Client should keep its own E&O / cyber / agency coverage for sales and TCPA.
 
 ## 13. Term and termination
 
@@ -110,7 +110,7 @@ Neither party is liable for delay caused by events beyond reasonable control (ou
 
 ## 18. General
 
-**Governing law:** Wyoming, without conflict-of-law rules. **Venue:** state or federal courts sitting in Wyoming, unless both parties agree in writing to another forum.
+**Governing law:** Wyoming, without conflict-of-law rules. **Venue:** state or federal courts sitting in Texas, unless both parties agree in writing to another forum. Notwithstanding any agreement to arbitrate, either party may seek injunctive or other equitable relief for infringement or misuse of intellectual property or trademarks in any court of competent jurisdiction.
 
 Notices: email is enough if sent to the addresses on the invoice (or updated in writing) and not bounced.
 

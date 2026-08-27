@@ -5,7 +5,7 @@
 **Prepared for:** Michael Lang  
 **Vendor / licensor:** artificialBRIDGE LLC  
 **Period of performance:** August 2026 (through 25 August 2026)  
-**Repo:** `copperlang2007/insureitall-website`  
+**Repo:** `artificialBRIDGEllc/insureitall-llc.com` (repository of record; see SOW No. 1 §1)  
 **Live marketing origin:** https://insureitall-llc.com  
 **Status:** Website update complete. Partner systems licensed, not sold.
 
@@ -32,9 +32,9 @@ They **do not own** BRIDGEt, the Plan Choice Audit, the client portal, the staff
 
 artificialBRIDGE LLC grants INSUREitALL LLC a **royalty-free, non-exclusive, non-transferable, non-sublicensable license** to run the partner systems on insureitall-llc.com (and the agreed staging hosts) for the design-partner term.
 
-**Consideration is not cash.** It is operational data and product feedback sufficient to train and improve BRIDGEt and related systems (never SSN or Medicare numbers). If that bargain stops, the license may be revoked. No assignment. No white-label. No claim of ownership in a deck, contract, or carrier form.
+**Consideration is not cash.** It is INSUREitALL's participation as a design partner — qualitative product feedback, roadmap input, and reference availability. Separately and independently, artificialBRIDGE's right to create and use deidentified data and aggregated data under License §4 is a permitted use, not the price of the license. If the design-partner bargain stops, the license may be revoked. No assignment. No white-label. No claim of ownership in a deck, contract, or carrier form.
 
-Listed license value below is **forgone fee**, not an amount due.
+Listed license value below is **forgone fee**, not an amount due, and not itself the consideration for the license.
 
 ---
 
@@ -89,7 +89,7 @@ These shipped on their domain so the partner can run them and so artificialBRIDG
 
 **Held for Phase 2 (not licensed, not on this site):** **beneFIT** — anonymous Extra Help / MSP / SNAP screener. Next engagement, next invoice. `/screener` redirects home.
 
-**Partner consideration this phase:** widget questions, Plan Choice Audit completions, portal patterns, qualitative feedback. No SSN, no MBI, no enrollment. No beneFIT data because the product is not deployed here.
+**Design-partner participation this phase:** widget questions, Plan Choice Audit completions, portal patterns, qualitative feedback. No SSN, no MBI, no enrollment. No beneFIT data because the product is not deployed here.
 
 ---
 

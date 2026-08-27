@@ -112,7 +112,7 @@ Static 14 / 14 **stays** until Ryan marks zip-level **Yes** on the CCO form. Zip
 
 Agent lists every public route that (a) mentions plans, (b) takes a lead, (c) runs AI, or (d) is legal. Current inventory:
 
-`/`, `/medicare-basics`, `/compare`, `/needs-analysis`, `/lead`, `/contact`, `/bridget`, `/leaving`, `/privacy`, `/hipaa`, `/glba`, `/security`, `/terms`, `/ai-disclosure`, `/accessibility`, `/ab`, `/ab/privacy`, `/ab/terms`, plus footer on all `SiteShell` pages.
+`/`, `/medicare-basics`, `/compare`, `/needs-analysis`, `/lead`, `/contact`, `/bridget`, `/privacy`, `/hipaa`, `/glba`, `/security`, `/terms`, `/ai-disclosure`, `/accessibility`, `/ab`, `/ab/privacy`, `/ab/terms`, plus footer on all `SiteShell` pages. `/portal` is a "coming soon" placeholder with no plan talk, lead capture, or fileBRIDGE link, so it is out of the plan-touching inventory until that integration is active.
 
 **PASS:** list matches production sitemap. No orphan marketing page without footer TPMO.
 
@@ -174,7 +174,7 @@ Mismatch vs CCO form = FAIL.
 
 ### R9 — Leave-site
 
-`/leaving` before fileBRIDGE. Points in `LEAVE_POINTS` (different operator, different privacy, TCPA does not move, not an enrollment). Continue vs stay.
+**Currently not applicable.** `/portal` is a "coming soon" placeholder with no outbound fileBRIDGE link from Licensee's domain, so no leave-site interstitial is required today. If and when `/portal` links to fileBRIDGE, this gate re-activates: a `/leaving` interstitial must run before that link, naming the different operator, different privacy, that TCPA does not move, and that it is not an enrollment. Continue vs stay.
 
 ### R10 — HIPAA proof page
 
@@ -211,7 +211,7 @@ Agent MUST prove, before calling Phase R done:
 | Footer TPMO + non-affiliation | Load `/`, `/medicare-basics`, `/compare`, `/lead` |
 | Consent server-side | POST lead without consent → rejected |
 | Identifier scan | Submit SSN-like string → rejected |
-| Leave-site | `/leaving?to=filebridge` 200, copy present |
+| Leave-site | Not applicable while `/portal` has no outbound fileBRIDGE link (see R9). Re-verify `/leaving?to=filebridge` 200 with copy present once that link is built. |
 | Legal routes | `/hipaa` `/glba` `/security` `/ai-disclosure` `/privacy` `/ab/privacy` 200 |
 | Source lock | ripgrep: disclaimer string only from `compliance.ts` |
 | Staff desk | `/console` not open to non-staff email |
@@ -230,7 +230,7 @@ RA  audit every live URL in scope (worksheet 09a). STOP if audit-only.
  → R5–R6 forms + server + recording
  → R7 house facts
  → R8 scan public copy for forbidden claims
- → R9 leaving interstitial
+ → R9 leaving interstitial (skip while not applicable, see R9)
  → R10–R13 legal pages (HIPAA, GLBA, AI, split privacy)
  → R14 attach CCO form; do not wait to ship static 14/14
  → R15 self-check paraphrase
@@ -255,7 +255,7 @@ These are the Phase R artifacts from SOW No. 1. The Agent maintains them; it doe
 | GLBA / NAIC | `src/lib/glba.ts` · `/glba` |
 | ISP | `src/lib/isp.ts` · `/security` |
 | AI | `/ai-disclosure` |
-| Leave-site | `src/lib/leaving.ts` · `/leaving` |
+| Leave-site (build when `/portal` links to fileBRIDGE — see R9) | `src/lib/leaving.ts` · `/leaving` — not yet built |
 | AB legal | `src/lib/ab-legal.ts` · `/ab/*` |
 | This phase | `docs/contracts/11-phase-r-regulatory-disclaimers.md` |
 | Existing-site audit protocol | `docs/contracts/11a-site-compliance-audit.md` |

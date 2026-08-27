@@ -24,24 +24,26 @@
 <body>
   <article class="sheet">
     <h1>Exhibit BAA</h1>
-    <p class="meta">Business Associate Agreement · 45 CFR § 164.504(e) · ready for electronic signature</p>
+    <p class="meta">Subcontractor Business Associate Agreement · 45 CFR § 164.502(e)(1)(ii) / § 164.504(e) · ready for electronic signature</p>
     <div class="gold"></div>
-    <p><strong>Covered Entity:</strong> INSUREitALL LLC &nbsp;·&nbsp; <strong>Business Associate:</strong> artificialBRIDGE LLC (Wyoming single-member)</p>
-    <p><strong>Effective:</strong> date of last electronic signature &nbsp;·&nbsp; <strong>Ends:</strong> 24 August 2027 (License End Date), then §8 return/destroy</p>
-    <p>Related: ICA · SOW No. 1 · Design Partner License. Not legal advice. Sign if CE wants BA to host, support, or deidentify Limited PHI. <strong>Does not authorize training on identifiable PHI.</strong></p>
+    <p><strong>Business Associate:</strong> INSUREitALL LLC (a business associate of the Medicare insurance carriers/plans for enrollment-related PHI) &nbsp;·&nbsp; <strong>Subcontractor:</strong> artificialBRIDGE LLC (Wyoming single-member)</p>
+    <p><strong>Effective:</strong> date of last electronic signature &nbsp;·&nbsp; <strong>Ends:</strong> 31 March 2027 (License End Date), then §8 return/destroy</p>
+    <p>Related: ICA · SOW No. 1 · Design Partner License. Not legal advice. Sign if BA wants Sub-BA to host, support, or deidentify Limited PHI. <strong>Does not authorize training on identifiable PHI.</strong></p>
+    <p><strong>Confirmed structure (resolves License §4.9's open item):</strong> INSUREitALL is a business associate of the insurance plans/carriers, not itself a covered entity here. artificialBRIDGE is INSUREitALL's subcontractor, and this exhibit is the subcontractor BAA required by 45 CFR § 164.502(e)(1)(ii).</p>
+    <p><strong>Still outstanding:</strong> BA (INSUREitALL) will provide Sub-BA the deidentification / permitted-downstream-use language from BA's own carrier BAA(s), so §2(3) below doesn't exceed what BA is authorized to flow down.</p>
 
     <h2>1. Limited PHI</h2>
-    <p>Optional doctor names, medication names, and notes typed (a) on insureitall-llc.com needs-analysis / lead forms, or (b) in fileBRIDGE after the person grants INSUREitALL those fields. fileBRIDGE is owned and operated by BA. Public policy: /ab/privacy.</p>
+    <p>Optional doctor names, medication names, and notes typed (a) on insureitall-llc.com needs-analysis / lead forms, or (b) in fileBRIDGE after the person grants INSUREitALL those fields. fileBRIDGE is owned and operated by Sub-BA. Public policy: /ab/privacy.</p>
     <p><strong>Never in scope:</strong> SSN, MBI, bank accounts, card images, uploaded records, lab PDFs. Contact-only leads (name, phone, email, zip, window) without health details are not PHI under this exhibit.</p>
 
     <h2>2. Permitted uses</h2>
-    <p>BA may use Limited PHI only to (1) host Licensed Systems, (2) support / security / breach investigation, (3) create deidentified data under 45 CFR §§ 164.502(d) and 164.514 then train BRIDGEt on that deidentified data, (4) as required by law. BA will not train on identifiable Limited PHI, sell PHI, market with it, re-identify, or store SSN/MBI.</p>
+    <p>Sub-BA may use Limited PHI only to (1) host Licensed Systems, (2) support / security / breach investigation, (3) create deidentified data under 45 CFR §§ 164.502(d) and 164.514 then train BRIDGEt on that deidentified data — subject to the carrier-BAA confirmation above, (4) as required by law. Sub-BA will not train on identifiable Limited PHI, sell PHI, market with it, re-identify, or store SSN/MBI.</p>
 
     <h2>3–4. Safeguards and subcontractors</h2>
-    <p>TLS; staff gate on /console; no SSN/MBI fields; alerts without doctors/meds/notes; identifier scan. Subprocessors only if bound in writing. CE still signs vendor BAAs (Neon; any host that sees Limited PHI).</p>
+    <p>TLS; staff gate on /console; no SSN/MBI fields; alerts without doctors/meds/notes; identifier scan. Sub-BA's own subprocessors only if bound in writing to the same restrictions. BA still signs vendor BAAs (Neon; any host that sees Limited PHI).</p>
 
-    <h2>5–7. Rights, incidents, CE duties</h2>
-    <p>BA will support access, amendment, accounting, and HHS as required. BA notifies CE of a Breach of Unsecured PHI within <strong>five business days</strong> of discovery. CE will not send SSN/MBI or ask BA to use PHI outside this exhibit.</p>
+    <h2>5–7. Rights, incidents, BA duties</h2>
+    <p>Sub-BA will support access, amendment, accounting, and HHS as required. Sub-BA notifies BA of a Breach of Unsecured PHI within <strong>five business days</strong> of discovery. BA will not send SSN/MBI or ask Sub-BA to use PHI outside this exhibit or outside what BA's carrier BAA(s) permit it to flow down.</p>
 
     <h2>8–10. Term, fee, conflict</h2>
     <p>Ends with the License. 30-day wind-down: return or destroy Limited PHI except Deidentified Data and copies required by law. No extra fee — covers the $5,000 SOW and $0 license. PHI conflict: this exhibit controls. ICA $5,000 cap and defense control still apply except willful HIPAA violation.</p>
@@ -51,7 +53,7 @@
 
     <div class="sign">
       <div class="box">
-        <strong>Covered Entity — INSUREitALL LLC</strong>
+        <strong>Business Associate — INSUREitALL LLC</strong>
         <label><input type="checkbox" /> I agree this electronic signature is my legal signature on this BAA, and I have authority to bind INSUREitALL LLC.</label>
         <p style="margin:12px 0 0">/s/ Ryan Butterfield</p>
         <p class="meta">Title: CEO</p>
@@ -61,7 +63,7 @@
         <p class="meta" style="margin-top:10px">rmbutterfield@team-iia.com</p>
       </div>
       <div class="box">
-        <strong>Business Associate — artificialBRIDGE LLC</strong>
+        <strong>Subcontractor — artificialBRIDGE LLC</strong>
         <label><input type="checkbox" /> I agree this electronic signature is my legal signature on this BAA, and I have authority to bind artificialBRIDGE LLC.</label>
         <p style="margin:12px 0 0">/s/ Michael Lang</p>
         <p class="meta">Title: Managing Member</p>

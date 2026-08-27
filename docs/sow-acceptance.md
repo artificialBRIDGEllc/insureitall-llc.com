@@ -18,11 +18,11 @@ Material defects only. Cosmetic preference is not a defect. 7-day window, then c
 - [x] Vercel / env notes in README + `.env.example`
 - [x] `/screener` redirects home (beneFIT held)
 
-## Licensed, not sold (on site through 24 Aug 2027)
+## Licensed, not sold (on site through 31 Mar 2027)
 
 - [x] BRIDGEt (advocate, clay, widget)
 - [x] Plan Choice Audit (`/compare`)
-- [x] fileBRIDGE (`/portal`) — owned and operated by artificialBRIDGE LLC; consent-scoped agency access
+- [ ] fileBRIDGE integration (`/portal`) — owned and operated by artificialBRIDGE LLC; currently a "coming soon" placeholder, not an active consumer integration
 - [x] Staff console (`/console`) — lead lifecycle through disenrollment
 
 ## Out (not this invoice)

@@ -183,7 +183,7 @@ Reference implementation after BUILD — **not** a shortcut to skip RA:
 
 - `src/lib/compliance.ts` + `<TpmoDisclaimer />` on footer  
 - `LEAD_CONSENT` + server refuse  
-- `/leaving` before fileBRIDGE  
+- `/leaving` before fileBRIDGE, once `/portal` links out to it (not applicable while `/portal` is a placeholder — see Exhibit R, R9)  
 - `/hipaa` proof, not a certificate  
 - `/glba` with health-info row  
 - `/ai-disclosure`  

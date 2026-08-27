@@ -3,7 +3,6 @@ Allow: /
 Allow: /ab
 Allow: /ab/privacy
 Allow: /ab/terms
-Allow: /leaving
 Disallow: /console
 Disallow: /portal
 Disallow: /login
