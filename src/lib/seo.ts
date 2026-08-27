@@ -11,7 +11,6 @@ export const PUBLIC_PATHS = [
   "/bridget",
   "/compare",
   "/contact",
-  "/leaving",
   "/medicare-basics",
   "/needs-analysis",
   "/privacy",

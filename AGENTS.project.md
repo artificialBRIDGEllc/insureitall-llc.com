@@ -2,7 +2,7 @@
 
 Operate on the **current elite site** (TanStack Start at repo root). Full map: `CLAUDE.md`. This file is the working contract.
 
-GitHub: `copperlang2007/insureitall-website`. Preview is the TanStack tree at repo root. Staff admin is `/console` (BRIDGEt Console). `/portal` remains the consumer file.
+GitHub: `copperlang2007/insureitall-website`. Preview is the TanStack tree at repo root. Staff admin is `/console` (BRIDGEt Console). `/portal` is now a beneficiaryCONNECT "client portal coming soon" placeholder (fileBRIDGE consumer app removed).
 
 ---
 
@@ -66,9 +66,9 @@ Must remain true:
 
 ## Pages you may touch
 
-`/`, `/bridget`, `/compare` (Plan Choice Audit — type ledger, not every plan), `/contact`, `/lead`, `/medicare-basics` (includes plan-type table), `/needs-analysis`, `/privacy`, `/hipaa`, `/glba`, `/security`, `/terms`, `/ai-disclosure`, `/accessibility`, `/portal` (consumer app: file / share / help), `/console` (staff BRIDGEt Console + nested leads/usage/sessions/consent/audit/debt), plus chrome (`site-shell`, header, footer, widget, ident). **`/screener` (beneFIT) is held — not licensed this phase; old URL redirects home.**
+`/`, `/bridget`, `/compare` (Plan Choice Audit — type ledger, not every plan), `/contact`, `/lead`, `/medicare-basics` (includes plan-type table), `/needs-analysis`, `/privacy`, `/hipaa`, `/glba`, `/security`, `/terms`, `/ai-disclosure`, `/accessibility`, `/portal` (beneficiaryCONNECT — "coming soon" placeholder, no auth gate), `/console` (staff BRIDGEt Console + nested leads/usage/sessions/consent/audit/debt), plus chrome (`site-shell`, header, footer, widget, ident). **`/screener` (beneFIT) is held — not licensed this phase; old URL redirects home.**
 
-`/portal` (consumer file) and `/console` (BRIDGEt Console, staff). `/team` redirects to `/console`.
+`/portal` (beneficiaryCONNECT coming-soon placeholder) and `/console` (BRIDGEt Console, staff). `/team` redirects to `/console`.
 
 Staff emails: `team-iia.com`, `insureitallins.com`, `insureitall-llc.com`, `insureitall.com` (`src/lib/staff.ts`).
 
@@ -78,7 +78,7 @@ Regulatory disclaimers are a **strict operating phase**. Full contract: `docs/co
 
 - Source lock: `src/lib/compliance.ts` — TPMO, counts, non-affiliation, states, TCPA. **Do not paraphrase.**
 - Render TPMO with `<TpmoDisclaimer />`. Footer on every marketing page.
-- TCPA enforced **server-side**. No SSN/MBI fields. Leave-site `/leaving` before fileBRIDGE.
+- TCPA enforced **server-side**. No SSN/MBI fields.
 - Counts change only from a signed `docs/cco-confirmation.md`. Static 14/14 until Ryan marks zip-level Yes.
 - **Audit first** if a site is already live: `docs/contracts/11a-site-compliance-audit.md`. File `docs/audits/AUD-YYYYMMDD-<host>.md`. Do not change TPMO/TCPA until the log exists.
 

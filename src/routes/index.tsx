@@ -282,15 +282,15 @@ function Home() {
         <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-2">
           <div>
             <p className="text-xs font-semibold tracking-[0.16em] text-mist uppercase">
-              fileBRIDGE · artificialBRIDGE
+              beneficiaryCONNECT
             </p>
             <h2 className="mt-3 font-display text-3xl sm:text-4xl">
               Continuity when the <em className="italic">relationship changes.</em>
             </h2>
             <p className="mt-4 leading-relaxed text-elevated/80">
-              A beneficiary app owned and operated by artificialBRIDGE LLC — not by
-              INSUREitALL. You may grant this agency access, field by field, and
-              revoke it anytime. Lives at filebridge.theartificialbridge.com
+              beneficiaryCONNECT is a separate client portal that will connect
+              with your INSUREitALL coverage file. It's coming soon — not live
+              yet.
             </p>
             <p className="welcome-home">Welcome home.</p>
           </div>
@@ -299,9 +299,7 @@ function Home() {
               Express consent. Scoped fields. Not an enrollment.
             </p>
             <Button asChild size="lg" variant="soft">
-              <Link to="/leaving" search={{ to: "filebridge" }}>
-                Open fileBRIDGE
-              </Link>
+              <Link to="/portal">Client Portal — coming soon</Link>
             </Button>
           </div>
         </div>

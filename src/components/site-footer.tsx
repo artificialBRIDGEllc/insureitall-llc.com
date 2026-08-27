@@ -59,9 +59,7 @@ export function SiteFooter() {
                 <Link to="/lead">Request a call back</Link>
               </li>
               <li>
-                <Link to="/leaving" search={{ to: "filebridge" }}>
-                  fileBRIDGE (third-party)
-                </Link>
+                <Link to="/portal">Client Portal (coming soon)</Link>
               </li>
             </ul>
           </div>
@@ -74,9 +72,6 @@ export function SiteFooter() {
             <p className="mt-3 flex flex-col gap-2 text-xs text-elevated/70">
               <Link to="/privacy" className="underline underline-offset-2">
                 Privacy Policy
-              </Link>
-              <Link to="/ab/privacy" className="underline underline-offset-2">
-                fileBRIDGE privacy (artificialBRIDGE LLC)
               </Link>
               <Link to="/hipaa" className="underline underline-offset-2">
                 HIPAA & PHI

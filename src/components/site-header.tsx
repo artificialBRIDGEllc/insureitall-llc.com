@@ -6,7 +6,6 @@ import { useCurrentUserState } from "@/lib/auth/use-current-user";
 import { Logo } from "@/components/logo";
 import { BridgetMark } from "@/components/bridget-wordmark";
 import { CallLink } from "@/components/call-link";
-import { LeavingLink } from "@/components/leaving-link";
 import { Button } from "@/components/ui/button";
 import { HOURS, PHONE_DISPLAY } from "@/lib/utils";
 import { isStaffUser } from "@/lib/staff";
@@ -37,9 +36,9 @@ function AuthSlot() {
     );
   }
   return (
-    <LeavingLink className="hidden text-sm font-medium text-muted hover:text-navy lg:inline">
-      fileBRIDGE
-    </LeavingLink>
+    <Link to="/portal" className="hidden text-sm font-medium text-muted hover:text-navy lg:inline">
+      Client Portal
+    </Link>
   );
 }
 
@@ -124,12 +123,11 @@ export function SiteHeader() {
               ))}
               <SignedOut>
                 <Link
-                  to="/leaving"
-                  search={{ to: "filebridge" }}
+                  to="/portal"
                   className="rounded-xl px-3 py-3 text-base font-medium text-navy hover:bg-soft"
                   onClick={() => setOpen(false)}
                 >
-                  fileBRIDGE (leaves this site)
+                  Client Portal
                 </Link>
               </SignedOut>
               <SignedIn>

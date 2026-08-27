@@ -13,5 +13,5 @@ export const Route = createFileRoute("/login")({
 });
 
 function LoginRedirect() {
-  return <Navigate to="/leaving" search={{ to: "filebridge" }} replace />;
+  return <Navigate to="/portal" replace />;
 }
