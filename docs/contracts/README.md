@@ -29,13 +29,12 @@ Amendment No. 1 (License) and Amendment No. 1 (ICA/SOW) have been **merged into 
 1. **HIPAA structure confirmed.** INSUREitALL is a business associate of the Medicare insurance carriers/plans (the covered entities), not itself a covered entity here; artificialBRIDGE is INSUREitALL's **subcontractor**. Exhibit BAA is rewritten as the subcontractor BAA 45 CFR § 164.502(e)(1)(ii) requires — see its "Still outstanding" note: INSUREitALL still needs to hand artificialBRIDGE the deidentification/downstream-use language from its own carrier BAA(s), since a subcontractor agreement can't flow down more than INSUREitALL itself is authorized to give.
 2. **Go-live date confirmed** — 25 August 2026. License §5's ratification clause is filled in.
 3. **Production deployment parity confirmed.** Vercel's production alias for `www.insureitall-llc.com` currently serves commit `13c020be034ac088bd1382102a0d539ecfde59e7` on `main` — the same commit this packet's PR branches from, which contains `/hipaa`, `/glba`, and `/ab/privacy`. Direct HTTP checks of the live URLs weren't possible from this environment (network policy blocks the domain); do one manual pass over `/hipaa`, `/glba`, `/ab/privacy` before calling Phase R fully PASS. Separately, `/portal` no longer links out to fileBRIDGE (it's a "coming soon" placeholder), so Exhibit R gate R9 (leave-site interstitial) is not applicable right now — re-open it if that integration goes live.
-4. **Invoice remit block filled in** — bank (Coastal Community Bank, Everett WA), account name, routing, account number, and EIN are all in. Only the check-payer mailing address (`[REMIT ADDRESS]`) is still a placeholder.
+4. **Invoice remit block filled in and payment method locked to wire transfer.** Bank (Coastal Community Bank, Everett WA), account name, routing, account number, and EIN are all in. Checks are not accepted — the invoice says so, so there's no remit-address placeholder to fill.
 
 ## Pre-signature blockers — still open
 
-1. **ICA §12 insurance is a 30-day-bind obligation, not yet bound.** Actually bind tech E&O + cyber (~$1,000,000 per claim each) within 30 days of the Effective Date so the representation stays true.
-2. **Invoice check remit address** (`[REMIT ADDRESS]`) is still a placeholder — only relevant if Client might pay by check rather than ACH.
-3. **Carrier BAA flow-down language** — INSUREitALL should send artificialBRIDGE the deidentification/permitted-downstream-use language from its carrier BAA(s) per Exhibit BAA's "Still outstanding" note, so §2(3) is confirmed within what INSUREitALL is actually authorized to flow down.
+1. **ICA §12 insurance is a 30-day-bind obligation, not yet bound.** Contractor has confirmed intent to bind tech E&O + cyber (~$1,000,000 per claim each) within 30 days of the Effective Date — actually placing that coverage is the remaining step so the representation stays true.
+2. **Carrier BAA flow-down language** — INSUREitALL should send artificialBRIDGE the deidentification/permitted-downstream-use language from its carrier BAA(s) per Exhibit BAA's "Still outstanding" note, so §2(3) is confirmed within what INSUREitALL is actually authorized to flow down.
 
 ## Send list
 
