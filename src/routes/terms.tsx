@@ -49,12 +49,12 @@ function TermsPage() {
           </p>
         </section>
         <section>
-          <h2 className="font-display text-2xl text-navy">4. Third-party sites</h2>
+          <h2 className="font-display text-2xl text-navy">4. Client portal</h2>
           <p className="mt-3">
-            fileBRIDGE is owned and operated by artificialBRIDGE LLC. When you
-            follow that link we tell you that you are leaving INSUREitALL LLC.
-            We are not responsible for that site’s content, privacy practices, or
-            availability. Using it is not an enrollment with us or with Medicare.
+            beneficiaryCONNECT is a separate client portal that will connect
+            with your INSUREitALL coverage file. It is coming soon and is not
+            live yet. These terms will be updated with the portal operator's
+            details when it launches.
           </p>
         </section>
         <section>

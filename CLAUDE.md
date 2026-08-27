@@ -1,6 +1,6 @@
 # INSUREitALL website — current state
 
-Last aligned: 25 Aug 2026 (SOW No. 1 accepted for delivery). Preview app is the **TanStack Start** tree at repo root. GitHub: [copperlang2007/insureitall-website](https://github.com/copperlang2007/insureitall-website). Staff admin: **`/console`**. `/team` redirects there. Consumer file is **fileBRIDGE** at `/portal` (third-party; IIA uses `/leaving`).
+Last aligned: 27 Aug 2026 (fileBRIDGE consumer app removed from `/portal`). Preview app is the **TanStack Start** tree at repo root. GitHub: [copperlang2007/insureitall-website](https://github.com/copperlang2007/insureitall-website). Staff admin: **`/console`**. `/team` redirects there. `/portal` is now a **beneficiaryCONNECT** "client portal coming soon" placeholder — beneficiaryCONNECT is a separate product, not yet live.
 
 This file is the site map for Claude. Agent operating rules live in `AGENTS.project.md` (this workspace) / `AGENTS.md` on GitHub.
 
@@ -29,7 +29,7 @@ Live marketing domains historically: insureitallins.com / insureitall-llc.com.
 - Auth: existing Grok/Better-auth wiring (`src/lib/auth/`)
 - Fonts: **Fraunces** (display) + **Inter** (body)
 - Icons: lucide-react
-- Motion: CSS only (hover raise, ident, widget pop, clay bob). Ident auto-plays on `/` once per session (`iia-ident-v11`) with Skip intro + optional Play sound. Escape skips. `prefers-reduced-motion` short-circuits. Never gates `/portal` or inner pages.
+- Motion: CSS only (hover raise, ident, widget pop, clay bob). Ident auto-plays on `/` once per session (`iia-ident-v11`) with Skip intro + optional Play sound. Escape skips. `prefers-reduced-motion` short-circuits.
 
 ### Dual trees (do not mix blindly)
 
@@ -122,12 +122,11 @@ Six polymer-clay objects around her. Tap for her take. Hover/focus raise.
 | `/terms` | Terms of use |
 | `/ai-disclosure` | How BRIDGEt / AI is used — not an agent, no PHI |
 | `/accessibility` | Accessibility statement |
-| `/portal` | **artificialBRIDGE** beneficiary app — file, **express scoped consent** to INSUREitALL, share codes. Not an IIA product. |
-| `/ab` `/ab/privacy` `/ab/terms` | Wyoming single-member LLC entity, privacy, terms for fileBRIDGE |
+| `/portal` | **beneficiaryCONNECT** client portal — "coming soon" placeholder. Not live. |
+| `/ab` `/ab/privacy` `/ab/terms` | Legacy Wyoming single-member LLC entity/privacy/terms pages for the retired fileBRIDGE product. Unlinked from nav; kept for historical/legal reference. |
 | `/console` | Staff desk — lead lifecycle (new → enrolled → disenrolled), usage, sessions, consent, audit, debt |
 | `/team` | Redirects to `/console` |
-| `/leaving` | Third-party notice before fileBRIDGE |
-| `/login` | Goes through `/leaving` then fileBRIDGE |
+| `/login` | Redirects to `/portal` |
 
 Nav (header): Needs Analysis, Plan Choice Audit, BRIDGEt, Medicare Basics, Contact. Phone CTA always present.
 
@@ -152,9 +151,9 @@ Copy lives in `src/lib/compliance.ts`. Footer always renders TPMO via `TpmoDiscl
 
 ## Portal split
 
-- `/portal` — consumer. Signed out: marketing + create account. Signed in: app shell (`/portal`, `/portal/file`, `/portal/share`, `/portal/help`). File is zip, doctors, medications, budget, notes. Share codes are revocable. Staff open codes on `/console/leads`.
-- `/console` — BRIDGEt Console. Overview KPIs, lead desk, usage, sessions, consent/retention, audit log. Live inbound from `ops_requests`. Usage metrics are illustrative until ElevenLabs analytics is wired. Staff emails: `team-iia.com`, `insureitallins.com`, `insureitall-llc.com`, `insureitall.com`. `/team` redirects here.
-- Migrations `0002_portal.sql`, `0003_portal_shares.sql`, `0004_ops_requests.sql`, `0005_ops_lead_status.sql`.
+- `/portal` — public, no auth. Static "beneficiaryCONNECT — client portal coming soon" page. The old fileBRIDGE consumer app (file/agency/share/help, sign-in gate) has been removed.
+- `/console` — BRIDGEt Console. Overview KPIs, lead desk, usage, sessions, consent/retention, audit log. Live inbound from `ops_requests`. Usage metrics are illustrative until ElevenLabs analytics is wired. Staff emails: `team-iia.com`, `insureitallins.com`, `insureitall-llc.com`, `insureitall.com`. `/team` redirects here. Staff can still open legacy share codes on `/console/leads` (`src/lib/portal.ts`, `TeamShareLookup`) — that backend is untouched.
+- Migrations `0002_portal.sql`, `0003_portal_shares.sql`, `0004_ops_requests.sql`, `0005_ops_lead_status.sql` remain for the staff-side share-code lookup above; no new consumer writes happen through `/portal` today.
 
 ---
 
@@ -183,8 +182,7 @@ src/components/bridget-orbit.tsx     clay frustrations
 src/components/bridget-copilot.tsx   site widget
 src/components/bridget-wordmark.tsx  BRIDGE + t + smile
 src/components/call-link.tsx         tel: + pickup ring
-src/components/portal/shell.tsx     consumer app chrome
-src/components/portal/welcome.tsx    signed-out portal landing
+src/routes/portal.tsx                beneficiaryCONNECT "coming soon" placeholder
 src/lib/ring.ts                      pickup audio
 docs/neon-nerd.md                  Neon catalog + Wyoming LLC tax schedule (0009)
 migrations/0009_wy_llc_license_tax.sql

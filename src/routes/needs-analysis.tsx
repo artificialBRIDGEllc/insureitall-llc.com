@@ -7,8 +7,6 @@ import { LeadConsent } from "@/components/lead-consent";
 import { PageHero } from "@/components/page-hero";
 import { SiteShell } from "@/components/site-shell";
 import { Button } from "@/components/ui/button";
-import { useCurrentUserState } from "@/lib/auth/use-current-user";
-import { savePortalProfile } from "@/lib/portal";
 import { submitOpsRequest } from "@/lib/ops";
 import { track } from "@/lib/track";
 import { pageHead } from "@/lib/seo";
@@ -27,11 +25,9 @@ export const Route = createFileRoute("/needs-analysis")({
 
 function NeedsPage() {
   const [sent, setSent] = useState(false);
-  const [savedToFile, setSavedToFile] = useState(false);
   const [consent, setConsent] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const { user } = useCurrentUserState();
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -68,23 +64,6 @@ function NeedsPage() {
       setBusy(false);
       return;
     }
-    if (user) {
-      try {
-        await savePortalProfile({
-          data: {
-            role: "client",
-            zip,
-            doctors,
-            medications,
-            budget,
-            notes: "",
-          },
-        });
-        setSavedToFile(true);
-      } catch {
-        setSavedToFile(false);
-      }
-    }
     setBusy(false);
     setSent(true);
   }
@@ -103,15 +82,6 @@ function NeedsPage() {
             <p className="mt-2 text-ink">
               An agent will review what you shared and follow up. Prefer to talk now?
             </p>
-            {savedToFile ? (
-              <p className="mt-3 text-sm text-navy">
-                Also saved to{" "}
-                <Link to="/portal" className="text-blue">
-                  your portal file
-                </Link>
-                .
-              </p>
-            ) : null}
             <Button asChild className="mt-6" variant="blue">
               <a href={PHONE_HREF}>Call now</a>
             </Button>
@@ -143,15 +113,6 @@ function NeedsPage() {
             <Button type="submit" className="w-full" size="lg" variant="blue" disabled={!consent || busy}>
               {busy ? "Sending…" : "Send to an agent"}
             </Button>
-            <p className="text-center text-sm">
-              {user ? (
-                <span className="text-muted">We’ll also save this to your portal file.</span>
-              ) : (
-                <Link to="/portal" className="text-blue">
-                  Create a portal account so this file stays with you
-                </Link>
-              )}
-            </p>
             <p className="text-center text-sm">
               <Link to="/lead" className="text-blue">
                 Prefer a call back instead

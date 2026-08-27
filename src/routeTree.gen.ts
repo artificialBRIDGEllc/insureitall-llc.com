@@ -20,7 +20,6 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as GlbaRouteImport } from './routes/glba'
 import { Route as HipaaRouteImport } from './routes/hipaa'
 import { Route as LeadRouteImport } from './routes/lead'
-import { Route as LeavingRouteImport } from './routes/leaving'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as MedicareBasicsRouteImport } from './routes/medicare-basics'
 import { Route as NeedsAnalysisRouteImport } from './routes/needs-analysis'
@@ -41,11 +40,6 @@ import { Route as ConsoleDebtRouteImport } from './routes/console/debt'
 import { Route as ConsoleLeadsRouteImport } from './routes/console/leads'
 import { Route as ConsoleSessionsRouteImport } from './routes/console/sessions'
 import { Route as ConsoleUsageRouteImport } from './routes/console/usage'
-import { Route as PortalIndexRouteImport } from './routes/portal/index'
-import { Route as PortalAgencyRouteImport } from './routes/portal/agency'
-import { Route as PortalFileRouteImport } from './routes/portal/file'
-import { Route as PortalHelpRouteImport } from './routes/portal/help'
-import { Route as PortalShareRouteImport } from './routes/portal/share'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 
 const IndexRoute = IndexRouteImport.update({
@@ -101,11 +95,6 @@ const HipaaRoute = HipaaRouteImport.update({
 const LeadRoute = LeadRouteImport.update({
   id: '/lead',
   path: '/lead',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LeavingRoute = LeavingRouteImport.update({
-  id: '/leaving',
-  path: '/leaving',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -208,31 +197,6 @@ const ConsoleUsageRoute = ConsoleUsageRouteImport.update({
   path: '/usage',
   getParentRoute: () => ConsoleRoute,
 } as any)
-const PortalIndexRoute = PortalIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => PortalRoute,
-} as any)
-const PortalAgencyRoute = PortalAgencyRouteImport.update({
-  id: '/agency',
-  path: '/agency',
-  getParentRoute: () => PortalRoute,
-} as any)
-const PortalFileRoute = PortalFileRouteImport.update({
-  id: '/file',
-  path: '/file',
-  getParentRoute: () => PortalRoute,
-} as any)
-const PortalHelpRoute = PortalHelpRouteImport.update({
-  id: '/help',
-  path: '/help',
-  getParentRoute: () => PortalRoute,
-} as any)
-const PortalShareRoute = PortalShareRouteImport.update({
-  id: '/share',
-  path: '/share',
-  getParentRoute: () => PortalRoute,
-} as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: '/api/auth/$',
   path: '/api/auth/$',
@@ -251,11 +215,10 @@ export interface FileRoutesByFullPath {
   '/glba': typeof GlbaRoute
   '/hipaa': typeof HipaaRoute
   '/lead': typeof LeadRoute
-  '/leaving': typeof LeavingRoute
   '/login': typeof LoginRoute
   '/medicare-basics': typeof MedicareBasicsRoute
   '/needs-analysis': typeof NeedsAnalysisRoute
-  '/portal': typeof PortalRouteWithChildren
+  '/portal': typeof PortalRoute
   '/privacy': typeof PrivacyRoute
   '/screener': typeof ScreenerRoute
   '/security': typeof SecurityRoute
@@ -270,13 +233,8 @@ export interface FileRoutesByFullPath {
   '/console/leads': typeof ConsoleLeadsRoute
   '/console/sessions': typeof ConsoleSessionsRoute
   '/console/usage': typeof ConsoleUsageRoute
-  '/portal/agency': typeof PortalAgencyRoute
-  '/portal/file': typeof PortalFileRoute
-  '/portal/help': typeof PortalHelpRoute
-  '/portal/share': typeof PortalShareRoute
   '/ab/': typeof AbIndexRoute
   '/console/': typeof ConsoleIndexRoute
-  '/portal/': typeof PortalIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRoutesByTo {
@@ -289,10 +247,10 @@ export interface FileRoutesByTo {
   '/glba': typeof GlbaRoute
   '/hipaa': typeof HipaaRoute
   '/lead': typeof LeadRoute
-  '/leaving': typeof LeavingRoute
   '/login': typeof LoginRoute
   '/medicare-basics': typeof MedicareBasicsRoute
   '/needs-analysis': typeof NeedsAnalysisRoute
+  '/portal': typeof PortalRoute
   '/privacy': typeof PrivacyRoute
   '/screener': typeof ScreenerRoute
   '/security': typeof SecurityRoute
@@ -307,13 +265,8 @@ export interface FileRoutesByTo {
   '/console/leads': typeof ConsoleLeadsRoute
   '/console/sessions': typeof ConsoleSessionsRoute
   '/console/usage': typeof ConsoleUsageRoute
-  '/portal/agency': typeof PortalAgencyRoute
-  '/portal/file': typeof PortalFileRoute
-  '/portal/help': typeof PortalHelpRoute
-  '/portal/share': typeof PortalShareRoute
   '/ab': typeof AbIndexRoute
   '/console': typeof ConsoleIndexRoute
-  '/portal': typeof PortalIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRoutesById {
@@ -329,11 +282,10 @@ export interface FileRoutesById {
   '/glba': typeof GlbaRoute
   '/hipaa': typeof HipaaRoute
   '/lead': typeof LeadRoute
-  '/leaving': typeof LeavingRoute
   '/login': typeof LoginRoute
   '/medicare-basics': typeof MedicareBasicsRoute
   '/needs-analysis': typeof NeedsAnalysisRoute
-  '/portal': typeof PortalRouteWithChildren
+  '/portal': typeof PortalRoute
   '/privacy': typeof PrivacyRoute
   '/screener': typeof ScreenerRoute
   '/security': typeof SecurityRoute
@@ -348,13 +300,8 @@ export interface FileRoutesById {
   '/console/leads': typeof ConsoleLeadsRoute
   '/console/sessions': typeof ConsoleSessionsRoute
   '/console/usage': typeof ConsoleUsageRoute
-  '/portal/agency': typeof PortalAgencyRoute
-  '/portal/file': typeof PortalFileRoute
-  '/portal/help': typeof PortalHelpRoute
-  '/portal/share': typeof PortalShareRoute
   '/ab/': typeof AbIndexRoute
   '/console/': typeof ConsoleIndexRoute
-  '/portal/': typeof PortalIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRouteTypes {
@@ -371,7 +318,6 @@ export interface FileRouteTypes {
     | '/glba'
     | '/hipaa'
     | '/lead'
-    | '/leaving'
     | '/login'
     | '/medicare-basics'
     | '/needs-analysis'
@@ -390,13 +336,8 @@ export interface FileRouteTypes {
     | '/console/leads'
     | '/console/sessions'
     | '/console/usage'
-    | '/portal/agency'
-    | '/portal/file'
-    | '/portal/help'
-    | '/portal/share'
     | '/ab/'
     | '/console/'
-    | '/portal/'
     | '/api/auth/$'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -409,10 +350,10 @@ export interface FileRouteTypes {
     | '/glba'
     | '/hipaa'
     | '/lead'
-    | '/leaving'
     | '/login'
     | '/medicare-basics'
     | '/needs-analysis'
+    | '/portal'
     | '/privacy'
     | '/screener'
     | '/security'
@@ -427,13 +368,8 @@ export interface FileRouteTypes {
     | '/console/leads'
     | '/console/sessions'
     | '/console/usage'
-    | '/portal/agency'
-    | '/portal/file'
-    | '/portal/help'
-    | '/portal/share'
     | '/ab'
     | '/console'
-    | '/portal'
     | '/api/auth/$'
   id:
     | '__root__'
@@ -448,7 +384,6 @@ export interface FileRouteTypes {
     | '/glba'
     | '/hipaa'
     | '/lead'
-    | '/leaving'
     | '/login'
     | '/medicare-basics'
     | '/needs-analysis'
@@ -467,13 +402,8 @@ export interface FileRouteTypes {
     | '/console/leads'
     | '/console/sessions'
     | '/console/usage'
-    | '/portal/agency'
-    | '/portal/file'
-    | '/portal/help'
-    | '/portal/share'
     | '/ab/'
     | '/console/'
-    | '/portal/'
     | '/api/auth/$'
   fileRoutesById: FileRoutesById
 }
@@ -489,11 +419,10 @@ export interface RootRouteChildren {
   GlbaRoute: typeof GlbaRoute
   HipaaRoute: typeof HipaaRoute
   LeadRoute: typeof LeadRoute
-  LeavingRoute: typeof LeavingRoute
   LoginRoute: typeof LoginRoute
   MedicareBasicsRoute: typeof MedicareBasicsRoute
   NeedsAnalysisRoute: typeof NeedsAnalysisRoute
-  PortalRoute: typeof PortalRouteWithChildren
+  PortalRoute: typeof PortalRoute
   PrivacyRoute: typeof PrivacyRoute
   ScreenerRoute: typeof ScreenerRoute
   SecurityRoute: typeof SecurityRoute
@@ -580,13 +509,6 @@ declare module '@tanstack/react-router' {
       path: '/lead'
       fullPath: '/lead'
       preLoaderRoute: typeof LeadRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/leaving': {
-      id: '/leaving'
-      path: '/leaving'
-      fullPath: '/leaving'
-      preLoaderRoute: typeof LeavingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -729,41 +651,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConsoleUsageRouteImport
       parentRoute: typeof ConsoleRoute
     }
-    '/portal/': {
-      id: '/portal/'
-      path: '/'
-      fullPath: '/portal/'
-      preLoaderRoute: typeof PortalIndexRouteImport
-      parentRoute: typeof PortalRoute
-    }
-    '/portal/agency': {
-      id: '/portal/agency'
-      path: '/agency'
-      fullPath: '/portal/agency'
-      preLoaderRoute: typeof PortalAgencyRouteImport
-      parentRoute: typeof PortalRoute
-    }
-    '/portal/file': {
-      id: '/portal/file'
-      path: '/file'
-      fullPath: '/portal/file'
-      preLoaderRoute: typeof PortalFileRouteImport
-      parentRoute: typeof PortalRoute
-    }
-    '/portal/help': {
-      id: '/portal/help'
-      path: '/help'
-      fullPath: '/portal/help'
-      preLoaderRoute: typeof PortalHelpRouteImport
-      parentRoute: typeof PortalRoute
-    }
-    '/portal/share': {
-      id: '/portal/share'
-      path: '/share'
-      fullPath: '/portal/share'
-      preLoaderRoute: typeof PortalShareRouteImport
-      parentRoute: typeof PortalRoute
-    }
     '/api/auth/$': {
       id: '/api/auth/$'
       path: '/api/auth/$'
@@ -811,25 +698,6 @@ const ConsoleRouteChildren: ConsoleRouteChildren = {
 const ConsoleRouteWithChildren =
   ConsoleRoute._addFileChildren(ConsoleRouteChildren)
 
-interface PortalRouteChildren {
-  PortalAgencyRoute: typeof PortalAgencyRoute
-  PortalFileRoute: typeof PortalFileRoute
-  PortalHelpRoute: typeof PortalHelpRoute
-  PortalShareRoute: typeof PortalShareRoute
-  PortalIndexRoute: typeof PortalIndexRoute
-}
-
-const PortalRouteChildren: PortalRouteChildren = {
-  PortalAgencyRoute: PortalAgencyRoute,
-  PortalFileRoute: PortalFileRoute,
-  PortalHelpRoute: PortalHelpRoute,
-  PortalShareRoute: PortalShareRoute,
-  PortalIndexRoute: PortalIndexRoute,
-}
-
-const PortalRouteWithChildren =
-  PortalRoute._addFileChildren(PortalRouteChildren)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AbRoute: AbRouteWithChildren,
@@ -842,11 +710,10 @@ const rootRouteChildren: RootRouteChildren = {
   GlbaRoute: GlbaRoute,
   HipaaRoute: HipaaRoute,
   LeadRoute: LeadRoute,
-  LeavingRoute: LeavingRoute,
   LoginRoute: LoginRoute,
   MedicareBasicsRoute: MedicareBasicsRoute,
   NeedsAnalysisRoute: NeedsAnalysisRoute,
-  PortalRoute: PortalRouteWithChildren,
+  PortalRoute: PortalRoute,
   PrivacyRoute: PrivacyRoute,
   ScreenerRoute: ScreenerRoute,
   SecurityRoute: SecurityRoute,

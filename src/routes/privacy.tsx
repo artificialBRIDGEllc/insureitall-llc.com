@@ -46,12 +46,7 @@ function PrivacyPage() {
             name, phone number, email, zip, callback window, and any notes you
             type on <em>this</em> site. Optional doctor and medication names on
             those INSUREitALL forms stay with INSUREitALL LLC so a licensed agent
-            can prepare. fileBRIDGE accounts are not collected by this agency —
-            see{" "}
-            <Link className="text-blue" to="/ab/privacy">
-              artificialBRIDGE LLC privacy
-            </Link>
-            .
+            can prepare.
           </p>
         </section>
         <section>
@@ -96,40 +91,13 @@ function PrivacyPage() {
           </p>
         </section>
         <section>
-          <h2 className="font-display text-2xl text-navy">Leaving this website</h2>
+          <h2 className="font-display text-2xl text-navy">Client portal</h2>
           <p className="mt-3">
-            Links labeled fileBRIDGE send you to a product owned and operated by
-            artificialBRIDGE LLC (filebridge.theartificialbridge.com). That is
-            a third-party site. It is not INSUREitALL, not Medicare, and not CMS.
-            Their privacy policy is at{" "}
-            <Link className="text-blue" to="/ab/privacy">
-              /ab/privacy
-            </Link>
-            . Their entity is at{" "}
-            <Link className="text-blue" to="/ab">
-              /ab
-            </Link>
-            . We show a leave-site notice first. TCPA consent you give on this site does not transfer.
-            Granting this agency access to your file is optional, scoped, and
-            revocable. It is not an enrollment. See{" "}
-            <Link className="text-blue" to="/leaving" search={{ to: "filebridge" }}>
-              the leave-site notice
-            </Link>
-            .
-          </p>
-        </section>
-        <section>
-          <h2 className="font-display text-2xl text-navy">fileBRIDGE accounts</h2>
-          <p className="mt-3">
-            The coverage file is owned and operated by artificialBRIDGE LLC.
-            It is not an INSUREitALL product. You may grant INSUREitALL licensed
-            agents access to specific fields (zip, budget, doctor names,
-            medication names, notes) by express consent. You may revoke that
-            access at any time. We store the coverage file you choose to save on
-            your artificialBRIDGE account. Never enter a Medicare number or
-            Social Security number. Share codes are revocable. Sharing is not an
-            enrollment and is not a transfer of a book of business. You may email
-            info@team-iia.com or the portal operator to delete the account.
+            beneficiaryCONNECT is a separate client portal that will connect
+            with your INSUREitALL coverage file. It is coming soon and is not
+            live yet — no account, coverage file, or third-party redirect is
+            active from this site today. This section will be updated with
+            the portal operator's privacy details when it launches.
           </p>
         </section>
         <section>
