@@ -96,9 +96,14 @@ export function SiteFooter() {
         </div>
       </div>
       <div className="border-t border-elevated/10">
-        <div className="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-5 text-xs text-elevated/50 sm:px-6">
-          <p>{LICENSED_STATES_LINE}</p>
-          <p>© 2026 INSUREitALL LLC. All rights reserved.</p>
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-5 text-xs text-elevated/50 sm:px-6">
+          <div className="flex flex-col gap-2">
+            <p>{LICENSED_STATES_LINE}</p>
+            <p>© 2026 INSUREitALL LLC. All rights reserved.</p>
+          </div>
+          <Link to="/console" className="text-elevated/40 hover:text-elevated/60 underline underline-offset-2">
+            Team Console
+          </Link>
         </div>
       </div>
     </footer>
