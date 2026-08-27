@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { changePassword } from "@/routes/api/auth/change-password";
 
 export function ChangePasswordForm({
   onSuccess,
@@ -40,25 +41,16 @@ export function ChangePasswordForm({
 
     setLoading(true);
     try {
-      // TODO: Implement password change endpoint
-      // const res = await fetch("/api/auth/change-password", {
-      //   method: "POST",
-      //   headers: { "Content-Type": "application/json" },
-      //   body: JSON.stringify({
-      //     currentPassword: isRequired ? undefined : currentPassword,
-      //     newPassword,
-      //   }),
-      // });
-      //
-      // if (!res.ok) {
-      //   const data = await res.json();
-      //   setError(data.message || "Failed to change password.");
-      //   return;
-      // }
+      const result = await changePassword({
+        currentPassword: isRequired ? undefined : currentPassword,
+        newPassword,
+      });
 
-      onSuccess?.();
+      if (result.success) {
+        onSuccess?.();
+      }
     } catch (err) {
-      setError(err instanceof Error ? err.message : "An error occurred.");
+      setError(err instanceof Error ? err.message : "Failed to change password.");
     } finally {
       setLoading(false);
     }

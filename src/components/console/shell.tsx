@@ -6,6 +6,7 @@ import {
   ListTodo,
   Menu,
   ScrollText,
+  Settings,
   Shield,
   Users,
   X,
@@ -13,6 +14,7 @@ import {
 import { useState, type ReactNode } from "react";
 import { UserButton } from "@/lib/auth/gates";
 import { useCurrentUser, useCurrentUserState } from "@/lib/auth/use-current-user";
+import { ForcePasswordChangeGate } from "@/components/auth/force-password-change";
 import { BridgetMark } from "@/components/bridget-wordmark";
 import { Button } from "@/components/ui/button";
 import { isStaffUser } from "@/lib/staff";
@@ -23,6 +25,7 @@ const NAV = [
   { to: "/console/leads", label: "Leads", icon: Users, end: false, minRole: "user" as const },
   { to: "/console/usage", label: "Usage & feature stats", icon: BarChart3, end: false, minRole: "admin" as const },
   { to: "/console/sessions", label: "BRIDGEt sessions", icon: Clock, end: false, minRole: "admin" as const },
+  { to: "/console/users", label: "Team members", icon: Settings, end: false, minRole: "admin" as const },
 ] as const;
 
 const COMPLIANCE = [
@@ -207,5 +210,9 @@ export function ConsoleGate() {
     );
   }
 
-  return <Outlet />;
+  return (
+    <ForcePasswordChangeGate>
+      <Outlet />
+    </ForcePasswordChangeGate>
+  );
 }
