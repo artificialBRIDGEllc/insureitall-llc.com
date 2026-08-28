@@ -2,7 +2,7 @@
 
 Operate on the **current elite site** (TanStack Start at repo root). Full map: `CLAUDE.md`. This file is the working contract.
 
-GitHub: `copperlang2007/insureitall-website`. Preview is the TanStack tree at repo root. Staff admin is `/console` (BRIDGEt Console). `/portal` is now a beneficiaryCONNECT "client portal coming soon" placeholder (fileBRIDGE consumer app removed).
+GitHub: `artificialBRIDGEllc/insureitall-llc.com`. Preview is the TanStack tree at repo root. Staff admin is `/console` (BRIDGEt Console). `/portal` is now a beneficiaryCONNECT "client portal coming soon" placeholder (fileBRIDGE consumer app removed).
 
 ---
 
