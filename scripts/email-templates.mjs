@@ -11,7 +11,7 @@ export const BRAND_DEFAULTS = {
   NON_AFFILIATION:
     "Insure It All is not connected with or endorsed by the U.S. Government or the federal Medicare program.",
   SITE_ORIGIN: "https://insureitall-llc.com",
-  CONSOLE_URL: "https://insureitall-llc.com/console/leads",
+  CONSOLE_URL: "https://insureitall-llc.com/console",
   DESK_CTA: "Open the lead desk",
   CALL_CTA: "Call +1 888-459-4842",
   FOOTER_LICENSE: "Licensed agents",

@@ -75,11 +75,11 @@
       "id": "console-usage-mock",
       "title": "Console usage metrics are illustrative",
       "severity": "p2",
-      "status": "open",
+      "status": "resolved",
       "area": "ops",
-      "why": "Inbound leads are live. Session/usage charts are sample until ElevenLabs analytics is wired.",
-      "next": "Keep the MockFlag. Do not present sample KPIs as carrier-audit fact.",
-      "clearsWhen": null
+      "why": "Moot — the staff console (and its illustrative usage/session charts) was extracted to BRIDGEt Console, a separate multi-tenant repo. Nothing in this repo renders sample KPIs anymore.",
+      "next": "Do not rebuild a staff console UI in this repo. BRIDGEt Console owns its own real-vs-illustrative data honesty.",
+      "clearsWhen": { "missingFile": "src/components/console/ui.tsx" }
     },
     {
       "id": "dual-tree",

@@ -20,7 +20,7 @@ Optional copy overrides (no deploy needed):
 EMAIL_SITE_NAME=INSUREitALL
 EMAIL_PHONE=+1 888-459-4842
 EMAIL_HOURS=Mon–Fri 9am–6pm ET
-EMAIL_CONSOLE_URL=https://insureitall-llc.com/console/leads
+EMAIL_CONSOLE_URL=https://insureitall-llc.com/console
 EMAIL_DESK_CTA=Open the lead desk
 EMAIL_CALL_CTA=Call +1 888-459-4842
 EMAIL_RECEIVED_TITLE=We have your request.

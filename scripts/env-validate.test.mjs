@@ -33,7 +33,7 @@ test("valid Resend cluster passes", () => {
       LEAD_ALERT_TO: "info@team-iia.com",
       RESEND_TEMPLATE_LEAD_ALERT: "insureitall-lead-alert",
       EMAIL_PHONE: "+1 888-459-4842",
-      EMAIL_CONSOLE_URL: "https://insureitall-llc.com/console/leads",
+      EMAIL_CONSOLE_URL: "https://insureitall-llc.com/console",
       LEAD_RECEIPT: "1",
     },
     { production: true },

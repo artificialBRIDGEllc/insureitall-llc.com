@@ -33,13 +33,6 @@ import { Route as AbIndexRouteImport } from './routes/ab/index'
 import { Route as AbPrivacyRouteImport } from './routes/ab/privacy'
 import { Route as AbTermsRouteImport } from './routes/ab/terms'
 import { Route as ApiBridgetVoiceRouteImport } from './routes/api/bridget-voice'
-import { Route as ConsoleIndexRouteImport } from './routes/console/index'
-import { Route as ConsoleAuditRouteImport } from './routes/console/audit'
-import { Route as ConsoleConsentRouteImport } from './routes/console/consent'
-import { Route as ConsoleDebtRouteImport } from './routes/console/debt'
-import { Route as ConsoleLeadsRouteImport } from './routes/console/leads'
-import { Route as ConsoleSessionsRouteImport } from './routes/console/sessions'
-import { Route as ConsoleUsageRouteImport } from './routes/console/usage'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 
 const IndexRoute = IndexRouteImport.update({
@@ -162,41 +155,6 @@ const ApiBridgetVoiceRoute = ApiBridgetVoiceRouteImport.update({
   path: '/api/bridget-voice',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ConsoleIndexRoute = ConsoleIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => ConsoleRoute,
-} as any)
-const ConsoleAuditRoute = ConsoleAuditRouteImport.update({
-  id: '/audit',
-  path: '/audit',
-  getParentRoute: () => ConsoleRoute,
-} as any)
-const ConsoleConsentRoute = ConsoleConsentRouteImport.update({
-  id: '/consent',
-  path: '/consent',
-  getParentRoute: () => ConsoleRoute,
-} as any)
-const ConsoleDebtRoute = ConsoleDebtRouteImport.update({
-  id: '/debt',
-  path: '/debt',
-  getParentRoute: () => ConsoleRoute,
-} as any)
-const ConsoleLeadsRoute = ConsoleLeadsRouteImport.update({
-  id: '/leads',
-  path: '/leads',
-  getParentRoute: () => ConsoleRoute,
-} as any)
-const ConsoleSessionsRoute = ConsoleSessionsRouteImport.update({
-  id: '/sessions',
-  path: '/sessions',
-  getParentRoute: () => ConsoleRoute,
-} as any)
-const ConsoleUsageRoute = ConsoleUsageRouteImport.update({
-  id: '/usage',
-  path: '/usage',
-  getParentRoute: () => ConsoleRoute,
-} as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: '/api/auth/$',
   path: '/api/auth/$',
@@ -210,7 +168,7 @@ export interface FileRoutesByFullPath {
   '/ai-disclosure': typeof AiDisclosureRoute
   '/bridget': typeof BridgetRoute
   '/compare': typeof CompareRoute
-  '/console': typeof ConsoleRouteWithChildren
+  '/console': typeof ConsoleRoute
   '/contact': typeof ContactRoute
   '/glba': typeof GlbaRoute
   '/hipaa': typeof HipaaRoute
@@ -227,14 +185,7 @@ export interface FileRoutesByFullPath {
   '/ab/privacy': typeof AbPrivacyRoute
   '/ab/terms': typeof AbTermsRoute
   '/api/bridget-voice': typeof ApiBridgetVoiceRoute
-  '/console/audit': typeof ConsoleAuditRoute
-  '/console/consent': typeof ConsoleConsentRoute
-  '/console/debt': typeof ConsoleDebtRoute
-  '/console/leads': typeof ConsoleLeadsRoute
-  '/console/sessions': typeof ConsoleSessionsRoute
-  '/console/usage': typeof ConsoleUsageRoute
   '/ab/': typeof AbIndexRoute
-  '/console/': typeof ConsoleIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRoutesByTo {
@@ -243,6 +194,7 @@ export interface FileRoutesByTo {
   '/ai-disclosure': typeof AiDisclosureRoute
   '/bridget': typeof BridgetRoute
   '/compare': typeof CompareRoute
+  '/console': typeof ConsoleRoute
   '/contact': typeof ContactRoute
   '/glba': typeof GlbaRoute
   '/hipaa': typeof HipaaRoute
@@ -259,14 +211,7 @@ export interface FileRoutesByTo {
   '/ab/privacy': typeof AbPrivacyRoute
   '/ab/terms': typeof AbTermsRoute
   '/api/bridget-voice': typeof ApiBridgetVoiceRoute
-  '/console/audit': typeof ConsoleAuditRoute
-  '/console/consent': typeof ConsoleConsentRoute
-  '/console/debt': typeof ConsoleDebtRoute
-  '/console/leads': typeof ConsoleLeadsRoute
-  '/console/sessions': typeof ConsoleSessionsRoute
-  '/console/usage': typeof ConsoleUsageRoute
   '/ab': typeof AbIndexRoute
-  '/console': typeof ConsoleIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRoutesById {
@@ -277,7 +222,7 @@ export interface FileRoutesById {
   '/ai-disclosure': typeof AiDisclosureRoute
   '/bridget': typeof BridgetRoute
   '/compare': typeof CompareRoute
-  '/console': typeof ConsoleRouteWithChildren
+  '/console': typeof ConsoleRoute
   '/contact': typeof ContactRoute
   '/glba': typeof GlbaRoute
   '/hipaa': typeof HipaaRoute
@@ -294,14 +239,7 @@ export interface FileRoutesById {
   '/ab/privacy': typeof AbPrivacyRoute
   '/ab/terms': typeof AbTermsRoute
   '/api/bridget-voice': typeof ApiBridgetVoiceRoute
-  '/console/audit': typeof ConsoleAuditRoute
-  '/console/consent': typeof ConsoleConsentRoute
-  '/console/debt': typeof ConsoleDebtRoute
-  '/console/leads': typeof ConsoleLeadsRoute
-  '/console/sessions': typeof ConsoleSessionsRoute
-  '/console/usage': typeof ConsoleUsageRoute
   '/ab/': typeof AbIndexRoute
-  '/console/': typeof ConsoleIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRouteTypes {
@@ -330,14 +268,7 @@ export interface FileRouteTypes {
     | '/ab/privacy'
     | '/ab/terms'
     | '/api/bridget-voice'
-    | '/console/audit'
-    | '/console/consent'
-    | '/console/debt'
-    | '/console/leads'
-    | '/console/sessions'
-    | '/console/usage'
     | '/ab/'
-    | '/console/'
     | '/api/auth/$'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -346,6 +277,7 @@ export interface FileRouteTypes {
     | '/ai-disclosure'
     | '/bridget'
     | '/compare'
+    | '/console'
     | '/contact'
     | '/glba'
     | '/hipaa'
@@ -362,14 +294,7 @@ export interface FileRouteTypes {
     | '/ab/privacy'
     | '/ab/terms'
     | '/api/bridget-voice'
-    | '/console/audit'
-    | '/console/consent'
-    | '/console/debt'
-    | '/console/leads'
-    | '/console/sessions'
-    | '/console/usage'
     | '/ab'
-    | '/console'
     | '/api/auth/$'
   id:
     | '__root__'
@@ -396,14 +321,7 @@ export interface FileRouteTypes {
     | '/ab/privacy'
     | '/ab/terms'
     | '/api/bridget-voice'
-    | '/console/audit'
-    | '/console/consent'
-    | '/console/debt'
-    | '/console/leads'
-    | '/console/sessions'
-    | '/console/usage'
     | '/ab/'
-    | '/console/'
     | '/api/auth/$'
   fileRoutesById: FileRoutesById
 }
@@ -414,7 +332,7 @@ export interface RootRouteChildren {
   AiDisclosureRoute: typeof AiDisclosureRoute
   BridgetRoute: typeof BridgetRoute
   CompareRoute: typeof CompareRoute
-  ConsoleRoute: typeof ConsoleRouteWithChildren
+  ConsoleRoute: typeof ConsoleRoute
   ContactRoute: typeof ContactRoute
   GlbaRoute: typeof GlbaRoute
   HipaaRoute: typeof HipaaRoute
@@ -602,55 +520,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiBridgetVoiceRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/console/': {
-      id: '/console/'
-      path: '/'
-      fullPath: '/console/'
-      preLoaderRoute: typeof ConsoleIndexRouteImport
-      parentRoute: typeof ConsoleRoute
-    }
-    '/console/audit': {
-      id: '/console/audit'
-      path: '/audit'
-      fullPath: '/console/audit'
-      preLoaderRoute: typeof ConsoleAuditRouteImport
-      parentRoute: typeof ConsoleRoute
-    }
-    '/console/consent': {
-      id: '/console/consent'
-      path: '/consent'
-      fullPath: '/console/consent'
-      preLoaderRoute: typeof ConsoleConsentRouteImport
-      parentRoute: typeof ConsoleRoute
-    }
-    '/console/debt': {
-      id: '/console/debt'
-      path: '/debt'
-      fullPath: '/console/debt'
-      preLoaderRoute: typeof ConsoleDebtRouteImport
-      parentRoute: typeof ConsoleRoute
-    }
-    '/console/leads': {
-      id: '/console/leads'
-      path: '/leads'
-      fullPath: '/console/leads'
-      preLoaderRoute: typeof ConsoleLeadsRouteImport
-      parentRoute: typeof ConsoleRoute
-    }
-    '/console/sessions': {
-      id: '/console/sessions'
-      path: '/sessions'
-      fullPath: '/console/sessions'
-      preLoaderRoute: typeof ConsoleSessionsRouteImport
-      parentRoute: typeof ConsoleRoute
-    }
-    '/console/usage': {
-      id: '/console/usage'
-      path: '/usage'
-      fullPath: '/console/usage'
-      preLoaderRoute: typeof ConsoleUsageRouteImport
-      parentRoute: typeof ConsoleRoute
-    }
     '/api/auth/$': {
       id: '/api/auth/$'
       path: '/api/auth/$'
@@ -675,29 +544,6 @@ const AbRouteChildren: AbRouteChildren = {
 
 const AbRouteWithChildren = AbRoute._addFileChildren(AbRouteChildren)
 
-interface ConsoleRouteChildren {
-  ConsoleAuditRoute: typeof ConsoleAuditRoute
-  ConsoleConsentRoute: typeof ConsoleConsentRoute
-  ConsoleDebtRoute: typeof ConsoleDebtRoute
-  ConsoleLeadsRoute: typeof ConsoleLeadsRoute
-  ConsoleSessionsRoute: typeof ConsoleSessionsRoute
-  ConsoleUsageRoute: typeof ConsoleUsageRoute
-  ConsoleIndexRoute: typeof ConsoleIndexRoute
-}
-
-const ConsoleRouteChildren: ConsoleRouteChildren = {
-  ConsoleAuditRoute: ConsoleAuditRoute,
-  ConsoleConsentRoute: ConsoleConsentRoute,
-  ConsoleDebtRoute: ConsoleDebtRoute,
-  ConsoleLeadsRoute: ConsoleLeadsRoute,
-  ConsoleSessionsRoute: ConsoleSessionsRoute,
-  ConsoleUsageRoute: ConsoleUsageRoute,
-  ConsoleIndexRoute: ConsoleIndexRoute,
-}
-
-const ConsoleRouteWithChildren =
-  ConsoleRoute._addFileChildren(ConsoleRouteChildren)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AbRoute: AbRouteWithChildren,
@@ -705,7 +551,7 @@ const rootRouteChildren: RootRouteChildren = {
   AiDisclosureRoute: AiDisclosureRoute,
   BridgetRoute: BridgetRoute,
   CompareRoute: CompareRoute,
-  ConsoleRoute: ConsoleRouteWithChildren,
+  ConsoleRoute: ConsoleRoute,
   ContactRoute: ContactRoute,
   GlbaRoute: GlbaRoute,
   HipaaRoute: HipaaRoute,
