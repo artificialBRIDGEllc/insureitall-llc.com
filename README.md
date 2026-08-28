@@ -1,7 +1,7 @@
 # INSUREitALL website
 
 SOW No. 1 — **$5,000** website update for INSUREitALL LLC (NPN 20114179).  
-Repo: [copperlang2007/insureitall-website](https://github.com/copperlang2007/insureitall-website).
+Repo: [artificialBRIDGEllc/insureitall-llc.com](https://github.com/artificialBRIDGEllc/insureitall-llc.com).
 
 Client owns the supplied **logos**. BRIDGEt, Plan Choice Audit, fileBRIDGE, and the staff console stay with **artificialBRIDGE LLC** (design-partner license through **24 August 2027**). **beneFIT** is not on this site.
 

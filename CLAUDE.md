@@ -1,6 +1,6 @@
 # INSUREitALL website — current state
 
-Last aligned: 27 Aug 2026 (fileBRIDGE consumer app removed from `/portal`). Preview app is the **TanStack Start** tree at repo root. GitHub: [copperlang2007/insureitall-website](https://github.com/copperlang2007/insureitall-website). Staff admin: **`/console`**. `/team` redirects there. `/portal` is now a **beneficiaryCONNECT** "client portal coming soon" placeholder — beneficiaryCONNECT is a separate product, not yet live.
+Last aligned: 27 Aug 2026 (fileBRIDGE consumer app removed from `/portal`). Preview app is the **TanStack Start** tree at repo root. GitHub: [artificialBRIDGEllc/insureitall-llc.com](https://github.com/artificialBRIDGEllc/insureitall-llc.com). Staff admin: **`/console`**. `/team` redirects there. `/portal` is now a **beneficiaryCONNECT** "client portal coming soon" placeholder — beneficiaryCONNECT is a separate product, not yet live.
 
 This file is the site map for Claude. Agent operating rules live in `AGENTS.project.md` (this workspace) / `AGENTS.md` on GitHub.
 
