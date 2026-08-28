@@ -6,7 +6,7 @@
  *
  * `VITE_BRIDGET_CONSOLE_URL` — origin of the deployed BRIDGEt app, e.g.
  *   https://bridget-console.example.com
- * `BRIDGET_TENANT_SLUG` — this site's tenant slug in BRIDGEt (defaults to
+ * `VITE_BRIDGET_TENANT_SLUG` — this site's tenant slug in BRIDGEt (defaults to
  *   "insureitall", matching the tenant BRIDGEt's own seed migration creates).
  * `BRIDGET_INGEST_API_KEY` — server-only. A tenant API key minted from
  *   BRIDGEt's Settings → API keys page, used to authenticate the forwarded

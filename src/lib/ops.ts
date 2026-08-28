@@ -32,7 +32,8 @@ function clientKey() {
  * management of these leads (list, advance stage, disenroll, …) now lives in
  * the BRIDGEt Console app, not this repo — see `@/lib/bridget-console` and
  * `docs/`. This still writes to the local `ops_requests` table (email/webhook
- * alerts and the legacy `/console/leads` share-code lookup depend on it) and,
+ * alerts and the legacy share-code lookup in `src/lib/portal.ts` depend on
+ * it — that lookup is currently unmounted, not gone; see CLAUDE.md) and,
  * best-effort, forwards the same lead to BRIDGEt so it shows up in the staff
  * desk.
  */
