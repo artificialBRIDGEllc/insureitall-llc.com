@@ -2,7 +2,7 @@
 
 Operate on the **current elite site** (TanStack Start at repo root). Full map: `CLAUDE.md`. This file is the working contract.
 
-GitHub: `copperlang2007/insureitall-website`. Preview is the TanStack tree at repo root. Staff admin now lives in **BRIDGEt Console**, a separate multi-tenant product/repo (`copperlang2007/BRIDGEt`) — `/console` here just redirects to it. `/portal` is now a beneficiaryCONNECT "client portal coming soon" placeholder (fileBRIDGE consumer app removed).
+GitHub: `artificialBRIDGEllc/insureitall-llc.com`. Preview is the TanStack tree at repo root. Staff admin now lives in **BRIDGEt Console**, a separate multi-tenant product/repo (`copperlang2007/BRIDGEt`) — `/console` here just redirects to it. `/portal` is now a beneficiaryCONNECT "client portal coming soon" placeholder (fileBRIDGE consumer app removed).
 
 ---
 
@@ -10,7 +10,7 @@ GitHub: `copperlang2007/insureitall-website`. Preview is the TanStack tree at re
 
 Phone-first Medicare agency site. Licensed agents. No pressure. No scripts. BRIDGEt is the advocate on the way to a human — never the closer.
 
-Success = the live preview looks like a luxury navy/cream Medicare house, CTAs dial `+1 888-459-4842`, TPMO copy is present, BRIDGEt stays on-voice.
+Success = the live preview looks like a luxury navy/cream Medicare house, CTAs dial `+1 908-827-6223`, TPMO copy is present, BRIDGEt stays on-voice.
 
 ---
 

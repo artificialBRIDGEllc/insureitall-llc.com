@@ -1,6 +1,6 @@
 # INSUREitALL website — current state
 
-Last aligned: 28 Aug 2026 (staff console extracted to a separate multi-tenant product, BRIDGEt Console). Preview app is the **TanStack Start** tree at repo root. GitHub: [copperlang2007/insureitall-website](https://github.com/copperlang2007/insureitall-website). Staff admin now lives in **BRIDGEt Console**, a separate repo/product ([copperlang2007/BRIDGEt](https://github.com/copperlang2007/BRIDGEt) — pending transfer to the `artificialBRIDGEllc` org). `/console` and `/team` here just redirect to it (`VITE_BRIDGET_CONSOLE_URL`). `/portal` is now a **beneficiaryCONNECT** "client portal coming soon" placeholder — beneficiaryCONNECT is a separate product, not yet live.
+Last aligned: 29 Aug 2026 (staff console extracted to a separate multi-tenant product, BRIDGEt Console). Preview app is the **TanStack Start** tree at repo root. GitHub: [artificialBRIDGEllc/insureitall-llc.com](https://github.com/artificialBRIDGEllc/insureitall-llc.com). Staff admin now lives in **BRIDGEt Console**, a separate repo/product ([copperlang2007/BRIDGEt](https://github.com/copperlang2007/BRIDGEt) — pending transfer to the `artificialBRIDGEllc` org). `/console` and `/team` here just redirect to it (`VITE_BRIDGET_CONSOLE_URL`). `/portal` is now a **beneficiaryCONNECT** "client portal coming soon" placeholder — beneficiaryCONNECT is a separate product, not yet live.
 
 This file is the site map for Claude. Agent operating rules live in `AGENTS.project.md` (this workspace) / `AGENTS.md` on GitHub.
 
@@ -13,7 +13,7 @@ Public Medicare agency site for **INSUREitALL LLC**. Phone-first. Licensed agent
 | | |
 |---|---|
 | Legal | INSUREitALL LLC · NPN **20114179** |
-| Phone | **+1 888-459-4842** · TTY 711 · recorded |
+| Phone | **+1 908-827-6223** · TTY 711 · recorded |
 | Hours | Mon–Fri 9am–6pm ET |
 | HQ | 3550 Buschwood Park Dr, Ste 180, Tampa, FL 33618 |
 | Email | info@team-iia.com |
@@ -185,6 +185,9 @@ src/components/bridget-copilot.tsx   site widget
 src/components/bridget-wordmark.tsx  BRIDGE + t + smile
 src/components/call-link.tsx         tel: + pickup ring
 src/routes/portal.tsx                beneficiaryCONNECT "coming soon" placeholder
+src/lib/auth/tanstack-cookies.ts     static-import replacement for better-auth's
+                                     tanstackStartCookies (upstream's dynamic import
+                                     breaks the prod SSR bundle — 500 on every route)
 src/lib/ring.ts                      pickup audio
 docs/neon-nerd.md                  Neon catalog + Wyoming LLC tax schedule (0009)
 migrations/0009_wy_llc_license_tax.sql

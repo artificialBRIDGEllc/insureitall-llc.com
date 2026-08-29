@@ -10,7 +10,12 @@ function splashDone() {
 }
 
 function reducedMotion() {
-  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  // Render-path callable: must be SSR-safe or the whole page body fails to
+  // server-render and falls back to client-only rendering.
+  return (
+    typeof window !== "undefined" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  );
 }
 
 function setChromeInert(value: boolean) {
