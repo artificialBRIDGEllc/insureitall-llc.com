@@ -48,7 +48,7 @@ function CreateUserForm() {
 
     setLoading(true);
     try {
-      const result = await (createUserAccount as any)({ email, name, role });
+      const result = await createUserAccount({ data: { email, name, role } });
       setSuccess(`User created: ${result.email}`);
       setEmail("");
       setName("");

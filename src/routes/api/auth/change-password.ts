@@ -1,15 +1,19 @@
 import { createServerFn } from "@tanstack/react-start";
+import { getRequest } from "@tanstack/react-start/server";
 import { authMiddleware } from "@/lib/auth/middleware";
 import { auth } from "@/lib/auth/server";
-import { markPasswordChanged } from "@/lib/auth/roles";
+import { getUserWithRole, markPasswordChanged } from "@/lib/auth/roles";
 
-export const changePassword = createServerFn({
-  method: "POST",
-})
+interface ChangePasswordInput {
+  currentPassword?: string;
+  newPassword: string;
+}
+
+export const changePassword = createServerFn({ method: "POST" })
   .middleware([authMiddleware])
-  .handler(
-    async (input: any) => {
-      const { currentPassword, newPassword, context } = input;
+  .validator((input: ChangePasswordInput) => input)
+  .handler(async ({ data, context }) => {
+    const { currentPassword, newPassword } = data;
 
     if (!newPassword || newPassword.length < 8) {
       throw new Error("Password must be at least 8 characters.");
@@ -17,41 +21,59 @@ export const changePassword = createServerFn({
 
     const userId = context.userId;
 
-    // Get the user's account to verify current password
-    const { getRequest } = await import("@tanstack/react-start/server");
     const request = getRequest();
-
     if (!request) {
       throw new Error("Request context not available");
     }
 
     const session = await auth.api.getSession({ headers: request.headers });
-
-    if (!session?.user) {
+    if (!session?.user || session.user.id !== userId) {
       throw new Error("Not authenticated");
     }
 
-    // Update password in Better Auth account table
     const { getSql } = await import("@/lib/db");
     const sql = await getSql();
 
-    // Hash the new password using bcrypt (same as Better Auth)
-    const bcryptHash = await hashPasswordBcrypt(newPassword);
+    // Better Auth stores email/password credentials under providerId
+    // 'credential' and verifies them with its own (scrypt) hasher — the hash
+    // MUST come from auth.$context.password or future sign-ins fail.
+    const authCtx = await auth.$context;
 
-    // Update the account password
+    const accounts = await sql<Array<{ id: string; password: string | null }>>`
+      select id, password from account
+      where "userId" = ${userId} and "providerId" = 'credential'
+    `;
+    const account = Array.isArray(accounts) ? accounts[0] : (accounts as any)?.[0];
+    if (!account?.password) {
+      throw new Error("No password account found for this user.");
+    }
+
+    // A user who has already changed their temporary password must prove the
+    // current one; only the forced first-login change may skip it.
+    const userRecord = await getUserWithRole(userId);
+    const forcedFirstChange = !userRecord?.passwordChangedAt;
+    if (!forcedFirstChange) {
+      if (!currentPassword) {
+        throw new Error("Current password is required.");
+      }
+      const valid = await authCtx.password.verify({
+        hash: account.password,
+        password: currentPassword,
+      });
+      if (!valid) {
+        throw new Error("Current password is incorrect.");
+      }
+    }
+
+    const newHash = await authCtx.password.hash(newPassword);
+
     await sql`
       update account
-      set password = ${bcryptHash}, "updatedAt" = now()
-      where "userId" = ${userId} and "providerId" = 'email'
+      set password = ${newHash}, "updatedAt" = now()
+      where id = ${account.id}
     `;
 
-    // Mark password as changed
     await markPasswordChanged(userId);
 
     return { success: true };
   });
-
-async function hashPasswordBcrypt(password: string): Promise<string> {
-  const bcrypt = await import("bcrypt");
-  return await bcrypt.hash(password, 10);
-}

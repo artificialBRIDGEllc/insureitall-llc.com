@@ -183,6 +183,9 @@ src/components/bridget-copilot.tsx   site widget
 src/components/bridget-wordmark.tsx  BRIDGE + t + smile
 src/components/call-link.tsx         tel: + pickup ring
 src/routes/portal.tsx                beneficiaryCONNECT "coming soon" placeholder
+src/lib/auth/tanstack-cookies.ts     static-import replacement for better-auth's
+                                     tanstackStartCookies (upstream's dynamic import
+                                     breaks the prod SSR bundle — 500 on every route)
 src/lib/ring.ts                      pickup audio
 docs/neon-nerd.md                  Neon catalog + Wyoming LLC tax schedule (0009)
 migrations/0009_wy_llc_license_tax.sql
