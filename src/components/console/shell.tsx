@@ -138,16 +138,16 @@ export function ConsoleFrame({
         <div className="fixed inset-0 z-50 lg:hidden">
           <button
             type="button"
-            className="absolute inset-0 bg-navy/50"
+            className="absolute inset-0 bg-navy-deep/60 backdrop-blur-[2px]"
             aria-label="Close menu"
             onClick={() => setOpen(false)}
           />
-          <aside className="console-sidebar relative flex h-full w-[16.5rem] flex-col shadow-lift">
+          <aside className="console-sidebar console-drawer relative flex h-full w-[17rem] max-w-[85vw] flex-col shadow-lift">
             <div className="flex items-center justify-between pr-2">
               <BrandLockup />
               <button
                 type="button"
-                className="mr-3 grid size-11 place-items-center rounded-xl text-elevated"
+                className="mr-3 grid size-11 shrink-0 place-items-center rounded-xl text-elevated/70 transition-colors hover:bg-elevated/10 hover:text-elevated"
                 onClick={() => setOpen(false)}
                 aria-label="Close menu"
               >
@@ -155,33 +155,38 @@ export function ConsoleFrame({
               </button>
             </div>
             <SidebarNav userRole={userRole} onGo={() => setOpen(false)} />
+            <div className="border-t border-elevated/10 px-4 py-4">
+              <UserButton />
+            </div>
           </aside>
         </div>
       ) : null}
 
       <div className="flex min-w-0 flex-col">
-        <header className="console-header flex items-center justify-between gap-3 px-4 py-4 sm:px-8">
-          <div className="flex min-w-0 items-center gap-3">
+        <header className="console-header flex items-center justify-between gap-2 px-4 py-3 sm:gap-3 sm:px-8 sm:py-4">
+          <div className="flex min-w-0 items-center gap-2 sm:gap-3">
             <button
               type="button"
-              className="grid size-11 place-items-center rounded-xl bg-elevated text-navy shadow-card lg:hidden"
+              className="grid size-11 shrink-0 place-items-center rounded-xl bg-elevated text-navy shadow-card lg:hidden"
               onClick={() => setOpen(true)}
               aria-label="Open menu"
             >
               <Menu className="size-5" />
             </button>
-            <h1 className="truncate font-display text-2xl font-semibold tracking-tight text-navy sm:text-[1.7rem]">
+            <h1 className="truncate font-display text-xl font-semibold tracking-tight text-navy sm:text-[1.7rem]">
               {title}
             </h1>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex shrink-0 items-center gap-2 sm:gap-3">
             {actions}
             <div className="hidden sm:block">
               <UserButton />
             </div>
           </div>
         </header>
-        <div className="min-w-0 flex-1 px-4 pt-6 pb-16 sm:px-8">{children}</div>
+        <div className="console-main min-w-0 flex-1 px-4 pt-5 pb-20 sm:px-8 sm:pt-6 sm:pb-16">
+          {children}
+        </div>
       </div>
     </div>
   );

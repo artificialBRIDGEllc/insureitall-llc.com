@@ -9,7 +9,7 @@ export const Route = createFileRoute("/console/sessions")({ component: SessionsP
 function SessionsPage() {
   return (
     <ConsoleFrame title="BRIDGEt sessions">
-      <div className="mb-6 grid gap-4 sm:grid-cols-3">
+      <div className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4">
         <ConsoleCard>
           <p className="text-[0.68rem] font-semibold tracking-[0.14em] text-muted uppercase">
             Avg. length
@@ -35,7 +35,7 @@ function SessionsPage() {
         <p className="mt-1 text-sm text-muted">
           She never quotes or enrolls. A guardrail block means she walked the person to a licensed agent instead.
         </p>
-        <div className="mt-4 overflow-x-auto">
+        <div className="console-scroll mt-4">
           <table className="console-table min-w-[720px]">
             <thead>
               <tr>

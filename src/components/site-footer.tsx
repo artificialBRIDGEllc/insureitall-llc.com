@@ -96,13 +96,16 @@ export function SiteFooter() {
         </div>
       </div>
       <div className="border-t border-elevated/10">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-5 text-xs text-elevated/50 sm:px-6">
+        <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-5 text-xs text-elevated/50 sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:px-6">
           <div className="flex flex-col gap-2">
             <p>{LICENSED_STATES_LINE}</p>
             <p>© 2026 INSUREitALL LLC. All rights reserved.</p>
           </div>
-          <Link to="/console" className="text-elevated/40 hover:text-elevated/60 underline underline-offset-2">
-            Team Console
+          <Link
+            to="/login"
+            className="inline-flex min-h-11 shrink-0 items-center text-[0.7rem] font-semibold tracking-[0.18em] text-elevated/45 uppercase underline underline-offset-4 transition-colors hover:text-gold"
+          >
+            Team Login
           </Link>
         </div>
       </div>

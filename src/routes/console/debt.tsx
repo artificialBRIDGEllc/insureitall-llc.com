@@ -39,7 +39,7 @@ function DebtPage() {
         the exact restore steps below. PHI never belongs in this list.
       </p>
 
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
         <KpiCard label="Open or watch" value={String(open)} hint="not resolved" />
         <KpiCard label="P0 open" value={String(counts.p0)} hint="blocks ship" />
         <KpiCard label="P1 open" value={String(counts.p1)} hint="voice / brand" />
@@ -103,7 +103,7 @@ function DebtPage() {
 
       <ConsoleCard className="mt-4">
         <h2 className="font-sans text-base font-semibold text-navy">Ledger</h2>
-        <div className="mt-5 overflow-x-auto">
+        <div className="console-scroll mt-5">
           <table className="console-table min-w-[720px]">
             <thead>
               <tr>

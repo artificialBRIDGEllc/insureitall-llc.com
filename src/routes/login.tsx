@@ -4,6 +4,7 @@ import { authClient } from "@/lib/auth/client";
 import { useCurrentUserState } from "@/lib/auth/use-current-user";
 import { Button } from "@/components/ui/button";
 import { pageHead } from "@/lib/seo";
+import { BRIDGET_AVATAR } from "@/lib/bridget-assets";
 
 export const Route = createFileRoute("/login")({
   component: LoginPage,
@@ -53,8 +54,13 @@ function LoginPage() {
 
   if (isPending) {
     return (
-      <div className="grid min-h-dvh place-items-center bg-surface">
-        <div className="h-24 w-64 animate-pulse rounded-3xl bg-soft" />
+      <div className="console-app grid min-h-dvh place-items-center">
+        <div className="flex flex-col items-center gap-4">
+          <span className="console-bust size-14 animate-pulse">
+            <img src={BRIDGET_AVATAR.bust} alt="" width={56} height={56} />
+          </span>
+          <p className="console-eyebrow">Checking your session</p>
+        </div>
       </div>
     );
   }
@@ -64,9 +70,23 @@ function LoginPage() {
   }
 
   return (
-    <div className="grid min-h-dvh place-items-center bg-surface px-4">
-      <div className="w-full max-w-sm rounded-3xl bg-elevated p-8 shadow-card">
-        <h1 className="font-display text-3xl font-semibold text-navy">Sign In</h1>
+    <div className="console-app grid min-h-dvh place-items-center px-4 py-10">
+      <div className="console-card w-full max-w-sm p-7 sm:p-8">
+        <div className="flex items-center gap-3">
+          <span className="console-bust size-11 shrink-0">
+            <img src={BRIDGET_AVATAR.bust} alt="" width={44} height={44} />
+          </span>
+          <span className="leading-tight">
+            <span className="block font-display text-[0.95rem] font-semibold tracking-tight text-navy">
+              BRIDGE<span className="italic text-blue">t</span>
+            </span>
+            <span className="block text-[0.65rem] font-semibold tracking-[0.2em] text-muted uppercase">
+              Console
+            </span>
+          </span>
+        </div>
+
+        <h1 className="mt-6 font-display text-3xl font-semibold text-navy">Team Login</h1>
         <p className="mt-2 text-sm text-muted">INSUREitALL team only</p>
 
         <form onSubmit={handleSignIn} className="mt-6 space-y-4">
@@ -80,8 +100,9 @@ function LoginPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="your@email.com"
+              autoComplete="email"
               required
-              className="w-full rounded-lg border border-border bg-surface px-4 py-2.5 text-sm text-navy placeholder-muted focus:border-blue focus:ring-1 focus:ring-blue"
+              className="w-full min-h-11 rounded-xl border border-border bg-surface px-4 py-2.5 text-base text-navy placeholder-muted focus:border-blue focus:ring-1 focus:ring-blue sm:text-sm"
             />
           </div>
 
@@ -95,8 +116,9 @@ function LoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
+              autoComplete="current-password"
               required
-              className="w-full rounded-lg border border-border bg-surface px-4 py-2.5 text-sm text-navy placeholder-muted focus:border-blue focus:ring-1 focus:ring-blue"
+              className="w-full min-h-11 rounded-xl border border-border bg-surface px-4 py-2.5 text-base text-navy placeholder-muted focus:border-blue focus:ring-1 focus:ring-blue sm:text-sm"
             />
           </div>
 
