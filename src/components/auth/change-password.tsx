@@ -72,7 +72,7 @@ export function ChangePasswordForm({
             onChange={(e) => setCurrentPassword(e.target.value)}
             placeholder="••••••••"
             required
-            className="w-full rounded-lg border border-border bg-surface px-4 py-2.5 text-sm text-navy placeholder-muted focus:border-blue focus:ring-1 focus:ring-blue"
+            className="w-full min-h-11 rounded-xl border border-border bg-surface px-4 py-2.5 text-base text-navy placeholder-muted focus:border-blue focus:ring-1 focus:ring-blue sm:text-sm"
           />
         </div>
       )}
@@ -88,7 +88,7 @@ export function ChangePasswordForm({
           onChange={(e) => setNewPassword(e.target.value)}
           placeholder="••••••••"
           required
-          className="w-full rounded-lg border border-border bg-surface px-4 py-2.5 text-sm text-navy placeholder-muted focus:border-blue focus:ring-1 focus:ring-blue"
+          className="w-full min-h-11 rounded-xl border border-border bg-surface px-4 py-2.5 text-base text-navy placeholder-muted focus:border-blue focus:ring-1 focus:ring-blue sm:text-sm"
         />
         <p className="mt-1.5 text-xs text-muted">At least 8 characters</p>
       </div>
@@ -104,7 +104,7 @@ export function ChangePasswordForm({
           onChange={(e) => setConfirmPassword(e.target.value)}
           placeholder="••••••••"
           required
-          className="w-full rounded-lg border border-border bg-surface px-4 py-2.5 text-sm text-navy placeholder-muted focus:border-blue focus:ring-1 focus:ring-blue"
+          className="w-full min-h-11 rounded-xl border border-border bg-surface px-4 py-2.5 text-base text-navy placeholder-muted focus:border-blue focus:ring-1 focus:ring-blue sm:text-sm"
         />
       </div>
 

@@ -1206,6 +1206,98 @@ iframe[src*="convai"] {
   transition: width 600ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+/* ---- Horizontal scroll containers ------------------------------------------
+   Wide tables stay tables on desktop. The fade on the right edge tells the
+   reader there is more to pan to, instead of a column silently cut off. */
+.console-scroll {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) transparent;
+}
+
+.console-scroll::-webkit-scrollbar {
+  height: 0.5rem;
+}
+
+.console-scroll::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 999px;
+}
+
+.console-scroll::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--color-muted) 45%, transparent);
+}
+
+/* ---- Lead card (phones) ---------------------------------------------------- */
+.console-lead-card {
+  display: block;
+  padding: 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background: var(--color-elevated);
+  box-shadow: var(--shadow-elevation-1);
+  transition:
+    box-shadow 180ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 180ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.console-lead-card:active {
+  box-shadow: var(--shadow-inset);
+  border-color: var(--color-gold);
+}
+
+.console-lead-card:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+}
+
+/* ---- Mobile drawer --------------------------------------------------------- */
+.console-drawer {
+  animation: console-drawer-in 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes console-drawer-in {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: none;
+  }
+}
+
+/* Respect the notch / home indicator on phones. */
+.console-main {
+  padding-bottom: max(5rem, env(safe-area-inset-bottom) + 4rem);
+}
+
+.console-sidebar {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* Tables breathe less on small screens so more columns survive the fold. */
+@media (max-width: 640px) {
+  .console-table thead th,
+  .console-table tbody td {
+    padding-inline: 0.65rem;
+  }
+
+  /* KPI tiles sit two-up on phones; trim the numeral so it never wraps. */
+  .console-kpi {
+    padding: 1rem;
+  }
+  .console-kpi-value {
+    font-size: 1.75rem;
+  }
+  .console-kpi::after {
+    width: 5rem;
+    height: 5rem;
+    top: -2.5rem;
+    right: -2.5rem;
+  }
+}
+
 /* Section eyebrow — Fraunces-adjacent tracking, used above card titles. */
 .console-eyebrow {
   font-size: 0.62rem;
@@ -1223,6 +1315,9 @@ iframe[src*="convai"] {
   .console-nav-item::before,
   .console-bar span {
     transition: none;
+  }
+  .console-drawer {
+    animation: none;
   }
 }
 

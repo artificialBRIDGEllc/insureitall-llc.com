@@ -13,7 +13,7 @@ function AuditPage() {
           Who touched what. Illustrative until session analytics and staff actions write to the
           same log. PHI never belongs here.
         </p>
-        <div className="mt-5 overflow-x-auto">
+        <div className="console-scroll mt-5">
           <table className="console-table min-w-[640px]">
             <thead>
               <tr>

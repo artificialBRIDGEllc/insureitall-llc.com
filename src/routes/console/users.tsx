@@ -74,7 +74,7 @@ function CreateUserForm() {
             onChange={(e) => setName(e.target.value)}
             placeholder="John Doe"
             required
-            className="w-full rounded-lg border border-border bg-surface px-4 py-2.5 text-sm text-navy placeholder-muted focus:border-blue focus:ring-1 focus:ring-blue"
+            className="w-full min-h-11 rounded-xl border border-border bg-surface px-4 py-2.5 text-base text-navy placeholder-muted focus:border-blue focus:ring-1 focus:ring-blue sm:text-sm"
           />
         </div>
 
@@ -89,7 +89,7 @@ function CreateUserForm() {
             onChange={(e) => setEmail(e.target.value)}
             placeholder="john@example.com"
             required
-            className="w-full rounded-lg border border-border bg-surface px-4 py-2.5 text-sm text-navy placeholder-muted focus:border-blue focus:ring-1 focus:ring-blue"
+            className="w-full min-h-11 rounded-xl border border-border bg-surface px-4 py-2.5 text-base text-navy placeholder-muted focus:border-blue focus:ring-1 focus:ring-blue sm:text-sm"
           />
         </div>
 
@@ -101,7 +101,7 @@ function CreateUserForm() {
             id="role"
             value={role}
             onChange={(e) => setRole(e.target.value as "user" | "admin")}
-            className="w-full rounded-lg border border-border bg-surface px-4 py-2.5 text-sm text-navy focus:border-blue focus:ring-1 focus:ring-blue"
+            className="w-full min-h-11 rounded-xl border border-border bg-surface px-4 py-2.5 text-base text-navy focus:border-blue focus:ring-1 focus:ring-blue sm:text-sm"
           >
             <option value="user">User (leads only)</option>
             <option value="admin">Admin (full access)</option>

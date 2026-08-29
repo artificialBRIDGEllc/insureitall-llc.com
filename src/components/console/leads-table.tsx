@@ -60,8 +60,54 @@ export function LeadsTable({
 
   return (
     <div>
-      <div className="overflow-x-auto">
-        <table className="console-table min-w-[860px]">
+      {/* Phones: a tappable card per lead. A 860px table would force the
+          staff desk to side-scroll on the device agents actually carry. */}
+      <ul className="space-y-3 md:hidden">
+        {shown.length === 0 ? (
+          <li className="rounded-2xl border border-border bg-elevated py-10 text-center text-sm text-muted">
+            No leads in this view yet.
+          </li>
+        ) : (
+          shown.map((row) => (
+            <li key={row.id}>
+              <button
+                type="button"
+                onClick={() => setOpenId(row.id)}
+                className="console-lead-card w-full text-left"
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <p className="truncate font-semibold text-navy">{row.name}</p>
+                    {row.location ? (
+                      <p className="truncate text-xs text-muted">{row.location}</p>
+                    ) : null}
+                  </div>
+                  <DispositionChip value={row.disposition} />
+                </div>
+                <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-sm">
+                  <span className="tabular-nums text-ink">{row.phone || "—"}</span>
+                  {row.bestTime ? (
+                    <span className="text-muted">{row.bestTime}</span>
+                  ) : null}
+                </div>
+                <div className="mt-3 flex flex-wrap items-center gap-2">
+                  <SourceChip label={row.source} />
+                  {row.live ? (
+                    <span className="text-[0.65rem] font-medium tracking-wide text-blue uppercase">
+                      Live
+                    </span>
+                  ) : (
+                    <span className="text-[0.65rem] text-muted">Sample</span>
+                  )}
+                </div>
+              </button>
+            </li>
+          ))
+        )}
+      </ul>
+
+      <div className="console-scroll hidden md:block">
+        <table className="console-table min-w-[720px]">
           <thead>
             <tr>
               <th>Name</th>
