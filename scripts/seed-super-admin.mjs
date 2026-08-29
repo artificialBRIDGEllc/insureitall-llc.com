@@ -6,6 +6,7 @@
 
 import { Pool } from "pg";
 import { randomUUID } from "crypto";
+import { hashPassword } from "better-auth/crypto";
 
 const databaseUrl = process.env.DATABASE_URL;
 const email = process.env.SUPER_ADMIN_EMAIL || "Lang@theartificialbridge.com";
@@ -48,17 +49,27 @@ async function seedSuperAdmin() {
 
     const actualUserId = userResult.rows[0]?.id || userId;
 
-    // Create account with password
-    const accountId = randomUUID();
+    // Create (or refresh) the credential account. No unique constraint exists
+    // on ("userId", "providerId"), so upsert manually instead of ON CONFLICT.
     const hashedPassword = await hashPassword(password);
-
-    await pool.query(
-      `INSERT INTO account (id, "accountId", "providerId", "userId", password, "createdAt", "updatedAt")
-       VALUES ($1, $2, $3, $4, $5, NOW(), NOW())
-       ON CONFLICT ("userId", "providerId") DO UPDATE
-       SET password = $5, "updatedAt" = NOW()`,
-      [accountId, accountId, "email", actualUserId, hashedPassword]
+    const existingAccount = await pool.query(
+      `SELECT id FROM account WHERE "userId" = $1 AND "providerId" = 'credential'`,
+      [actualUserId]
     );
+
+    if (existingAccount.rows[0]) {
+      await pool.query(
+        `UPDATE account SET password = $2, "updatedAt" = NOW() WHERE id = $1`,
+        [existingAccount.rows[0].id, hashedPassword]
+      );
+    } else {
+      const accountId = randomUUID();
+      await pool.query(
+        `INSERT INTO account (id, "accountId", "providerId", "userId", password, "createdAt", "updatedAt")
+         VALUES ($1, $2, 'credential', $3, $4, NOW(), NOW())`,
+        [accountId, accountId, actualUserId, hashedPassword]
+      );
+    }
 
     // Create or update role
     await pool.query(
@@ -78,28 +89,6 @@ async function seedSuperAdmin() {
     process.exit(1);
   } finally {
     await pool.end();
-  }
-}
-
-/**
- * Hash password using bcrypt (same as Better Auth)
- */
-async function hashPassword(password) {
-  // Use Node's built-in crypto for a simple hash
-  // Better Auth uses bcrypt, so this should match
-  const crypto = (await import("crypto")).default;
-
-  // For production, this should use bcrypt
-  // For now, we'll create a simple implementation
-  try {
-    const bcrypt = await import("bcrypt");
-    return await bcrypt.hash(password, 10);
-  } catch {
-    // Fallback if bcrypt not available
-    // Note: This is not secure for production
-    console.warn("⚠️  bcrypt not available, using simple hash (not secure for production)");
-    const hash = crypto.createHash("sha256").update(password).digest("hex");
-    return "$2b$10$" + hash.substring(0, 53);
   }
 }
 

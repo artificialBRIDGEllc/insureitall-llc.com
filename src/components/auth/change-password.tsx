@@ -41,9 +41,11 @@ export function ChangePasswordForm({
 
     setLoading(true);
     try {
-      const result = await (changePassword as any)({
-        currentPassword: isRequired ? undefined : currentPassword,
-        newPassword,
+      const result = await changePassword({
+        data: {
+          currentPassword: isRequired ? undefined : currentPassword,
+          newPassword,
+        },
       });
 
       if (result.success) {

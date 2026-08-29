@@ -4,11 +4,17 @@ import { getUserRole, setUserRole, type UserRole } from "@/lib/auth/roles";
 import { auth } from "@/lib/auth/server";
 import { randomUUID, randomInt } from "crypto";
 
+interface CreateUserInput {
+  email: string;
+  name: string;
+  role: UserRole;
+}
+
 export const createUserAccount = createServerFn({ method: "POST" })
   .middleware([authMiddleware])
-  .handler(
-    async (input: any) => {
-      const { email, name, role, context } = input;
+  .validator((input: CreateUserInput) => input)
+  .handler(async ({ data, context }) => {
+    const { email, name, role } = data;
 
     // Check if caller is admin or super_admin
     const callerRole = await getUserRole(context.userId);
@@ -56,14 +62,16 @@ export const createUserAccount = createServerFn({ method: "POST" })
         values (${userId}, ${name}, ${email}, false, now(), now())
       `;
 
-      // Create account with temporary password using simple hash
-      // In production, ensure bcrypt is available for secure hashing
-      const passwordHash = await hashPassword(tempPassword);
+      // Better Auth stores email/password credentials under providerId
+      // 'credential' and verifies them with its own (scrypt) hasher — the
+      // hash MUST come from auth.$context.password or sign-in fails.
+      const authCtx = await auth.$context;
+      const passwordHash = await authCtx.password.hash(tempPassword);
       const accountId = randomUUID();
 
       await sql`
         insert into account (id, "accountId", "providerId", "userId", password, "createdAt", "updatedAt")
-        values (${accountId}, ${accountId}, 'email', ${userId}, ${passwordHash}, now(), now())
+        values (${accountId}, ${accountId}, 'credential', ${userId}, ${passwordHash}, now(), now())
       `;
 
       // Assign role
@@ -110,11 +118,6 @@ function generateTempPassword(): string {
     [chars[i], chars[j]] = [chars[j], chars[i]];
   }
   return chars.join("");
-}
-
-async function hashPassword(password: string): Promise<string> {
-  const bcrypt = await import("bcrypt");
-  return await bcrypt.hash(password, 10);
 }
 
 async function sendPasswordEmail(
