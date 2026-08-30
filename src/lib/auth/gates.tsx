@@ -2,7 +2,6 @@ import type { ReactNode } from "react";
 import { Navigate } from "@tanstack/react-router";
 import { authEnabled, signOut } from "./client";
 import { useCurrentUser, useCurrentUserState } from "./use-current-user";
-import type { UserRole } from "./roles";
 
 /**
  * Auth state components — plain wrappers around `useCurrentUserState()`.
@@ -15,7 +14,7 @@ import type { UserRole } from "./roles";
  */
 
 /** Where `RedirectToSignIn` sends signed-out visitors. Create this route. */
-export const SIGN_IN_PATH = "/login";
+export const SIGN_IN_PATH = "/portal";
 
 /** Render children only when a user is present (real session, or the disabled-auth dev user). */
 export function SignedIn({ children }: { children: ReactNode }) {
@@ -45,24 +44,6 @@ export function RedirectToSignIn({ to = SIGN_IN_PATH }: { to?: string }) {
   return <Navigate to={to} />;
 }
 
-/** Render children only when user has the required role. */
-export function RequireRole({
-  role,
-  fallback,
-  children,
-}: {
-  role: UserRole | UserRole[];
-  fallback?: ReactNode;
-  children: ReactNode;
-}) {
-  const user = useCurrentUser();
-  const roles = Array.isArray(role) ? role : [role];
-  if (!user || !user.role || !roles.includes(user.role)) {
-    return fallback ?? null;
-  }
-  return <>{children}</>;
-}
-
 /**
  * Minimal signed-in identity chip + sign-out. Restyle freely (see the
  * `design-ui` skill). Sign-out is only shown when auth is enabled (the
@@ -86,11 +67,6 @@ export function UserButton() {
         </span>
       )}
       <span className="text-sm font-medium">{label}</span>
-      {user.role && (
-        <span className="text-xs text-muted">
-          {user.role === 'super_admin' ? 'Admin' : user.role === 'admin' ? 'Manager' : 'User'}
-        </span>
-      )}
       {authEnabled && (
         <button
           type="button"

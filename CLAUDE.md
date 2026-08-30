@@ -1,6 +1,6 @@
 # INSUREitALL website — current state
 
-Last aligned: 27 Aug 2026 (fileBRIDGE consumer app removed from `/portal`). Preview app is the **TanStack Start** tree at repo root. GitHub: [artificialBRIDGEllc/insureitall-llc.com](https://github.com/artificialBRIDGEllc/insureitall-llc.com). Staff admin: **`/console`**. `/team` redirects there. `/portal` is now a **beneficiaryCONNECT** "client portal coming soon" placeholder — beneficiaryCONNECT is a separate product, not yet live.
+Last aligned: 29 Aug 2026 (staff console extracted to a separate multi-tenant product, BRIDGEt Console). Preview app is the **TanStack Start** tree at repo root. GitHub: [artificialBRIDGEllc/insureitall-llc.com](https://github.com/artificialBRIDGEllc/insureitall-llc.com). Staff admin now lives in **BRIDGEt Console**, a separate repo/product ([copperlang2007/BRIDGEt](https://github.com/copperlang2007/BRIDGEt) — pending transfer to the `artificialBRIDGEllc` org). `/console` and `/team` here just redirect to it (`VITE_BRIDGET_CONSOLE_URL`). `/portal` is now a **beneficiaryCONNECT** "client portal coming soon" placeholder — beneficiaryCONNECT is a separate product, not yet live.
 
 This file is the site map for Claude. Agent operating rules live in `AGENTS.project.md` (this workspace) / `AGENTS.md` on GitHub.
 
@@ -124,7 +124,7 @@ Six polymer-clay objects around her. Tap for her take. Hover/focus raise.
 | `/accessibility` | Accessibility statement |
 | `/portal` | **beneficiaryCONNECT** client portal — "coming soon" placeholder. Not live. |
 | `/ab` `/ab/privacy` `/ab/terms` | Legacy Wyoming single-member LLC entity/privacy/terms pages for the retired fileBRIDGE product. Unlinked from nav; kept for historical/legal reference. |
-| `/console` | Staff desk — lead lifecycle (new → enrolled → disenrolled), usage, sessions, consent, audit, debt |
+| `/console` | Redirects to BRIDGEt Console (`VITE_BRIDGET_CONSOLE_URL`) when configured; otherwise an in-app "the console moved" page. No staff data lives in this repo anymore. |
 | `/team` | Redirects to `/console` |
 | `/login` | Redirects to `/portal` |
 
@@ -152,8 +152,9 @@ Copy lives in `src/lib/compliance.ts`. Footer always renders TPMO via `TpmoDiscl
 ## Portal split
 
 - `/portal` — public, no auth. Static "beneficiaryCONNECT — client portal coming soon" page. The old fileBRIDGE consumer app (file/agency/share/help, sign-in gate) has been removed.
-- `/console` — BRIDGEt Console. Overview KPIs, lead desk, usage, sessions, consent/retention, audit log. Live inbound from `ops_requests`. Usage metrics are illustrative until ElevenLabs analytics is wired. Staff emails: `team-iia.com`, `insureitallins.com`, `insureitall-llc.com`, `insureitall.com`. `/team` redirects here. Staff can still open legacy share codes on `/console/leads` (`src/lib/portal.ts`, `TeamShareLookup`) — that backend is untouched.
-- Migrations `0002_portal.sql`, `0003_portal_shares.sql`, `0004_ops_requests.sql`, `0005_ops_lead_status.sql` remain for the staff-side share-code lookup above; no new consumer writes happen through `/portal` today.
+- `/console` — no longer a staff desk in this repo. Redirects to **BRIDGEt Console** (separate multi-tenant product, own repo/DB, auth scoped per tenant). `/team` redirects here too.
+- Staff can still open legacy share codes at `/console/leads`'s old backend — `src/lib/portal.ts` (`TeamShareLookup` component still exists in `src/components/portal-share.tsx` but currently has no route rendering it since `/console/leads` was removed; it is untouched and could be re-mounted somewhere if that lookup is still needed) — `staffMiddleware`/`isStaffEmail` (`src/lib/staff.ts`, `src/lib/staff-middleware.ts`) stay for that and for the header's staff-only "Console" link.
+- Migrations `0002_portal.sql`, `0003_portal_shares.sql`, `0004_ops_requests.sql`, `0005_ops_lead_status.sql` remain (untouched) for the staff-side share-code lookup above and for `ops_requests`/`lead_events`, which this repo still writes to on every public lead submission (`src/lib/ops.ts` → `submitOpsRequest`) — kept as the local system of record for email/webhook alerts. Every new lead is ALSO forwarded to BRIDGEt Console (`src/lib/bridget-console.ts` → `forwardLeadToBridget`, best-effort, needs `VITE_BRIDGET_CONSOLE_URL` + server-only `BRIDGET_INGEST_API_KEY` set) so it shows up in the tenant-scoped staff desk there. No new UI reads these tables in this repo — that's BRIDGEt's job now.
 
 ---
 
@@ -171,6 +172,7 @@ scripts/env-validate.mjs            Vercel env format + Resend cluster checks
 npm run env:check                   validate env (no secret values logged)
 emails/                             paste-ready Resend dashboard templates
 scripts/commercial-guard.mjs        lead validation + rate limit + MBI/SSN reject
+src/lib/bridget-console.ts          BRIDGEt Console URL + best-effort lead forwarding (POST /api/ingest/leads)
 public/robots.txt
 public/sitemap.xml
 src/lib/debt.ledger.json            named debt items (scanner source of truth)
@@ -208,3 +210,4 @@ public/audio/ring-pickup.mp3
 - Collect SSN / Medicare number in the widget
 - Treat `artifacts/insureitall-website` as the source of truth for this preview
 - Expand the staff portal in this visual PR
+- Rebuild a staff console UI in this repo — that product now lives in BRIDGEt Console (separate repo, multi-tenant, its own DB). `/console` here is a redirect only.

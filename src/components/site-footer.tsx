@@ -102,7 +102,7 @@ export function SiteFooter() {
             <p>© 2026 INSUREitALL LLC. All rights reserved.</p>
           </div>
           <Link
-            to="/login"
+            to="/team"
             className="inline-flex min-h-11 shrink-0 items-center text-[0.7rem] font-semibold tracking-[0.18em] text-elevated/45 uppercase underline underline-offset-4 transition-colors hover:text-gold"
           >
             Team Login

@@ -1,6 +1,4 @@
-import { useEffect, useState } from "react";
 import { authClient, authEnabled } from "./client";
-import type { UserRole } from "./roles";
 
 /** Normalized user shape used across the app, auth on or off. */
 export type AppUser = {
@@ -10,8 +8,6 @@ export type AppUser = {
   profileImageUrl: string | null;
   /** True when this is the sandbox/dev fallback (auth not configured). */
   isDevFallback: boolean;
-  /** User's role (loaded server-side, not in client session). */
-  role?: UserRole;
 };
 
 /**
@@ -63,29 +59,6 @@ export function useCurrentUserState(): CurrentUserState {
   // eslint-disable-next-line react-hooks/rules-of-hooks -- authEnabled is constant for the app's lifetime
   const { data, isPending } = authClient.useSession();
   const user = data?.user;
-  const [role, setRole] = useState<UserRole | undefined>(undefined);
-  const [roleLoading, setRoleLoading] = useState(false);
-
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  useEffect(() => {
-    if (!user || role !== undefined) return;
-    setRoleLoading(true);
-
-    // Import server function inside effect to avoid issues with SSR
-    import("@/routes/api/auth/user-role").then(async ({ getUserRoleServer }) => {
-      try {
-        const userWithRole = await getUserRoleServer();
-        if (userWithRole) {
-          setRole(userWithRole.role);
-        }
-      } catch (err) {
-        console.error("Failed to load user role:", err);
-      } finally {
-        setRoleLoading(false);
-      }
-    });
-  }, [user?.id, role]);
-
   return {
     user: user
       ? {
@@ -94,10 +67,9 @@ export function useCurrentUserState(): CurrentUserState {
           primaryEmail: user.email ?? null,
           profileImageUrl: user.image ?? null,
           isDevFallback: false,
-          role,
         }
       : null,
-    isPending: isPending || roleLoading,
+    isPending,
   };
 }
 

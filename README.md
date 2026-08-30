@@ -20,6 +20,8 @@ fileBRIDGE (`/portal`) is a third-party app. IIA chrome sends people through `/l
 
 Leads persist and email only with `DATABASE_URL` + Resend. Without them the site still markets and takes in-memory/PGLite data in preview.
 
+The staff console is now a separate product, **BRIDGEt Console** ([copperlang2007/BRIDGEt](https://github.com/copperlang2007/BRIDGEt)). `/console` and `/team` here just redirect to it — set `VITE_BRIDGET_CONSOLE_URL` (its deployed origin) once it's live, or they show an in-app "moved" message. Set the server-only `BRIDGET_INGEST_API_KEY` (a tenant API key minted from BRIDGEt's Settings page) to also forward every new lead there.
+
 ## Scripts
 
 ```bash

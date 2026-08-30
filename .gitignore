@@ -11,3 +11,4 @@ attachments
 .env.local
 .pglite
 debt/latest.json
+.scratch

@@ -28,7 +28,7 @@ test("email tells staff to open the desk for the file", () => {
     leadAlertPayload({ id: "REQ-1", kind: "callback", firstName: "Pat", phone: "+18884594842" }),
   );
   assert.match(subject, /Callback/);
-  assert.match(text, /\/console\/leads/);
+  assert.match(text, /\/console\b/);
   assert.match(html, /#0A1D3D/);
   assert.equal(text.includes("lisinopril"), false);
   assert.equal(html.includes("lisinopril"), false);
