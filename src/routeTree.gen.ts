@@ -33,6 +33,7 @@ import { Route as AbIndexRouteImport } from './routes/ab/index'
 import { Route as AbPrivacyRouteImport } from './routes/ab/privacy'
 import { Route as AbTermsRouteImport } from './routes/ab/terms'
 import { Route as ApiBridgetVoiceRouteImport } from './routes/api/bridget-voice'
+import { Route as ApiLeadIntakeRouteImport } from './routes/api/lead-intake'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 
 const IndexRoute = IndexRouteImport.update({
@@ -155,6 +156,11 @@ const ApiBridgetVoiceRoute = ApiBridgetVoiceRouteImport.update({
   path: '/api/bridget-voice',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiLeadIntakeRoute = ApiLeadIntakeRouteImport.update({
+  id: '/api/lead-intake',
+  path: '/api/lead-intake',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: '/api/auth/$',
   path: '/api/auth/$',
@@ -185,6 +191,7 @@ export interface FileRoutesByFullPath {
   '/ab/privacy': typeof AbPrivacyRoute
   '/ab/terms': typeof AbTermsRoute
   '/api/bridget-voice': typeof ApiBridgetVoiceRoute
+  '/api/lead-intake': typeof ApiLeadIntakeRoute
   '/ab/': typeof AbIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
@@ -211,6 +218,7 @@ export interface FileRoutesByTo {
   '/ab/privacy': typeof AbPrivacyRoute
   '/ab/terms': typeof AbTermsRoute
   '/api/bridget-voice': typeof ApiBridgetVoiceRoute
+  '/api/lead-intake': typeof ApiLeadIntakeRoute
   '/ab': typeof AbIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
@@ -239,6 +247,7 @@ export interface FileRoutesById {
   '/ab/privacy': typeof AbPrivacyRoute
   '/ab/terms': typeof AbTermsRoute
   '/api/bridget-voice': typeof ApiBridgetVoiceRoute
+  '/api/lead-intake': typeof ApiLeadIntakeRoute
   '/ab/': typeof AbIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
@@ -268,6 +277,7 @@ export interface FileRouteTypes {
     | '/ab/privacy'
     | '/ab/terms'
     | '/api/bridget-voice'
+    | '/api/lead-intake'
     | '/ab/'
     | '/api/auth/$'
   fileRoutesByTo: FileRoutesByTo
@@ -294,6 +304,7 @@ export interface FileRouteTypes {
     | '/ab/privacy'
     | '/ab/terms'
     | '/api/bridget-voice'
+    | '/api/lead-intake'
     | '/ab'
     | '/api/auth/$'
   id:
@@ -321,6 +332,7 @@ export interface FileRouteTypes {
     | '/ab/privacy'
     | '/ab/terms'
     | '/api/bridget-voice'
+    | '/api/lead-intake'
     | '/ab/'
     | '/api/auth/$'
   fileRoutesById: FileRoutesById
@@ -347,6 +359,7 @@ export interface RootRouteChildren {
   TeamRoute: typeof TeamRoute
   TermsRoute: typeof TermsRoute
   ApiBridgetVoiceRoute: typeof ApiBridgetVoiceRoute
+  ApiLeadIntakeRoute: typeof ApiLeadIntakeRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
 }
 
@@ -520,6 +533,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiBridgetVoiceRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/lead-intake': {
+      id: '/api/lead-intake'
+      path: '/api/lead-intake'
+      fullPath: '/api/lead-intake'
+      preLoaderRoute: typeof ApiLeadIntakeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/auth/$': {
       id: '/api/auth/$'
       path: '/api/auth/$'
@@ -566,6 +586,7 @@ const rootRouteChildren: RootRouteChildren = {
   TeamRoute: TeamRoute,
   TermsRoute: TermsRoute,
   ApiBridgetVoiceRoute: ApiBridgetVoiceRoute,
+  ApiLeadIntakeRoute: ApiLeadIntakeRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
 }
 export const routeTree = rootRouteImport

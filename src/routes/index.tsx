@@ -152,7 +152,7 @@ function Home() {
             <p className="font-display text-xl text-navy">Takes a few minutes.</p>
             <p className="mt-2 text-ink">No Medicare number. No enrollment.</p>
             <ul className="mt-6 space-y-3 text-sm text-ink">
-              __["What you have now", "Doctors, drugs, travel", "Gained / sacrificed / watch"].map((t) => (
+              {["What you have now", "Doctors, drugs, travel", "Gained / sacrificed / watch"].map((t) => (
                 <li key={t} className="flex items-center gap-2">
                   <Check className="size-4 text-blue" />
                   {t}
