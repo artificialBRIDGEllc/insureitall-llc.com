@@ -68,6 +68,7 @@ export async function forwardLeadToBridget(lead: ForwardLead): Promise<void> {
       authorization: `Bearer ${apiKey}`,
     },
     body: JSON.stringify(lead),
+    signal: AbortSignal.timeout(5000),
   });
   if (!res.ok) {
     throw new Error(`BRIDGEt ingestion responded ${res.status}`);
