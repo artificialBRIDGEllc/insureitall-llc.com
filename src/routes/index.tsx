@@ -61,13 +61,13 @@ function Home() {
               Licensed Medicare Agents · No cost to you
             </p>
             <h1 className="mt-4 font-display text-4xl leading-[1.12] text-elevated sm:text-5xl lg:text-[3.4rem]">
-              Medicare guidance that leaves you{" "}
-              <em className="italic text-mist">in good hands.</em>
+              We do the <em className="italic text-mist">hard part.</em>
             </h1>
             <p className="mt-5 max-w-xl text-lg leading-relaxed text-elevated/80">
-              We take calls — but we're not what you'd expect. Licensed agents
-              listen first, compare options honestly, and stay available long after
-              you've enrolled. No scripts. No pressure.
+              Medicare is genuinely complicated. Comparing plans, checking whether
+              your doctors are in network, tracking which prescriptions are covered,
+              catching the deadlines — that part is ours. Yours is to tell us what
+              m-atters to you.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Button asChild size="lg" variant="blue">
@@ -152,7 +152,7 @@ function Home() {
             <p className="font-display text-xl text-navy">Takes a few minutes.</p>
             <p className="mt-2 text-ink">No Medicare number. No enrollment.</p>
             <ul className="mt-6 space-y-3 text-sm text-ink">
-              {["What you have now", "Doctors, drugs, travel", "Gained / sacrificed / watch"].map((t) => (
+              __["What you have now", "Doctors, drugs, travel", "Gained / sacrificed / watch"].map((t) => (
                 <li key={t} className="flex items-center gap-2">
                   <Check className="size-4 text-blue" />
                   {t}
