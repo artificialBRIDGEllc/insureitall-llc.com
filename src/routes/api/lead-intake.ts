@@ -216,6 +216,7 @@ export const Route = createFileRoute("/api/lead-intake")({
 
         try {
           await forwardLeadToBridget({
+            externalId: id,
             kind: row.kind,
             firstName: row.firstName,
             phone: row.phone,

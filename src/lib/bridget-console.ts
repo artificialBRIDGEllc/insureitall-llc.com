@@ -35,6 +35,7 @@ export function bridgetConsoleUrl(): string | null {
 }
 
 type ForwardLead = {
+  externalId?: string;
   kind: string;
   firstName?: string;
   phone?: string;
