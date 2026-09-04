@@ -67,7 +67,7 @@ function Home() {
               Medicare is genuinely complicated. Comparing plans, checking whether
               your doctors are in network, tracking which prescriptions are covered,
               catching the deadlines — that part is ours. Yours is to tell us what
-              m-atters to you.
+              matters to you.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Button asChild size="lg" variant="blue">
