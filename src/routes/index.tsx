@@ -38,8 +38,7 @@ const plans = [
     title: "Medicare Supplement",
     body: "Medigap plans that work alongside Original Medicare to help with out-of-pocket costs like copays and deductibles.",
     fit: "You want to keep Original Medicare and add predictability.",
-  },
-  {
+  },\n  {
     title: "Prescription Drug Plans",
     body: "Part D plans that help cover the cost of prescription medications, with formularies that vary by plan.",
     fit: "You take regular medications and want to manage drug costs.",
