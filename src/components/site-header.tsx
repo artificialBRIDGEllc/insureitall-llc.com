@@ -4,7 +4,6 @@ import { useState } from "react";
 import { SignedIn, SignedOut, UserButton } from "@/lib/auth/gates";
 import { useCurrentUserState } from "@/lib/auth/use-current-user";
 import { Logo } from "@/components/logo";
-import { BridgetMark } from "@/components/bridget-wordmark";
 import { CallLink } from "@/components/call-link";
 import { Button } from "@/components/ui/button";
 import { HOURS, PHONE_DISPLAY } from "@/lib/utils";
@@ -82,9 +81,6 @@ export function SiteHeader() {
                 className="inline-flex items-center gap-1.5 text-sm font-medium text-ink hover:text-blue"
                 activeProps={{ className: "inline-flex items-center gap-1.5 text-sm font-semibold text-blue hover:text-blue" }}
               >
-                {item.to === "/bridget" ? (
-                  <BridgetMark className="text-xl" />
-                ) : null}
                 {item.label}
               </Link>
             ))}

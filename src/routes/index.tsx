@@ -38,8 +38,7 @@ const plans = [
     title: "Medicare Supplement",
     body: "Medigap plans that work alongside Original Medicare to help with out-of-pocket costs like copays and deductibles.",
     fit: "You want to keep Original Medicare and add predictability.",
-  },
-  {
+  },\n  {
     title: "Prescription Drug Plans",
     body: "Part D plans that help cover the cost of prescription medications, with formularies that vary by plan.",
     fit: "You take regular medications and want to manage drug costs.",
@@ -67,7 +66,7 @@ function Home() {
               Medicare is genuinely complicated. Comparing plans, checking whether
               your doctors are in network, tracking which prescriptions are covered,
               catching the deadlines — that part is ours. Yours is to tell us what
-              m-atters to you.
+              matters to you.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Button asChild size="lg" variant="blue">
