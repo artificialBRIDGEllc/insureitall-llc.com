@@ -1,1 +1,218 @@
-/**\n * Validate INSUREitALL env. Never log secret values.\n *\n *   node scripts/env-validate.mjs\n *   node scripts/env-validate.mjs --strict-production\n */\n\nconst EMAIL_RE = /^[^\s@]+@[^\s@]+\\.[^\s@]{2,}$/i;\nconst HTTPS_RE = /^https:\\/\\/[^\\s/$.?#].[^\\s]*$/i;\nconst RESEND_KEY_RE = /^re_[A-Za-z0-9_]{2,}$/;\nconst TEMPLATE_RE = /^[A-Za-z0-9][A-Za-z0-9._-]{1,80}$/;\nconst FROM_RE = /^(?:([^<>@\\n]{1,80})\\s*)?<([^<>\\s]+@[^<>\\s]+)>$|^([^\\s@]+@[^\\s@]+\\.[^\\s@]+)$/;\nconst SLUG_RE = /^[a-z0-9][a-z0-9-]{0,62}$/;\nconst TOKEN_RE = /^\\S{16,200}$/;\n\nexport const ENV_SCHEMA = [\n  { key: "DATABASE_URL", group: "data", format: "postgres", when: "if-set" },\n  { key: "RESEND_API_KEY", group: "resend", format: "resend-key", when: "cluster" },\n  { key: "LEAD_ALERT_FROM", group: "resend", format: "from", when: "if-set" },\n  { key: "LEAD_ALERT_TO", group: "resend", format: "email", when: "if-set" },\n  { key: "LEAD_ALERT_WEBHOOK", group: "alert", format: "https", when: "if-set" },\n  { key: "RESEND_TEMPLATE_LEAD_ALERT", group: "resend", format: "template", when: "if-set" },\n  { key: "RESEND_TEMPLATE_LEAD_RECEIVED", group: "resend", format: "template", when: "if-set" },\n  { key: "LEAD_RECEIPT", group: "resend", format: "flag", when: "if-set" },\n  { key: "EMAIL_SITE_NAME", group: "copy", format: "short", when: "if-set" },\n  { key: "EMAIL_PHONE", group: "copy", format: "phone", when: "if-set" },\n  { key: "EMAIL_HOURS", group: "copy", format: "short", when: "if-set" },\n  { key: "EMAIL_CONSOLE_URL", group: "copy", format: "https", when: "if-set" },\n  { key: "EMAIL_DESK_CTA", group: "copy", format: "short", when: "if-set" },\n  { key: "EMAIL_CALL_CTA", group: "copy", format: "short", when: "if-set" },\n  { key: "EMAIL_RECEIVED_TITLE", group: "copy", format: "short", when: "if-set" },\n  { key: "EMAIL_RECEIVED_BODY", group: "copy", format: "long", when: "if-set" },\n  { key: "VITE_BRIDGET_CONSOLE_URL", group: "bridget", format: "https", when: "cluster" },\n  { key: "BRIDGET_INGEST_API_KEY", group: "bridget", format: "token", when: "cluster" },\n  { key: "VITE_BRIDGET_TENANT_SLUG", group: "bridget", format: "slug", when: "if-set" },\n];\n\nconst RESEND_CLUSTER = [\n  "LEAD_ALERT_FROM",\n  "LEAD_ALERT_TO",\n  "RESEND_TEMPLATE_LEAD_ALERT",\n  "RESEND_TEMPLATE_LEAD_RECEIVED",\n  "LEAD_RECEIPT",\n  "EMAIL_SITE_NAME",\n  "EMAIL_PHONE",\n  "EMAIL_HOURS",\n  "EMAIL_CONSOLE_URL",\n  "EMAIL_DESK_CTA",\n  "EMAIL_CALL_CTA",\n  "EMAIL_RECEIVED_TITLE",\n  "EMAIL_RECEIVED_BODY",\n];\n\n// forwardLeadToBridget() in src/lib/bridget-console.ts returns early and\n// silently when either of these is missing. That is correct for local dev and\n// wrong for production: leads land in ops_requests and never reach the BRIDGEt\n// staff desk, with no error and no log line. These two are all-or-nothing.\nconst BRIDGET_REQUIRED_PAIR = ["VITE_BRIDGET_CONSOLE_URL", "BRIDGET_INGEST_API_KEY"];\n\nfunction trim(env, key) {\n  return String(env[key] ?? "").trim();\n}\n\nfunction validFrom(value) {\n  const m = value.match(FROM_RE);\n  if (!m) return false;\n  const email = m[2] || m[3];\n  return EMAIL_RE.test(email);\n}\n\nfunction validPhone(value) {\n  const d = value.replace(/\\D/g, "");\n  return d.length === 10 || (d.length === 11 && d.startsWith("1"));\n}\n\nfunction validPostgres(value) {\n  return /^(postgres|postgresql)(\\+.+)?:\\/\\//i.test(value);\n}\n\nfunction checkFormat(format, value) {\n  switch (format) {\n    case "email":\n      return EMAIL_RE.test(value) ? null : "must be an email address";\n    case "from":\n      return validFrom(value) ? null : "must be an email or Name <email@domain>";\n    case "https":\n      return HTTPS_RE.test(value) ? null : "must be an https URL";\n    case "resend-key":\n      return RESEND_KEY_RE.test(value) ? null : "must start with re_";\n    case "template":\n      return TEMPLATE_RE.test(value) ? null : "must be a Resend alias or tmpl_ id";\n    case "flag":\n      return value === "0" || value === "1" ? null : "must be 0 or 1";\n    case "phone":\n      return validPhone(value) ? null : "must be a 10-digit US phone";\n    case "short":\n      return value.length <= 80 ? null : "must be 80 characters or fewer";\n    case "long":\n      return value.length <= 400 ? null : "must be 400 characters or fewer";\n    case "postgres":\n      return validPostgres(value) ? null : "must be a postgres:// URL";\n    case "slug":\n      return SLUG_RE.test(value) ? null : "must be a lowercase slug, e.g. insureitall";\n    case "token":\n      return TOKEN_RE.test(value) ? null : "must be an opaque token, 16+ chars, no whitespace";\n    default:\n      return null;\n  }\n}\n\nexport function isProduction(env = {}) {\n  return trim(env, "VERCEL_ENV") === "production" || trim(env, "INSUREITALL_ENV") === "production";\n}\n\nexport function validateEnv(env = {}, { production = isProduction(env) } = {}) {\n  const errors = [];\n  const warnings = [];\n\n  for (const field of ENV_SCHEMA) {\n    const value = trim(env, field.key);\n    if (!value) continue;\n    const problem = checkFormat(field.format, value);\n    if (problem) errors.push({ key: field.key, message: problem });\n  }\n\n  const key = trim(env, "RESEND_API_KEY");\n  const clusterSet = RESEND_CLUSTER.filter((k) => trim(env, k));\n  if (clusterSet.length && !key) {\n    errors.push({\n      key: "RESEND_API_KEY",\n      message: `required because ${clusterSet[0]} is set`,\n    });\n  }\n  if (key && !trim(env, "LEAD_ALERT_FROM")) {\n    warnings.push({\n      key: "LEAD_ALERT_FROM",\n      message: "should be a verified Resend from-address; using the default",\n    });\n  }\n\n  const webhook = trim(env, "LEAD_ALERT_WEBHOOK");\n  const resendGroupError = errors.some((e) => {\n    const field = ENV_SCHEMA.find((s) => s.key === e.key);\n    return field?.group === "resend";\n  });\n  const webhookOk = Boolean(webhook) && !errors.some((e) => e.key === "LEAD_ALERT_WEBHOOK");\n  const resendOk = Boolean(key) && !resendGroupError;\n\n  // --- BRIDGEt lead forwarding -------------------------------------------\n  const bridgetSet = BRIDGET_REQUIRED_PAIR.filter((k) => trim(env, k));\n  const bridgetMissing = BRIDGET_REQUIRED_PAIR.filter((k) => !trim(env, k));\n\n  // Half-configured is always an error, in every environment. It is the state\n  // most likely to be mistaken for \"wired up\".\n  if (bridgetSet.length && bridgetMissing.length) {\n    for (const missing of bridgetMissing) {\n      errors.push({\n        key: missing,\n        message: `required because ${bridgetSet[0]} is set — forwardLeadToBridget() no-ops silently without it`,\n      });\n    }\n  }\n\n  const bridgetGroupError = errors.some((e) => {\n    const field = ENV_SCHEMA.find((s) => s.key === e.key);\n    return field?.group === "bridget";\n  });\n  const bridgetOk = bridgetMissing.length === 0 && !bridgetGroupError;\n\n  if (production && bridgetMissing.length === BRIDGET_REQUIRED_PAIR.length) {\n    warnings.push({\n      key: "BRIDGET_INGEST_API_KEY",\n      message:\n        "production is not forwarding leads to BRIDGEt — captured leads will never reach the staff desk, silently",\n    });\n  }\n\n  if (production && !webhookOk && !resendOk) {\n    warnings.push({\n      key: "LEAD_ALERT_WEBHOOK",\n      message: "production has no lead-alert channel (webhook or Resend)",\n    });\n  }\n  if (production && !trim(env, "DATABASE_URL")) {\n    warnings.push({\n      key: "DATABASE_URL",\n      message: "production should set DATABASE_URL so leads persist",\n    });\n  }\n\n  return {\n    ok: errors.length === 0,\n    errors,\n    warnings,\n    channels: {\n      resend: !key ? \"missing\" : resendOk ? \"ok\" : \"invalid\",\n      webhook: !webhook ? \"missing\" : webhookOk ? \"ok\" : \"invalid\",\n      bridget: !bridgetSet.length ? \"missing\" : bridgetOk ? \"ok\" : \"invalid\",\n    },\n  };\n}\n\nexport function formatReport(report) {\n  const lines = [];\n  for (const item of report.errors) lines.push(`error  ${item.key}: ${item.message}`);\n  for (const item of report.warnings) lines.push(`warn   ${item.key}: ${item.message}`);\n  if (!lines.length) lines.push(\"ok     env is valid\");\n  return lines.join(\"\\n\");\n}\n\nconst isMain = process.argv[1] && process.argv[1].endsWith(\"env-validate.mjs\");\nif (isMain) {\n  const report = validateEnv(process.env);\n  console.log(formatReport(report));\n  const strict = process.argv.includes(\"--strict-production\");\n  const fail = !report.ok || (strict && report.warnings.length);\n  process.exit(fail ? 1 : 0);\n}
+/**
+ * Validate INSUREitALL env. Never log secret values.
+ *
+ *   node scripts/env-validate.mjs
+ *   node scripts/env-validate.mjs --strict-production
+ */
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+const HTTPS_RE = /^https:\/\/[^\s/$.?#].[^\s]*$/i;
+const RESEND_KEY_RE = /^re_[A-Za-z0-9_]{2,}$/;
+const TEMPLATE_RE = /^[A-Za-z0-9][A-Za-z0-9._-]{1,80}$/;
+const FROM_RE = /^(?:([^<>@\n]{1,80})\s*)?<([^<>\s]+@[^<>\s]+)>$|^([^\s@]+@[^\s@]+\.[^\s@]+)$/;
+const SLUG_RE = /^[a-z0-9][a-z0-9-]{0,62}$/;
+const TOKEN_RE = /^\S{16,200}$/;
+
+export const ENV_SCHEMA = [
+  { key: "DATABASE_URL", group: "data", format: "postgres", when: "if-set" },
+  { key: "RESEND_API_KEY", group: "resend", format: "resend-key", when: "cluster" },
+  { key: "LEAD_ALERT_FROM", group: "resend", format: "from", when: "if-set" },
+  { key: "LEAD_ALERT_TO", group: "resend", format: "email", when: "if-set" },
+  { key: "LEAD_ALERT_WEBHOOK", group: "alert", format: "https", when: "if-set" },
+  { key: "RESEND_TEMPLATE_LEAD_ALERT", group: "resend", format: "template", when: "if-set" },
+  { key: "RESEND_TEMPLATE_LEAD_RECEIVED", group: "resend", format: "template", when: "if-set" },
+  { key: "LEAD_RECEIPT", group: "resend", format: "flag", when: "if-set" },
+  { key: "EMAIL_SITE_NAME", group: "copy", format: "short", when: "if-set" },
+  { key: "EMAIL_PHONE", group: "copy", format: "phone", when: "if-set" },
+  { key: "EMAIL_HOURS", group: "copy", format: "short", when: "if-set" },
+  { key: "EMAIL_CONSOLE_URL", group: "copy", format: "https", when: "if-set" },
+  { key: "EMAIL_DESK_CTA", group: "copy", format: "short", when: "if-set" },
+  { key: "EMAIL_CALL_CTA", group: "copy", format: "short", when: "if-set" },
+  { key: "EMAIL_RECEIVED_TITLE", group: "copy", format: "short", when: "if-set" },
+  { key: "EMAIL_RECEIVED_BODY", group: "copy", format: "long", when: "if-set" },
+  { key: "VITE_BRIDGET_CONSOLE_URL", group: "bridget", format: "https", when: "cluster" },
+  { key: "BRIDGET_INGEST_API_KEY", group: "bridget", format: "token", when: "cluster" },
+  { key: "VITE_BRIDGET_TENANT_SLUG", group: "bridget", format: "slug", when: "if-set" },
+];
+
+const RESEND_CLUSTER = [
+  "LEAD_ALERT_FROM",
+  "LEAD_ALERT_TO",
+  "RESEND_TEMPLATE_LEAD_ALERT",
+  "RESEND_TEMPLATE_LEAD_RECEIVED",
+  "LEAD_RECEIPT",
+  "EMAIL_SITE_NAME",
+  "EMAIL_PHONE",
+  "EMAIL_HOURS",
+  "EMAIL_CONSOLE_URL",
+  "EMAIL_DESK_CTA",
+  "EMAIL_CALL_CTA",
+  "EMAIL_RECEIVED_TITLE",
+  "EMAIL_RECEIVED_BODY",
+];
+
+// forwardLeadToBridget() in src/lib/bridget-console.ts returns early and
+// silently when either of these is missing. That is correct for local dev and
+// wrong for production: leads land in ops_requests and never reach the BRIDGEt
+// staff desk, with no error and no log line. These two are all-or-nothing.
+const BRIDGET_REQUIRED_PAIR = ["VITE_BRIDGET_CONSOLE_URL", "BRIDGET_INGEST_API_KEY"];
+
+function trim(env, key) {
+  return String(env[key] ?? "").trim();
+}
+
+function validFrom(value) {
+  const m = value.match(FROM_RE);
+  if (!m) return false;
+  const email = m[2] || m[3];
+  return EMAIL_RE.test(email);
+}
+
+function validPhone(value) {
+  const d = value.replace(/\D/g, "");
+  return d.length === 10 || (d.length === 11 && d.startsWith("1"));
+}
+
+function validPostgres(value) {
+  return /^(postgres|postgresql)(\+.+)?:\/\//i.test(value);
+}
+
+function checkFormat(format, value) {
+  switch (format) {
+    case "email":
+      return EMAIL_RE.test(value) ? null : "must be an email address";
+    case "from":
+      return validFrom(value) ? null : "must be an email or Name <email@domain>";
+    case "https":
+      return HTTPS_RE.test(value) ? null : "must be an https URL";
+    case "resend-key":
+      return RESEND_KEY_RE.test(value) ? null : "must start with re_";
+    case "template":
+      return TEMPLATE_RE.test(value) ? null : "must be a Resend alias or tmpl_ id";
+    case "flag":
+      return value === "0" || value === "1" ? null : "must be 0 or 1";
+    case "phone":
+      return validPhone(value) ? null : "must be a 10-digit US phone";
+    case "short":
+      return value.length <= 80 ? null : "must be 80 characters or fewer";
+    case "long":
+      return value.length <= 400 ? null : "must be 400 characters or fewer";
+    case "postgres":
+      return validPostgres(value) ? null : "must be a postgres:// URL";
+    case "slug":
+      return SLUG_RE.test(value) ? null : "must be a lowercase slug, e.g. insureitall";
+    case "token":
+      return TOKEN_RE.test(value) ? null : "must be an opaque token, 16+ chars, no whitespace";
+    default:
+      return null;
+  }
+}
+
+export function isProduction(env = {}) {
+  return trim(env, "VERCEL_ENV") === "production" || trim(env, "INSUREITALL_ENV") === "production";
+}
+
+export function validateEnv(env = {}, { production = isProduction(env) } = {}) {
+  const errors = [];
+  const warnings = [];
+
+  for (const field of ENV_SCHEMA) {
+    const value = trim(env, field.key);
+    if (!value) continue;
+    const problem = checkFormat(field.format, value);
+    if (problem) errors.push({ key: field.key, message: problem });
+  }
+
+  const key = trim(env, "RESEND_API_KEY");
+  const clusterSet = RESEND_CLUSTER.filter((k) => trim(env, k));
+  if (clusterSet.length && !key) {
+    errors.push({
+      key: "RESEND_API_KEY",
+      message: `required because ${clusterSet[0]} is set`,
+    });
+  }
+  if (key && !trim(env, "LEAD_ALERT_FROM")) {
+    warnings.push({
+      key: "LEAD_ALERT_FROM",
+      message: "should be a verified Resend from-address; using the default",
+    });
+  }
+
+  const webhook = trim(env, "LEAD_ALERT_WEBHOOK");
+  const resendGroupError = errors.some((e) => {
+    const field = ENV_SCHEMA.find((s) => s.key === e.key);
+    return field?.group === "resend";
+  });
+  const webhookOk = Boolean(webhook) && !errors.some((e) => e.key === "LEAD_ALERT_WEBHOOK");
+  const resendOk = Boolean(key) && !resendGroupError;
+
+  // --- BRIDGEt lead forwarding -------------------------------------------
+  const bridgetSet = BRIDGET_REQUIRED_PAIR.filter((k) => trim(env, k));
+  const bridgetMissing = BRIDGET_REQUIRED_PAIR.filter((k) => !trim(env, k));
+
+  // Half-configured is always an error, in every environment. It is the state
+  // most likely to be mistaken for "wired up".
+  if (bridgetSet.length && bridgetMissing.length) {
+    for (const missing of bridgetMissing) {
+      errors.push({
+        key: missing,
+        message: `required because ${bridgetSet[0]} is set — forwardLeadToBridget() no-ops silently without it`,
+      });
+    }
+  }
+
+  const bridgetGroupError = errors.some((e) => {
+    const field = ENV_SCHEMA.find((s) => s.key === e.key);
+    return field?.group === "bridget";
+  });
+  const bridgetOk = bridgetMissing.length === 0 && !bridgetGroupError;
+
+  if (production && bridgetMissing.length === BRIDGET_REQUIRED_PAIR.length) {
+    warnings.push({
+      key: "BRIDGET_INGEST_API_KEY",
+      message:
+        "production is not forwarding leads to BRIDGEt — captured leads will never reach the staff desk, silently",
+    });
+  }
+
+  if (production && !webhookOk && !resendOk) {
+    warnings.push({
+      key: "LEAD_ALERT_WEBHOOK",
+      message: "production has no lead-alert channel (webhook or Resend)",
+    });
+  }
+  if (production && !trim(env, "DATABASE_URL")) {
+    warnings.push({
+      key: "DATABASE_URL",
+      message: "production should set DATABASE_URL so leads persist",
+    });
+  }
+
+  return {
+    ok: errors.length === 0,
+    errors,
+    warnings,
+    channels: {
+      resend: !key ? "missing" : resendOk ? "ok" : "invalid",
+      webhook: !webhook ? "missing" : webhookOk ? "ok" : "invalid",
+      bridget: !bridgetSet.length ? "missing" : bridgetOk ? "ok" : "invalid",
+    },
+  };
+}
+
+export function formatReport(report) {
+  const lines = [];
+  for (const item of report.errors) lines.push(`error  ${item.key}: ${item.message}`);
+  for (const item of report.warnings) lines.push(`warn   ${item.key}: ${item.message}`);
+  if (!lines.length) lines.push("ok     env is valid");
+  return lines.join("\n");
+}
+
+const isMain = process.argv[1] && process.argv[1].endsWith("env-validate.mjs");
+if (isMain) {
+  const report = validateEnv(process.env);
+  console.log(formatReport(report));
+  const strict = process.argv.includes("--strict-production");
+  const fail = !report.ok || (strict && report.warnings.length);
+  process.exit(fail ? 1 : 0);
+}
