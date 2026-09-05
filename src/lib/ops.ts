@@ -101,6 +101,7 @@ export const submitOpsRequest = createServerFn({ method: "POST" })
     }
     try {
       await forwardLeadToBridget({
+        externalId: id,
         kind: row.kind,
         firstName: row.firstName,
         phone: row.phone,
