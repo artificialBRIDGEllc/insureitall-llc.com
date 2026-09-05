@@ -71,11 +71,11 @@ export const submitOpsRequest = createServerFn({ method: "POST" })
     await sql`
       insert into ops_requests (
         id, kind, first_name, phone, email, zip, callback_window,
-        doctors, medications, budget, notes, disposition, source, consent_at, stage
+        doctors, medications, budget, notes, source, consent_at, stage
       ) values (
         ${id}, ${row.kind}, ${row.firstName}, ${row.phone}, ${row.email},
         ${row.zip}, ${row.callbackWindow}, ${row.doctors}, ${row.medications},
-        ${row.budget}, ${row.notes}, ${"new"}, ${source}, now(), ${"new"}
+        ${row.budget}, ${row.notes}, ${source}, now(), ${"new"}
       )
     `;
     try {
