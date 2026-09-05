@@ -136,9 +136,9 @@ Home kicker under the consumer-portal paragraph: italic Fraunces **Welcome home.
 
 ## Compliance (non-negotiable)
 
-Source of TPMO counts: Ryan Butterfield, acting CCO, 2026-08-20. Static until he signs `docs/cco-confirmation.md` with zip-level product counts.
+Source of TPMO counts: Ryan Butterfield, acting CCO, 2026-08-20. **Static count retired 2026-09-05** — a compliance audit (`docs/audits/AUD-20260903-insureitall-llc.com.md`) found the "14 organizations / 14 products" string was a spliced, unprovable non-standard variant. `TPMO_DISCLAIMER` now serves a generic no-numbers interim sentence pending Ryan's sign-off on `docs/cco-confirmation.md` and real per-county appointment data. See `docs/decisions/ADR-0013-tpmo-disclaimer-stopgap.md`. The numeric resolver (ZIP → county → CMS-standardized text, hash-chained evidence, fail-closed) is staged and tested at `tools/bridge-disclosure/` (`python3 tools/bridge-disclosure/test_resolver.py`) but **not wired into the live site** — no real `agency_appointments` feed or ZIP-capture UI exists yet.
 
-- `TPMO_DISCLAIMER` — 14 organizations / 14 products, not every plan, send leftovers to Medicare.gov / 1-800-MEDICARE / SHIP
+- `TPMO_DISCLAIMER` — generic no-numbers interim form, not every plan, send leftovers to Medicare.gov / 1-800-MEDICARE (SHIP dropped — CMS removed it from the standardized text at 91 FR 17583, eff. CY2027 marketing 10/1/2026)
 - `NON_AFFILIATION` — not connected with or endorsed by the U.S. Government or federal Medicare program
 - BRIDGEt is **not** a licensed insurance agent
 - Calls recorded for quality / training / compliance
