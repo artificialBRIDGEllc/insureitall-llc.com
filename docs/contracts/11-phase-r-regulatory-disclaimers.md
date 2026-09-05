@@ -69,7 +69,7 @@ The Agent **MUST NOT**:
 
 | Fact | Module | Who may change it |
 |---|---|---|
-| TPMO org count / product count / disclaimer | `src/lib/compliance.ts` → `TPMO_ORG_COUNT`, `TPMO_PRODUCT_COUNT`, `TPMO_DISCLAIMER` | CCO via `docs/cco-confirmation.md` |
+| TPMO disclaimer text | `src/lib/compliance.ts` → `TPMO_DISCLAIMER` (interim generic form; numeric org/product counts retired pending CCO-confirmed appointment data — see `tools/bridge-disclosure/`) | CCO via `docs/cco-confirmation.md` |
 | Non-affiliation | `NON_AFFILIATION` | CCO |
 | Licensed states | `LICENSED_STATES` | CCO |
 | TCPA / recording consent | `LEAD_CONSENT` | CCO + counsel |

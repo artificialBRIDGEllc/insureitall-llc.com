@@ -1,3 +1,4 @@
+import { TPMO_DISCLAIMER } from "@/lib/compliance";
 import { HQ_LINE1, HQ_LINE2, PHONE_DISPLAY } from "@/lib/utils";
 
 export const SITE_ORIGIN = "https://insureitall-llc.com";
@@ -108,7 +109,7 @@ export const HOME_FAQS = [
   },
   {
     q: "Which carriers and plans do you offer?",
-    a: "We compare multiple carriers. We do not offer every plan available in your area. Please contact Medicare.gov, 1-800-MEDICARE, or your local SHIP to get information on all of your options.",
+    a: `We compare multiple carriers. ${TPMO_DISCLAIMER}`,
   },
   {
     q: "What happens after I enroll?",

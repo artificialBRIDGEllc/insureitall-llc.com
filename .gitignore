@@ -12,3 +12,4 @@ attachments
 .pglite
 debt/latest.json
 .scratch
+__pycache__/

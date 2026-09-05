@@ -9,20 +9,24 @@ This is the carrier-audit list. Check **Confirm** or write the replacement. Cosm
 
 Return a signed copy (PDF or this file). Until zip-level counts exist, the site keeps the static 14 / 14.
 
----
+> **Interim update — 2026-09-05, unsigned, pending your review:** a compliance audit (`docs/audits/AUD-20260903-insureitall-llc.com.md`) found the "Published" string below was never actually correct — it splices two different CMS text forms together, and no version of the regulation combines them. Independent of the 14/14 count question, `src/lib/compliance.ts` now serves the generic no-numbers sentence quoted in the "Interim (live now)" row below instead, per `docs/decisions/ADR-0013-tpmo-disclaimer-stopgap.md`. This still needs your sign-off — check the new row below in addition to (not instead of) the count question.
 
 ## 1. TPMO disclaimer (must match CMS TPMO marketing rules)
 
-Published:
+Previously published (defective — see ADR-0013, do not restore):
 
 > We do not offer every plan available in your area. Currently we represent **14** organizations which offer **14** products in your area. Any information we provide is limited to those plans we do offer in your area. Please contact Medicare.gov, 1-800-MEDICARE, or your local State Health Insurance Program (SHIP) to get information on all of your options.
 
-| | Confirm as published | Change to |
+Interim (live now, as of 2026-09-05):
+
+> We do not offer every plan available in your area. Any information we provide is limited to those plans we do offer in your area. Please contact Medicare.gov or 1-800-MEDICARE to get information on all of your options.
+
+| | Confirm | Change to |
 |---|---|---|
+| Interim generic sentence OK to stay live until zip-level counts exist? | ☐ Yes | ☐ No — attach rewrite |
 | Organization count | ☐ 14 | ______ |
 | Product count (static until zip-level) | ☐ 14 | ______ |
-| Disclaimer wording (no softer paraphrase) | ☐ | attach rewrite |
-| Zip-level product count ready for production? | ☐ No — keep static | ☐ Yes — effective date ______ |
+| Zip-level product count ready for production? | ☐ No — keep generic | ☐ Yes — effective date ______ |
 
 If zip-level is Yes, attach the contracted product count by zip (or the file we should load). Do not publish “every plan in your area.”
 

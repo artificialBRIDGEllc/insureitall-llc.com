@@ -1,15 +1,27 @@
-/** Carrier-audit copy. Source: Ryan Butterfield, acting CCO, 2026-08-20.
- *  Confirm / replace on docs/cco-confirmation.md before treating counts as zip-level. */
-
-export const TPMO_ORG_COUNT = 14;
-
 /**
- * Zip-specific in production. Static figure until Ryan confirms the
- * contracted product count for the disclaimer. One-line change.
+ * TPMO disclaimer — 42 CFR 422.2267(e)(41) / 423.2267(e)(41).
+ *
+ * Interim generic (no-numbers) form. See docs/decisions/ADR-0013-tpmo-disclaimer-stopgap.md.
+ * The prior string spliced two non-standardized sentences together and stated a static
+ * 14-organizations/14-products count with no source that could withstand a carrier or
+ * CMS audit request (docs/audits/AUDIT-insureitall-2026-09-03.md, findings F1/F2). CMS's
+ * standardized text requires the count blanks to be filled in — there is no verbatim
+ * "no-numbers" form in the regulation — so this generic sentence is a defensible interim
+ * posture (discloses non-exclusivity, drops any unprovable number), NOT verified CMS
+ * standardized content. It still needs Ryan Butterfield's (acting CCO) sign-off per
+ * docs/cco-confirmation.md.
+ *
+ * The numeric variant is staged and tested in tools/bridge-disclosure/ (resolver.py,
+ * schema.sql) for the day real per-county appointment data lands — swap this constant
+ * for that resolver's output then, do not hand-edit a new static pair back in.
+ *
+ * SHIP is intentionally omitted: CMS removed the SHIP referral from the standardized
+ * text at 91 FR 17583 (Apr 6, 2026, CMS-4208-F3 / RIN 0938-AV40, Fed. Reg. doc
+ * 2026-06600), effective for CY2027 marketing beginning Oct 1, 2026. Omitting it now
+ * is compliant under both the pre- and post-amendment text.
  */
-export const TPMO_PRODUCT_COUNT = 14;
-
-export const TPMO_DISCLAIMER = `We do not offer every plan available in your area. Currently we represent ${TPMO_ORG_COUNT} organizations which offer ${TPMO_PRODUCT_COUNT} products in your area. Any information we provide is limited to those plans we do offer in your area. Please contact Medicare.gov, 1-800-MEDICARE, or your local State Health Insurance Program (SHIP) to get information on all of your options.`;
+export const TPMO_DISCLAIMER =
+  "We do not offer every plan available in your area. Any information we provide is limited to those plans we do offer in your area. Please contact Medicare.gov or 1-800-MEDICARE to get information on all of your options.";
 
 export const NON_AFFILIATION =
   "Insure It All is not connected with or endorsed by the U.S. Government or the federal Medicare program.";
