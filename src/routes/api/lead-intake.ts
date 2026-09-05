@@ -174,12 +174,12 @@ export const Route = createFileRoute("/api/lead-intake")({
         const inserted = await sql`
           insert into ops_requests (
             id, kind, first_name, phone, email, zip, callback_window,
-            doctors, medications, budget, notes, disposition, source,
+            doctors, medications, budget, notes, source,
             consent_at, stage, external_id
           ) values (
             ${id}, ${row.kind}, ${row.firstName}, ${row.phone}, ${row.email},
             ${row.zip}, ${row.callbackWindow}, ${row.doctors}, ${row.medications},
-            ${row.budget}, ${row.notes}, ${"new"}, ${source}, now(), ${"new"},
+            ${row.budget}, ${row.notes}, ${source}, now(), ${"new"},
             ${externalId ?? null}
           )
           on conflict (external_id) do nothing
