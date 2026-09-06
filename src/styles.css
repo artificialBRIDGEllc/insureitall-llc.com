@@ -924,3 +924,14 @@ iframe[src*="convai"] {
 .ab-tag { margin-top: 0.25rem; font-size: 0.58rem; letter-spacing: 0.28em; text-transform: lowercase; color: var(--ab-ink-3); }
 .ab-product { font-weight: 800; letter-spacing: -0.03em; }
 .ab-product .lo { font-weight: 300; }
+
+/* Spam honeypot field on public lead forms (needs-analysis, /lead) — must stay
+   off-screen, not display:none, so it still traps bots that skip hidden inputs.
+   Missing class left it rendering as a visible, unstyled "Company website" box. */
+.lead-hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
