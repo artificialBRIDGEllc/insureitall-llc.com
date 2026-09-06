@@ -43,6 +43,7 @@ function NeedsPage() {
       await submitOpsRequest({
         data: {
           kind: "needs",
+          firstName: String(form.get("first") ?? ""),
           phone: String(form.get("phone") ?? ""),
           email: String(form.get("email") ?? ""),
           zip,
@@ -89,6 +90,7 @@ function NeedsPage() {
         ) : (
           <form onSubmit={onSubmit} className="relative space-y-4 rounded-3xl bg-elevated p-6 shadow-card">
             <Honeypot />
+            <Field label="Your name" name="first" autoComplete="given-name" required />
             <Field label="Zip code" name="zip" required inputMode="numeric" autoComplete="postal-code" />
             <AreaField label="Doctors you want to keep (optional)" name="doctors" rows={2} />
             <AreaField label="Medications (optional)" name="meds" rows={2} />
