@@ -12,8 +12,7 @@ export const Route = createFileRoute("/contact")({
   head: () =>
     pageHead({
       title: "Contact a licensed Medicare agent",
-      description:
-        "Call INSUREitALL at +1 813-742-6798. Licensed agents, Monday–Friday 9am–6pm ET, TTY 711. Tampa office. No scripts, no pressure.",
+      description: `Call INSUREitALL at ${PHONE_DISPLAY}. Licensed agents, Monday–Friday 9am–6pm ET, TTY 711. Tampa office. No scripts, no pressure.`,
       path: "/contact",
     }),
 });

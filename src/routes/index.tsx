@@ -22,8 +22,7 @@ export const Route = createFileRoute("/")({
   head: () =>
     pageHead({
       title: "Medicare guidance from licensed agents",
-      description:
-        "Licensed INSUREitALL agents help you understand Medicare Advantage, Supplement, and Part D. No cost, no pressure. Call +1 813-742-6798.",
+      description: `Licensed INSUREitALL agents help you understand Medicare Advantage, Supplement, and Part D. No cost, no pressure. Call ${PHONE_DISPLAY}.`,
       path: "/",
     }),
 });

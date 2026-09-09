@@ -18,8 +18,7 @@ export const Route = createFileRoute("/lead")({
   head: () =>
     pageHead({
       title: "Request a call back",
-      description:
-        "Leave a window that works. A licensed INSUREitALL agent will call you — no scripts, no pressure. Or call +1 813-742-6798 now.",
+      description: `Leave a window that works. A licensed INSUREitALL agent will call you — no scripts, no pressure. Or call ${PHONE_DISPLAY} now.`,
       path: "/lead",
     }),
 });
