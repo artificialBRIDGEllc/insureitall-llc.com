@@ -62,7 +62,7 @@ export const ORG_JSON_LD = {
   name: SITE_LEGAL,
   alternateName: SITE_NAME,
   url: SITE_ORIGIN,
-  telephone: "+1-908-827-6223",
+  telephone: "+1-813-742-6798",
   email: SITE_EMAIL,
   naics: "524210",
   identifier: { "@type": "PropertyValue", name: "NPN", value: SITE_NPN },

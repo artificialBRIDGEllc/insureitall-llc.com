@@ -23,7 +23,7 @@ export const Route = createFileRoute("/")({
     pageHead({
       title: "Medicare guidance from licensed agents",
       description:
-        "Licensed INSUREitALL agents help you understand Medicare Advantage, Supplement, and Part D. No cost, no pressure. Call +1 908-827-6223.",
+        "Licensed INSUREitALL agents help you understand Medicare Advantage, Supplement, and Part D. No cost, no pressure. Call +1 813-742-6798.",
       path: "/",
     }),
 });

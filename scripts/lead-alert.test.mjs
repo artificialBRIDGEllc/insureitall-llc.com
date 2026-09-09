@@ -45,7 +45,7 @@ test("consumer receipt has no PHI and names the phone", () => {
     }),
   );
   assert.match(mail.subject, /We have your request/);
-  assert.match(mail.text, /908-827-6223/);
+  assert.match(mail.text, /813-742-6798/);
   assert.equal(mail.html.includes("secret"), false);
   assert.equal(mail.alias, "insureitall-lead-received");
 });
