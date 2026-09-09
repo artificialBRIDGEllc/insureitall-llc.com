@@ -18,11 +18,11 @@ Optional copy overrides (no deploy needed):
 
 ```
 EMAIL_SITE_NAME=INSUREitALL
-EMAIL_PHONE=+1 908-827-6223
+EMAIL_PHONE=+1 813-742-6798
 EMAIL_HOURS=Mon–Fri 9am–6pm ET
 EMAIL_CONSOLE_URL=https://insureitall-llc.com/console
 EMAIL_DESK_CTA=Open the lead desk
-EMAIL_CALL_CTA=Call +1 908-827-6223
+EMAIL_CALL_CTA=Call +1 813-742-6798
 EMAIL_RECEIVED_TITLE=We have your request.
 EMAIL_RECEIVED_BODY=A licensed INSUREitALL agent will call during the window you chose. No scripts. No pressure.
 LEAD_RECEIPT=0
@@ -39,8 +39,8 @@ LEAD_RECEIPT=0
 | `HQ` | 3550 Buschwood Park Dr, Ste 180, Tampa, FL 33618 |
 | `HOURS` | Mon–Fri 9am–6pm ET |
 | `TTY` | TTY 711 |
-| `PHONE_DISPLAY` | +1 908-827-6223 |
-| `PHONE_HREF` | tel:+19088276223 |
+| `PHONE_DISPLAY` | +1 813-742-6798 |
+| `PHONE_HREF` | tel:+18137426798 |
 | `FOOTER_LICENSE` | Licensed agents |
 | `NON_AFFILIATION` | CMS non-affiliation sentence |
 
