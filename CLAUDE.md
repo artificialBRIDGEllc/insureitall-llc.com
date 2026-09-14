@@ -178,6 +178,8 @@ public/sitemap.xml
 src/lib/debt.ledger.json            named debt items (scanner source of truth)
 src/lib/debt.p0.json                P0 restore playbooks (numbered steps)
 scripts/debt-scan.mjs               automated gates (`npm run debt`)
+scripts/production-drift-guard.mjs  detects prod deployed behind main (ADR-0014); scheduled in
+                                     .github/workflows/production-drift-guard.yml, needs VERCEL_TOKEN secret
 src/components/brand-splash.tsx      first-load ident
 src/components/ident-mark.tsx        SVG ident runner
 src/components/bridget-orbit.tsx     clay frustrations
