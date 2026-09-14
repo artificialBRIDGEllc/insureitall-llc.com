@@ -38,21 +38,29 @@ jobs:
           restore-keys: |
             production-baseline-
 
+      # continue-on-error + a captured exit code (rather than steps.guard.outcome)
+      # so a real drift finding (exit 1) and the guard itself failing to run at
+      # all (exit 2: no VERCEL_TOKEN yet, Vercel API/network error) can be told
+      # apart downstream — the latter must never be filed as "production is down".
       - name: Check production against main
         id: guard
-        run: node scripts/production-drift-guard.mjs
+        continue-on-error: true
+        run: |
+          set +e
+          node scripts/production-drift-guard.mjs
+          echo "code=$?" >> "$GITHUB_OUTPUT"
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
 
       - name: Save verified baseline
-        if: steps.guard.outcome == 'success'
+        if: steps.guard.outputs.code == '0'
         uses: actions/cache/save@v4
         with:
           path: .github/state
           key: production-baseline-${{ github.run_id }}
 
       - name: Close resolved drift issue
-        if: steps.guard.outcome == 'success'
+        if: steps.guard.outputs.code == '0'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -62,18 +70,15 @@ jobs:
             gh issue close "$existing" --repo "$GITHUB_REPOSITORY"
           fi
 
-      # Scoped to the guard step's own outcome, not job-level failure() — a
-      # checkout or cache hiccup unrelated to production health must not file
-      # a false "production is down" incident.
-      - name: File or update regression issue
-        if: always() && steps.guard.outcome == 'failure'
+      - name: File or update drift issue
+        if: steps.guard.outputs.code == '1'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh label create production-drift --color B60205 \
             --description "Automated: production failed the drift guard" 2>/dev/null || true
           existing=$(gh issue list --repo "$GITHUB_REPOSITORY" --label production-drift --state open --json number --jq '.[0].number // empty')
-          body="Production Drift Guard failed at $(date -u +%FT%TZ). Run: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+          body="Production Drift Guard found a real problem at $(date -u +%FT%TZ). Run: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
           if [ -n "$existing" ]; then
             gh issue comment "$existing" --repo "$GITHUB_REPOSITORY" --body "$body"
           else
@@ -81,3 +86,24 @@ jobs:
               --title "Production is not serving verified main (drift guard failed)" \
               --label production-drift --body "$body"
           fi
+
+      - name: File or update guard-error issue
+        if: steps.guard.outputs.code == '2'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh label create production-drift-guard-error --color 5319E7 \
+            --description "Automated: the drift guard itself could not run" 2>/dev/null || true
+          existing=$(gh issue list --repo "$GITHUB_REPOSITORY" --label production-drift-guard-error --state open --json number --jq '.[0].number // empty')
+          body="Production Drift Guard could not run at $(date -u +%FT%TZ) — this is not a production-health finding, the guard itself is misconfigured or the Vercel API was unreachable. Run: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+          if [ -n "$existing" ]; then
+            gh issue comment "$existing" --repo "$GITHUB_REPOSITORY" --body "$body"
+          else
+            gh issue create --repo "$GITHUB_REPOSITORY" \
+              --title "Production Drift Guard cannot run (check VERCEL_TOKEN / Vercel API)" \
+              --label production-drift-guard-error --body "$body"
+          fi
+
+      - name: Fail the job if the guard did not pass
+        if: steps.guard.outputs.code != '0'
+        run: exit 1

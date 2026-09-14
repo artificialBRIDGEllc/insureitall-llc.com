@@ -84,3 +84,11 @@ test("flags a deployment with no commit metadata", () => {
   assert.equal(result.ok, false);
   assert.equal(result.prodSha, null);
 });
+
+test("accepts the reduced-schema top-level projectId as a fallback", () => {
+  const result = evaluateDeployment(deployment({ project: undefined, projectId: EXPECTED_PROJECT_ID }), {
+    headSha: "f07db04",
+    baselineSha: null,
+  });
+  assert.equal(result.ok, true);
+});

@@ -27,8 +27,16 @@ export const VERCEL_TEAM_ID = "team_6MHFnFIZBeG8WO7ZXF0EPwyR";
 export const EXPECTED_PROJECT_ID = "prj_5LPEuNOIpEoRgM01QJZQEh8QjTfT";
 export const EXPECTED_GITHUB_ORG = "artificialBRIDGEllc";
 export const EXPECTED_GITHUB_REPO = "insureitall-llc.com";
-export const PRODUCTION_DOMAIN = "insureitall-llc.com";
+// The apex 307-redirects here (docs/audits/AUD-20260903-insureitall-llc.com.md);
+// check the host visitors actually land on, not the one that just forwards to it.
+export const PRODUCTION_DOMAIN = "www.insureitall-llc.com";
 export const BASELINE_PATH = ".github/state/last-known-good-production-sha.txt";
+
+// Distinct from a real finding (exit 1): the guard couldn't even run its
+// checks (missing token, Vercel API/network failure). Kept separate so the
+// workflow never files a "production is down" issue for "the secret isn't
+// configured yet."
+export const EXIT_GUARD_ERROR = 2;
 
 export async function fetchLiveDeployment({
   token,
@@ -55,7 +63,7 @@ export function evaluateDeployment(deployment, { headSha, baselineSha, isAncesto
   const prodSha = deployment?.meta?.githubCommitSha ?? null;
   const org = deployment?.meta?.githubOrg;
   const repo = deployment?.meta?.githubRepo;
-  const projectId = deployment?.project?.id;
+  const projectId = deployment?.project?.id ?? deployment?.projectId;
   const readyState = deployment?.readyState;
   const problems = [];
 
@@ -98,14 +106,21 @@ const isMain = process.argv[1] && process.argv[1].endsWith("production-drift-gua
 if (isMain) {
   const token = process.env.VERCEL_TOKEN;
   if (!token) {
-    console.error("error  VERCEL_TOKEN is not set");
-    process.exit(1);
+    console.error("guard-error  VERCEL_TOKEN is not set");
+    process.exit(EXIT_GUARD_ERROR);
   }
 
   const headSha = execFileSync("git", ["rev-parse", "HEAD"]).toString().trim();
   const baselineSha = readBaseline(BASELINE_PATH);
 
-  const deployment = await fetchLiveDeployment({ token });
+  let deployment;
+  try {
+    deployment = await fetchLiveDeployment({ token });
+  } catch (err) {
+    console.error(`guard-error  could not reach the Vercel API: ${err.message}`);
+    process.exit(EXIT_GUARD_ERROR);
+  }
+
   const result = evaluateDeployment(deployment, { headSha, baselineSha });
 
   if (result.ok) {
