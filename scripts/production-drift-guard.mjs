@@ -53,16 +53,29 @@ export async function fetchLiveDeployment({
   return res.json();
 }
 
+// Matches git's "this object doesn't exist in this checkout at all" fatal
+// error — distinct from "not a git repository"/other corruption, which
+// should still propagate. Confirmed both exit 128; only the message differs.
+const UNKNOWN_OBJECT_RE = /Not a valid object name|bad revision|unknown revision/i;
+
 export function gitIsAncestor(ancestorSha, descendantSha, { cwd } = {}) {
   try {
-    execFileSync("git", ["merge-base", "--is-ancestor", ancestorSha, descendantSha], { stdio: "ignore", cwd });
+    execFileSync("git", ["merge-base", "--is-ancestor", ancestorSha, descendantSha], {
+      stdio: ["ignore", "ignore", "pipe"],
+      cwd,
+    });
     return true;
   } catch (err) {
-    // git defines exit status 1 as "not an ancestor" — a real, valid answer.
-    // Anything else (a missing binary, a corrupt checkout, an invalid object)
-    // is a guard failure, not a finding, and must propagate to the outer
-    // catch rather than silently masquerade as "not an ancestor".
+    // git exits 1 for a clean "not an ancestor" answer — a real result, not
+    // a failure. It also exits 128 when a SHA isn't a known object in this
+    // checkout at all, which is just as real an answer for this guard: a
+    // commit from a completely different history (the wrong-project/
+    // unmerged-branch case this guard exists to catch) is exactly as "not
+    // in main's history" as a known-but-unrelated commit. Only something
+    // else entirely (a missing git binary, a genuinely broken checkout)
+    // should propagate to the guard-error path instead of a real finding.
     if (err.status === 1) return false;
+    if (err.status === 128 && UNKNOWN_OBJECT_RE.test(err.stderr?.toString() ?? "")) return false;
     throw err;
   }
 }
@@ -123,7 +136,13 @@ if (isMain) {
   // network problem here must never surface as "production is down" just
   // because it happened to leave the process at a nonzero exit code.
   try {
-    const headSha = execFileSync("git", ["rev-parse", "HEAD"]).toString().trim();
+    // Refresh main immediately before comparing, not just at job checkout —
+    // a commit merged and deployed during earlier steps (cache restore, node
+    // setup) would otherwise be missing from this job's now-stale snapshot,
+    // making perfectly healthy production look like it isn't in main's
+    // history yet.
+    execFileSync("git", ["fetch", "--quiet", "origin", "main"]);
+    const headSha = execFileSync("git", ["rev-parse", "origin/main"]).toString().trim();
     const baselineSha = readBaseline(BASELINE_PATH);
     const deployment = await fetchLiveDeployment({ token });
     const result = evaluateDeployment(deployment, { headSha, baselineSha });

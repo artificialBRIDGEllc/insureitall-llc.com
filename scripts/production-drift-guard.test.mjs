@@ -131,8 +131,25 @@ test("gitIsAncestor returns true/false for real ancestry", () => {
   }
 });
 
-test("gitIsAncestor throws (does not silently return false) for a git-level error", () => {
-  assert.throws(() => gitIsAncestor("0000000000000000000000000000000000dead", "HEAD"));
+test("gitIsAncestor returns false (not a throw) for a commit unknown to this checkout", () => {
+  // A commit from a completely different history — the wrong-project or
+  // unmerged-branch case this guard exists to catch — is a real "not in
+  // main's history" answer, not a guard failure, even though git's exit
+  // code for it (128, "Not a valid object name") differs from the plain
+  // "not an ancestor" case (1).
+  assert.equal(gitIsAncestor("0000000000000000000000000000000000dead", "HEAD"), false);
+});
+
+test("gitIsAncestor throws (does not silently return false) for a genuine git failure", () => {
+  // A directory that isn't a git repository at all is also exit 128, but
+  // with a different message ("not a git repository") that must NOT be
+  // confused with "unknown object" — this really is a guard failure.
+  const dir = mkdtempSync(join(tmpdir(), "drift-guard-not-a-repo-"));
+  try {
+    assert.throws(() => gitIsAncestor("abc123", "def456", { cwd: dir }));
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
 });
 
 test("fetchLiveDeployment builds the expected URL, auth header, and timeout", async () => {
