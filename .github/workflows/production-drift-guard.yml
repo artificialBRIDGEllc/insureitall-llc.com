@@ -1,0 +1,61 @@
+name: Production Drift Guard
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: production-drift-guard
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: main
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Check production against main
+        run: node scripts/production-drift-guard.mjs
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+
+      - name: Record verified production commit
+        if: success()
+        run: |
+          if ! git diff --quiet -- .github/state/last-known-good-production-sha.txt; then
+            git config user.name "production-drift-guard"
+            git config user.email "actions@users.noreply.github.com"
+            git add .github/state/last-known-good-production-sha.txt
+            git commit -m "chore: record verified production commit"
+            git push
+          fi
+
+      - name: File or update regression issue
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh label create production-drift --color B60205 \
+            --description "Automated: production failed the drift guard" 2>/dev/null || true
+          existing=$(gh issue list --repo "$GITHUB_REPOSITORY" --label production-drift --state open --json number --jq '.[0].number // empty')
+          body="Production Drift Guard failed at $(date -u +%FT%TZ). Run: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+          if [ -n "$existing" ]; then
+            gh issue comment "$existing" --repo "$GITHUB_REPOSITORY" --body "$body"
+          else
+            gh issue create --repo "$GITHUB_REPOSITORY" \
+              --title "Production is not serving verified main (drift guard failed)" \
+              --label production-drift --body "$body"
+          fi

@@ -1,0 +1,32 @@
+ADR-0014 - Production Drift Guard: detect a Vercel production deployment that silently regresses behind main
+
+Status: Accepted.
+
+CONTEXT. On 2026-08-27 the site's phone number was set to a wrong number (908-827-6223) and shipped to production. PR #30 (commit f07db04, 2026-09-09) fixed it to 813-742-6798, verified against `src/lib/utils.ts`/`seo.ts`, and deployed cleanly to production. On 2026-09-11 someone clicked "Redeploy" on a two-day-old row in the Vercel dashboard's Deployments tab — a normal-looking button on a deployment that happened to predate the fix (PR #29's commit, f75393f). That redeploy became the new production deployment and silently reverted the live phone number back to 908, with no failed check, no CI signal, no error anywhere: `main` branch was correct the entire time, so every code-level safeguard (tests, typecheck, `npm run debt:strict`) kept passing. The regression was only found when Michael reported the wrong number showing on the live site, three days later.
+
+Nothing in this repo's CI (`.github/workflows/ci.yml`) can catch this class of failure — it verifies commits before merge, not what Vercel is actually serving after a human action in a dashboard neither `git log` nor GitHub Actions has visibility into.
+
+DECISION. Add `scripts/production-drift-guard.mjs`, run on a schedule by `.github/workflows/production-drift-guard.yml` (every 15 minutes + manual dispatch), which:
+
+1. Queries the Vercel API for the current production deployment's build metadata (`githubCommitSha`, `githubOrg`, `githubRepo`) for the specific project serving the live domains (`prj_5LPEuNOIpEoRgM01QJZQEh8QjTfT`, the `insureitall-llc-com` project — not the look-alike `insureitall-llc.com` project on the `copperlang2007` personal fork, found sitting on the same Vercel team during this investigation).
+2. Asserts that commit is actually in `main`'s history (`git merge-base --is-ancestor`) — catches a deploy from an unmerged branch or the wrong repo.
+3. Asserts that commit is a descendant of (or equal to) the last commit this guard verified, tracked in `.github/state/last-known-good-production-sha.txt`. A prior commit — the exact shape of the Sep 11 incident — fails this check.
+4. On pass, advances the baseline file (committed back via `contents: write`) and exits 0. On failure, exits non-zero and the workflow files or updates a `production-drift`-labeled GitHub issue so it surfaces even if nobody is watching Actions runs.
+
+The baseline file is seeded in this same change at `f07db0418a0ae07909b0ec9662f89d0c3c0fb3ca` (PR #30's production deployment, the last commit independently confirmed correct) rather than bootstrapped from whatever is live when the workflow first runs — bootstrapping from "whatever's live now" would have silently accepted the still-broken Sep 11 state as correct.
+
+ALTERNATIVES CONSIDERED. (a) Vercel deployment protection / branch restrictions to block manual redeploys of old commits: not available on the current plan tier for this granularity, and would block legitimate emergency rollbacks. (b) A post-deploy smoke test that scrapes the live site for `813-742-6798`: fragile (couples infra monitoring to one page's copy, breaks the next time the number legitimately changes) and doesn't generalize to the next thing that regresses this way. (c) Polling less frequently (hourly/daily): rejected — this incident sat for 3 days; 15 minutes costs nothing on a scheduled Actions job and catches the next one same-day.
+
+REASONING. The failure mode is specifically "production moved backward in history," not "production differs from main" (normal deploy lag is not an incident) and not "the phone number is wrong" (too narrow, doesn't generalize). Commit ancestry is the right invariant: cheap to check, generalizes to any regression this shape of accident could cause, and needs no knowledge of what changed.
+
+TRADEOFFS. Requires a `VERCEL_TOKEN` repo secret (read-only Vercel API token) that does not yet exist — this is the one manual setup step, tracked below. The guard also can't stop the click from happening again; it shortens detection from "whenever a customer/founder notices" to at most 15 minutes, and gives a named, evidenced GitHub issue instead of silence.
+
+MASTER DATA FLYWHEEL / MOAT IMPACT. Reusable pattern, not INSUREitALL-specific: any Vercel-deployed artificialBRIDGE property with a `githubCommitSha`-bearing deployment can adopt the same script by changing the four exported constants (team/project IDs, expected org/repo). Candidate for promotion to a shared `build-mode`/`aws-ops-engineer`-adjacent checklist item across the estate.
+
+SECURITY / COMPLIANCE IMPACT. None directly — no PHI/PII touched. Indirectly closes a compliance-adjacent gap: a wrong published contact number is a beneficiary-trust and TPMO-adjacent concern (the number is the disclosed point of contact throughout `src/lib/compliance.ts` copy).
+
+REVERSIBILITY. Easy. Disable by turning off the workflow or deleting it; no runtime behavior of the site itself is touched.
+
+EVIDENCE. Vercel deployment history for `prj_5LPEuNOIpEoRgM01QJZQEh8QjTfT` (deployments `dpl_Hz7NcDJtg8Yn6iGf2j7SCt1FkCQh` → `dpl_2GawHLGq5Qbnh1LPqXkgZsXhFANJ` → `dpl_3XAUYgzHfuk8NCfHdTEMhmQttCW3`, the last one a `"action": "redeploy"` of the first, timestamped after the second). `git log` on `main` showing `f07db04` (phone fix, merged) with zero remaining "908" occurrences in the tree. `scripts/production-drift-guard.test.mjs`, 6/6 passing.
+
+FOLLOW-UP ACTIONS. Michael: add a `VERCEL_TOKEN` (read-only, scoped to the artificialBRIDGE team) as a GitHub Actions repo secret — the workflow will fail loudly every 15 minutes until this exists, which is the correct behavior (visible, not silent) but should be resolved promptly. Confirm production has actually been promoted back to a commit at or after `f07db04` — the seeded baseline will fail the guard's first real run otherwise, which is expected until that happens. Separately: Vercel flagged "Proxy Detected" on `www.insureitall-llc.com`'s DNS (a proxy — e.g. Cloudflare — sitting in front of Vercel), which can itself cache stale HTML independent of this guard; worth confirming that proxy isn't caching page responses (or moving its DNS record to "DNS only" / grey-cloud) so a correct redeploy is never masked by an edge cache on top of it.
