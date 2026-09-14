@@ -1,6 +1,14 @@
 import assert from "node:assert/strict";
+import { execFileSync } from "node:child_process";
 import test from "node:test";
-import { evaluateDeployment, EXPECTED_GITHUB_ORG, EXPECTED_GITHUB_REPO, EXPECTED_PROJECT_ID } from "./production-drift-guard.mjs";
+import {
+  evaluateDeployment,
+  fetchLiveDeployment,
+  gitIsAncestor,
+  EXPECTED_GITHUB_ORG,
+  EXPECTED_GITHUB_REPO,
+  EXPECTED_PROJECT_ID,
+} from "./production-drift-guard.mjs";
 
 function deployment(overrides = {}) {
   const { meta, ...rest } = overrides;
@@ -91,4 +99,46 @@ test("accepts the reduced-schema top-level projectId as a fallback", () => {
     baselineSha: null,
   });
   assert.equal(result.ok, true);
+});
+
+test("gitIsAncestor returns true/false for real ancestry against this repo's own history", () => {
+  const head = execFileSync("git", ["rev-parse", "HEAD"]).toString().trim();
+  const parent = execFileSync("git", ["rev-parse", "HEAD~1"]).toString().trim();
+  assert.equal(gitIsAncestor(parent, head), true);
+  assert.equal(gitIsAncestor(head, parent), false);
+});
+
+test("gitIsAncestor throws (does not silently return false) for a git-level error", () => {
+  assert.throws(() => gitIsAncestor("0000000000000000000000000000000000dead", "HEAD"));
+});
+
+test("fetchLiveDeployment builds the expected URL, auth header, and timeout", async () => {
+  let capturedUrl;
+  let capturedInit;
+  const fakeFetch = async (url, init) => {
+    capturedUrl = url;
+    capturedInit = init;
+    return { ok: true, json: async () => ({ readyState: "READY" }) };
+  };
+
+  const body = await fetchLiveDeployment({
+    token: "test-token",
+    domain: "www.insureitall-llc.com",
+    teamId: "team_test",
+    fetchImpl: fakeFetch,
+  });
+
+  assert.equal(capturedUrl, "https://api.vercel.com/v13/deployments/www.insureitall-llc.com?teamId=team_test");
+  assert.equal(capturedInit.headers.Authorization, "Bearer test-token");
+  assert.ok(capturedInit.signal instanceof AbortSignal);
+  assert.deepEqual(body, { readyState: "READY" });
+});
+
+test("fetchLiveDeployment throws with the status and body on a non-2xx response", async () => {
+  const fakeFetch = async () => ({ ok: false, status: 403, text: async () => "forbidden" });
+
+  await assert.rejects(
+    fetchLiveDeployment({ token: "bad-token", fetchImpl: fakeFetch }),
+    /Vercel API 403: forbidden/,
+  );
 });

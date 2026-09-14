@@ -27,7 +27,7 @@ export const VERCEL_TEAM_ID = "team_6MHFnFIZBeG8WO7ZXF0EPwyR";
 export const EXPECTED_PROJECT_ID = "prj_5LPEuNOIpEoRgM01QJZQEh8QjTfT";
 export const EXPECTED_GITHUB_ORG = "artificialBRIDGEllc";
 export const EXPECTED_GITHUB_REPO = "insureitall-llc.com";
-// The apex 307-redirects here (docs/audits/AUD-20260903-insureitall-llc.com.md);
+// The apex 307-redirects here (docs/audits/AUD-20260825-insureitall-llc.com.md, lines 3 & 13);
 // check the host visitors actually land on, not the one that just forwards to it.
 export const PRODUCTION_DOMAIN = "www.insureitall-llc.com";
 export const BASELINE_PATH = ".github/state/last-known-good-production-sha.txt";
@@ -53,12 +53,17 @@ export async function fetchLiveDeployment({
   return res.json();
 }
 
-function gitIsAncestor(ancestorSha, descendantSha) {
+export function gitIsAncestor(ancestorSha, descendantSha) {
   try {
     execFileSync("git", ["merge-base", "--is-ancestor", ancestorSha, descendantSha], { stdio: "ignore" });
     return true;
-  } catch {
-    return false;
+  } catch (err) {
+    // git defines exit status 1 as "not an ancestor" — a real, valid answer.
+    // Anything else (a missing binary, a corrupt checkout, an invalid object)
+    // is a guard failure, not a finding, and must propagate to the outer
+    // catch rather than silently masquerade as "not an ancestor".
+    if (err.status === 1) return false;
+    throw err;
   }
 }
 
