@@ -45,7 +45,10 @@ export async function fetchLiveDeployment({
   fetchImpl = fetch,
 }) {
   const url = `https://api.vercel.com/v13/deployments/${encodeURIComponent(domain)}?teamId=${teamId}`;
-  const res = await fetchImpl(url, { headers: { Authorization: `Bearer ${token}` } });
+  const res = await fetchImpl(url, {
+    headers: { Authorization: `Bearer ${token}` },
+    signal: AbortSignal.timeout(20_000),
+  });
   if (!res.ok) throw new Error(`Vercel API ${res.status}: ${await res.text()}`);
   return res.json();
 }
@@ -110,26 +113,27 @@ if (isMain) {
     process.exit(EXIT_GUARD_ERROR);
   }
 
-  const headSha = execFileSync("git", ["rev-parse", "HEAD"]).toString().trim();
-  const baselineSha = readBaseline(BASELINE_PATH);
-
-  let deployment;
+  // Everything below is either a real finding (exit 1, from evaluateDeployment
+  // alone) or the guard failing to run at all (exit 2) — a git, filesystem, or
+  // network problem here must never surface as "production is down" just
+  // because it happened to leave the process at a nonzero exit code.
   try {
-    deployment = await fetchLiveDeployment({ token });
+    const headSha = execFileSync("git", ["rev-parse", "HEAD"]).toString().trim();
+    const baselineSha = readBaseline(BASELINE_PATH);
+    const deployment = await fetchLiveDeployment({ token });
+    const result = evaluateDeployment(deployment, { headSha, baselineSha });
+
+    if (result.ok) {
+      const note = baselineSha ? "" : " (baseline initialized)";
+      console.log(`ok     production is verified at ${result.prodSha}${note}`);
+      if (result.prodSha !== baselineSha) writeBaseline(BASELINE_PATH, result.prodSha);
+      process.exit(0);
+    }
+
+    for (const problem of result.problems) console.error(`error  ${problem}`);
+    process.exit(1);
   } catch (err) {
-    console.error(`guard-error  could not reach the Vercel API: ${err.message}`);
+    console.error(`guard-error  could not complete the check: ${err.message}`);
     process.exit(EXIT_GUARD_ERROR);
   }
-
-  const result = evaluateDeployment(deployment, { headSha, baselineSha });
-
-  if (result.ok) {
-    const note = baselineSha ? "" : " (baseline initialized)";
-    console.log(`ok     production is verified at ${result.prodSha}${note}`);
-    if (result.prodSha !== baselineSha) writeBaseline(BASELINE_PATH, result.prodSha);
-    process.exit(0);
-  }
-
-  for (const problem of result.problems) console.error(`error  ${problem}`);
-  process.exit(1);
 }

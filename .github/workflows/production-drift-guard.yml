@@ -70,6 +70,20 @@ jobs:
             gh issue close "$existing" --repo "$GITHUB_REPOSITORY"
           fi
 
+      # Runs on 0 or 1 (the guard executed and produced a real result), not
+      # just 0 — a guard-error issue means "couldn't run", so it must clear
+      # the moment the guard runs again at all, whether or not it finds drift.
+      - name: Close resolved guard-error issue
+        if: steps.guard.outputs.code == '0' || steps.guard.outputs.code == '1'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          existing=$(gh issue list --repo "$GITHUB_REPOSITORY" --label production-drift-guard-error --state open --json number --jq '.[0].number // empty')
+          if [ -n "$existing" ]; then
+            gh issue comment "$existing" --repo "$GITHUB_REPOSITORY" --body "The guard ran successfully again at $(date -u +%FT%TZ). Closing."
+            gh issue close "$existing" --repo "$GITHUB_REPOSITORY"
+          fi
+
       - name: File or update drift issue
         if: steps.guard.outputs.code == '1'
         env:
