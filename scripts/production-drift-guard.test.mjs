@@ -1,15 +1,19 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { evaluateDeployment, EXPECTED_GITHUB_ORG, EXPECTED_GITHUB_REPO } from "./production-drift-guard.mjs";
+import { evaluateDeployment, EXPECTED_GITHUB_ORG, EXPECTED_GITHUB_REPO, EXPECTED_PROJECT_ID } from "./production-drift-guard.mjs";
 
 function deployment(overrides = {}) {
+  const { meta, ...rest } = overrides;
   return {
+    readyState: "READY",
+    project: { id: EXPECTED_PROJECT_ID },
     meta: {
       githubCommitSha: "f07db04",
       githubOrg: EXPECTED_GITHUB_ORG,
       githubRepo: EXPECTED_GITHUB_REPO,
-      ...overrides,
+      ...meta,
     },
+    ...rest,
   };
 }
 
@@ -20,7 +24,7 @@ test("passes when production is the current head and no baseline yet", () => {
 });
 
 test("passes when production has moved forward of the baseline", () => {
-  const result = evaluateDeployment(deployment({ githubCommitSha: "b2" }), {
+  const result = evaluateDeployment(deployment({ meta: { githubCommitSha: "b2" } }), {
     headSha: "b2",
     baselineSha: "a1",
     isAncestor: (ancestor, descendant) => ancestor === "a1" && descendant === "b2",
@@ -29,7 +33,7 @@ test("passes when production has moved forward of the baseline", () => {
 });
 
 test("flags a rollback behind the last verified commit", () => {
-  const result = evaluateDeployment(deployment({ githubCommitSha: "a1" }), {
+  const result = evaluateDeployment(deployment({ meta: { githubCommitSha: "a1" } }), {
     headSha: "b2",
     baselineSha: "b2",
     isAncestor: (ancestor, descendant) => ancestor === "a1" && descendant === "b2",
@@ -39,7 +43,7 @@ test("flags a rollback behind the last verified commit", () => {
 });
 
 test("flags a commit that isn't in main's history at all", () => {
-  const result = evaluateDeployment(deployment({ githubCommitSha: "deadbeef" }), {
+  const result = evaluateDeployment(deployment({ meta: { githubCommitSha: "deadbeef" } }), {
     headSha: "b2",
     baselineSha: null,
     isAncestor: () => false,
@@ -49,12 +53,30 @@ test("flags a commit that isn't in main's history at all", () => {
 });
 
 test("flags a deployment built from the wrong repo", () => {
-  const result = evaluateDeployment(deployment({ githubOrg: "copperlang2007" }), {
+  const result = evaluateDeployment(deployment({ meta: { githubOrg: "copperlang2007" } }), {
     headSha: "f07db04",
     baselineSha: null,
   });
   assert.equal(result.ok, false);
-  assert.match(result.problems[0], /wrong Vercel project/);
+  assert.match(result.problems[0], /copperlang2007/);
+});
+
+test("flags the domain resolving to a different Vercel project", () => {
+  const result = evaluateDeployment(deployment({ project: { id: "prj_someone_elses_fork" } }), {
+    headSha: "f07db04",
+    baselineSha: null,
+  });
+  assert.equal(result.ok, false);
+  assert.match(result.problems[0], /different project/);
+});
+
+test("flags a deployment that isn't READY yet", () => {
+  const result = evaluateDeployment(deployment({ readyState: "BUILDING" }), {
+    headSha: "f07db04",
+    baselineSha: null,
+  });
+  assert.equal(result.ok, false);
+  assert.match(result.problems[0], /not READY/);
 });
 
 test("flags a deployment with no commit metadata", () => {

@@ -1,6 +1,6 @@
 /**
  * Verify the live production deployment is a forward build of main, from the
- * right repo.
+ * right repo and project.
  *
  * Incident this exists for: on 2026-09-11 someone clicked "Redeploy" on a
  * two-day-old row in the Vercel dashboard. That silently replaced production
@@ -11,6 +11,12 @@
  *   node scripts/production-drift-guard.mjs
  *
  * Requires VERCEL_TOKEN (read-only) and full git history (fetch-depth: 0).
+ *
+ * Resolves the deployment by the live custom domain, not by project ID: a
+ * project-ID lookup only ever inspects the project you already assume is
+ * correct, so it can't catch the domain itself moving to a different Vercel
+ * project (a real, adjacent risk found while investigating — a look-alike
+ * project for this same repo exists on a personal fork in the same team).
  */
 
 import { execFileSync } from "node:child_process";
@@ -18,24 +24,22 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname } from "node:path";
 
 export const VERCEL_TEAM_ID = "team_6MHFnFIZBeG8WO7ZXF0EPwyR";
-export const VERCEL_PROJECT_ID = "prj_5LPEuNOIpEoRgM01QJZQEh8QjTfT";
+export const EXPECTED_PROJECT_ID = "prj_5LPEuNOIpEoRgM01QJZQEh8QjTfT";
 export const EXPECTED_GITHUB_ORG = "artificialBRIDGEllc";
 export const EXPECTED_GITHUB_REPO = "insureitall-llc.com";
+export const PRODUCTION_DOMAIN = "insureitall-llc.com";
 export const BASELINE_PATH = ".github/state/last-known-good-production-sha.txt";
 
-export async function fetchLatestProductionDeployment({
+export async function fetchLiveDeployment({
   token,
+  domain = PRODUCTION_DOMAIN,
   teamId = VERCEL_TEAM_ID,
-  projectId = VERCEL_PROJECT_ID,
   fetchImpl = fetch,
 }) {
-  const url = `https://api.vercel.com/v6/deployments?projectId=${projectId}&target=production&limit=1&teamId=${teamId}`;
+  const url = `https://api.vercel.com/v13/deployments/${encodeURIComponent(domain)}?teamId=${teamId}`;
   const res = await fetchImpl(url, { headers: { Authorization: `Bearer ${token}` } });
   if (!res.ok) throw new Error(`Vercel API ${res.status}: ${await res.text()}`);
-  const body = await res.json();
-  const deployment = body.deployments?.[0];
-  if (!deployment) throw new Error("Vercel API returned no production deployments");
-  return deployment;
+  return res.json();
 }
 
 function gitIsAncestor(ancestorSha, descendantSha) {
@@ -51,22 +55,30 @@ export function evaluateDeployment(deployment, { headSha, baselineSha, isAncesto
   const prodSha = deployment?.meta?.githubCommitSha ?? null;
   const org = deployment?.meta?.githubOrg;
   const repo = deployment?.meta?.githubRepo;
+  const projectId = deployment?.project?.id;
+  const readyState = deployment?.readyState;
   const problems = [];
 
   if (!prodSha) {
-    return { ok: false, prodSha, problems: ["production deployment has no githubCommitSha in its metadata"] };
+    return { ok: false, prodSha, problems: ["the live deployment has no githubCommitSha in its metadata"] };
   }
-  if (org !== EXPECTED_GITHUB_ORG || repo !== EXPECTED_GITHUB_REPO) {
+  if (readyState !== "READY") {
+    problems.push(`the live deployment's state is ${readyState ?? "unknown"}, not READY — refusing to trust it`);
+  }
+  if (projectId !== EXPECTED_PROJECT_ID) {
     problems.push(
-      `production is built from ${org}/${repo}, expected ${EXPECTED_GITHUB_ORG}/${EXPECTED_GITHUB_REPO} — the domain may be pointed at the wrong Vercel project`,
+      `the production domain now resolves to Vercel project ${projectId}, expected ${EXPECTED_PROJECT_ID} — it may have moved to a different project`,
     );
   }
+  if (org !== EXPECTED_GITHUB_ORG || repo !== EXPECTED_GITHUB_REPO) {
+    problems.push(`the live deployment is built from ${org}/${repo}, expected ${EXPECTED_GITHUB_ORG}/${EXPECTED_GITHUB_REPO}`);
+  }
   if (headSha && prodSha !== headSha && !isAncestor(prodSha, headSha)) {
-    problems.push(`production commit ${prodSha} is not in main's history — it was not built from a merged commit`);
+    problems.push(`live commit ${prodSha} is not in main's history — it was not built from a merged commit`);
   }
   if (baselineSha && prodSha !== baselineSha && !isAncestor(baselineSha, prodSha)) {
     problems.push(
-      `production commit ${prodSha} is not a descendant of the last verified commit ${baselineSha} — production has been rolled back`,
+      `live commit ${prodSha} is not a descendant of the last verified commit ${baselineSha} — production has been rolled back`,
     );
   }
 
@@ -93,7 +105,7 @@ if (isMain) {
   const headSha = execFileSync("git", ["rev-parse", "HEAD"]).toString().trim();
   const baselineSha = readBaseline(BASELINE_PATH);
 
-  const deployment = await fetchLatestProductionDeployment({ token });
+  const deployment = await fetchLiveDeployment({ token });
   const result = evaluateDeployment(deployment, { headSha, baselineSha });
 
   if (result.ok) {

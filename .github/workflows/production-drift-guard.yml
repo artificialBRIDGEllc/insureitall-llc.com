@@ -10,7 +10,7 @@ concurrency:
   cancel-in-progress: false
 
 permissions:
-  contents: write
+  contents: read
   issues: write
 
 jobs:
@@ -27,24 +27,46 @@ jobs:
         with:
           node-version: "22"
 
+      # Baseline lives in the Actions cache, not a commit to main — committing
+      # the advancing SHA back to the production branch would trigger another
+      # Vercel deploy, which would advance the baseline again next run, forever.
+      - name: Restore last verified baseline
+        uses: actions/cache/restore@v4
+        with:
+          path: .github/state
+          key: production-baseline-${{ github.run_id }}
+          restore-keys: |
+            production-baseline-
+
       - name: Check production against main
+        id: guard
         run: node scripts/production-drift-guard.mjs
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
 
-      - name: Record verified production commit
-        if: success()
+      - name: Save verified baseline
+        if: steps.guard.outcome == 'success'
+        uses: actions/cache/save@v4
+        with:
+          path: .github/state
+          key: production-baseline-${{ github.run_id }}
+
+      - name: Close resolved drift issue
+        if: steps.guard.outcome == 'success'
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          if ! git diff --quiet -- .github/state/last-known-good-production-sha.txt; then
-            git config user.name "production-drift-guard"
-            git config user.email "actions@users.noreply.github.com"
-            git add .github/state/last-known-good-production-sha.txt
-            git commit -m "chore: record verified production commit"
-            git push
+          existing=$(gh issue list --repo "$GITHUB_REPOSITORY" --label production-drift --state open --json number --jq '.[0].number // empty')
+          if [ -n "$existing" ]; then
+            gh issue comment "$existing" --repo "$GITHUB_REPOSITORY" --body "Production verified healthy again at $(date -u +%FT%TZ). Closing."
+            gh issue close "$existing" --repo "$GITHUB_REPOSITORY"
           fi
 
+      # Scoped to the guard step's own outcome, not job-level failure() — a
+      # checkout or cache hiccup unrelated to production health must not file
+      # a false "production is down" incident.
       - name: File or update regression issue
-        if: failure()
+        if: always() && steps.guard.outcome == 'failure'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
