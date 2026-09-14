@@ -53,9 +53,9 @@ export async function fetchLiveDeployment({
   return res.json();
 }
 
-export function gitIsAncestor(ancestorSha, descendantSha) {
+export function gitIsAncestor(ancestorSha, descendantSha, { cwd } = {}) {
   try {
-    execFileSync("git", ["merge-base", "--is-ancestor", ancestorSha, descendantSha], { stdio: "ignore" });
+    execFileSync("git", ["merge-base", "--is-ancestor", ancestorSha, descendantSha], { stdio: "ignore", cwd });
     return true;
   } catch (err) {
     // git defines exit status 1 as "not an ancestor" — a real, valid answer.

@@ -1,5 +1,8 @@
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
+import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import test from "node:test";
 import {
   evaluateDeployment,
@@ -101,11 +104,31 @@ test("accepts the reduced-schema top-level projectId as a fallback", () => {
   assert.equal(result.ok, true);
 });
 
-test("gitIsAncestor returns true/false for real ancestry against this repo's own history", () => {
-  const head = execFileSync("git", ["rev-parse", "HEAD"]).toString().trim();
-  const parent = execFileSync("git", ["rev-parse", "HEAD~1"]).toString().trim();
-  assert.equal(gitIsAncestor(parent, head), true);
-  assert.equal(gitIsAncestor(head, parent), false);
+test("gitIsAncestor returns true/false for real ancestry", () => {
+  // A throwaway two-commit repo, not this checkout's own history: CI runs
+  // this suite from a shallow clone (fetch-depth 1, no parent commits), so
+  // asserting against HEAD~1 here would fail there even though the guard
+  // logic is fine — this repo's depth is under this test's control instead.
+  const dir = mkdtempSync(join(tmpdir(), "drift-guard-test-"));
+  try {
+    execFileSync("git", ["init", "--quiet"], { cwd: dir });
+    execFileSync("git", ["config", "user.email", "test@example.com"], { cwd: dir });
+    execFileSync("git", ["config", "user.name", "test"], { cwd: dir });
+    writeFileSync(join(dir, "a.txt"), "a");
+    execFileSync("git", ["add", "a.txt"], { cwd: dir });
+    execFileSync("git", ["commit", "--quiet", "-m", "first"], { cwd: dir });
+    const parent = execFileSync("git", ["rev-parse", "HEAD"], { cwd: dir }).toString().trim();
+
+    writeFileSync(join(dir, "b.txt"), "b");
+    execFileSync("git", ["add", "b.txt"], { cwd: dir });
+    execFileSync("git", ["commit", "--quiet", "-m", "second"], { cwd: dir });
+    const head = execFileSync("git", ["rev-parse", "HEAD"], { cwd: dir }).toString().trim();
+
+    assert.equal(gitIsAncestor(parent, head, { cwd: dir }), true);
+    assert.equal(gitIsAncestor(head, parent, { cwd: dir }), false);
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
 });
 
 test("gitIsAncestor throws (does not silently return false) for a git-level error", () => {
