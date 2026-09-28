@@ -79,5 +79,5 @@ test("strict production failure is clearly reported to stderr", () => {
     result.stderr,
     /^\[env-validate\] FAILING BUILD: strict-production treats warnings as errors\n/,
   );
-  assert.match(result.stderr, /warn   DATABASE_URL:/);
+  assert.ok(result.stderr.includes("warn   DATABASE_URL:"));
 });
