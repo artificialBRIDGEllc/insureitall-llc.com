@@ -211,8 +211,14 @@ export function formatReport(report) {
 const isMain = process.argv[1] && process.argv[1].endsWith("env-validate.mjs");
 if (isMain) {
   const report = validateEnv(process.env);
-  console.log(formatReport(report));
   const strict = process.argv.includes("--strict-production");
   const fail = !report.ok || (strict && report.warnings.length);
+  const formatted = formatReport(report);
+  if (fail && strict) {
+    console.error("[env-validate] FAILING BUILD: strict-production treats warnings as errors");
+    console.error(formatted);
+  } else {
+    console.log(formatted);
+  }
   process.exit(fail ? 1 : 0);
 }

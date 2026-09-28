@@ -375,9 +375,10 @@ examples in the `neon` and `auth` skills.
 
 React 19, TypeScript, Vite 8, TanStack Start / Router / Query / Table, Tailwind
 v4, core Radix set, zustand, zod + react-hook-form, lucide, sonner, cmdk, vaul,
-recharts. Data + auth: Postgres (`pg` + PGLite fallback) + self-hosted Better
-Auth federated to the shared Grok auth broker (Google, X; plus optional local
-email/password), pre-wired in `src/lib` — see "Data & auth" below.
+and add `recharts@^3` if charts are needed. Data + auth: Postgres (`pg` + PGLite
+fallback) + self-hosted Better Auth federated to the shared Grok auth broker
+(Google, X; plus optional local email/password), pre-wired in `src/lib` — see
+"Data & auth" below.
 
 ### Data & auth
 

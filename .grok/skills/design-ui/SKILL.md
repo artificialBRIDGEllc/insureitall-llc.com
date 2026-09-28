@@ -78,8 +78,8 @@ Define the system once, then compose from it. **Never** sprinkle ad-hoc values.
 
 - **No gradient-blob filler**, no giant hero gradients as a substitute for content.
 - **No emoji as icons** — use a real icon set (`lucide-react`).
-- **No hand-drawn SVG** illustrations/maps/charts — use real libraries (`recharts`
-  for charts) or real generated images.
+- **No hand-drawn SVG** illustrations/maps/charts — use real libraries (add
+  `recharts@^3` if charts are needed) or real generated images.
 - **No placeholder images / lorem-gray boxes** in the final product — generate
   real images or use real content; set `crossOrigin="anonymous"` on canvas images.
 - **Avoid the overused-font look** (default system-only, or Comic Sans-tier picks).
