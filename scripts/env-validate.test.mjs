@@ -1,6 +1,10 @@
 import assert from "node:assert/strict";
+import { spawnSync } from "node:child_process";
 import test from "node:test";
+import { fileURLToPath } from "node:url";
 import { validateEnv } from "./env-validate.mjs";
+
+const validatorPath = fileURLToPath(new URL("./env-validate.mjs", import.meta.url));
 
 test("empty env is valid in preview", () => {
   const report = validateEnv({}, { production: false });
@@ -61,4 +65,19 @@ test("production without an alert channel warns", () => {
   assert.equal(report.ok, true);
   assert.ok(report.warnings.some((w) => w.key === "LEAD_ALERT_WEBHOOK"));
   assert.ok(report.warnings.some((w) => w.key === "DATABASE_URL"));
+});
+
+test("strict production failure is clearly reported to stderr", () => {
+  const result = spawnSync(process.execPath, [validatorPath, "--strict-production"], {
+    encoding: "utf8",
+    env: { VERCEL_ENV: "production" },
+  });
+
+  assert.equal(result.status, 1);
+  assert.equal(result.stdout, "");
+  assert.match(
+    result.stderr,
+    /^\[env-validate\] FAILING BUILD: strict-production treats warnings as errors\n/,
+  );
+  assert.ok(result.stderr.includes("warn   DATABASE_URL:"));
 });
