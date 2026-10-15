@@ -7,6 +7,8 @@ import { forwardLeadToBridget } from "@/lib/bridget-console";
 import { parsePublicLead, takeLeadSlot } from "../../scripts/commercial-guard.mjs";
 // @ts-expect-error -- JS alert
 import { notifyTeamLead } from "../../scripts/lead-alert.mjs";
+// @ts-expect-error -- JS GHL sync
+import { syncLeadToGhl } from "../../scripts/ghl-lead.mjs";
 
 function mintId(): string {
   const alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
@@ -117,6 +119,32 @@ export const submitOpsRequest = createServerFn({ method: "POST" })
       });
     } catch {
       /* Lead is saved locally. BRIDGEt sync must not fail the consumer. */
+    }
+    try {
+      const ghl = await syncLeadToGhl(
+        {
+          id,
+          kind: row.kind,
+          firstName: row.firstName,
+          phone: row.phone,
+          email: row.email,
+          zip: row.zip,
+          callbackWindow: row.callbackWindow,
+          source,
+          consent: row.consent,
+        },
+        process.env,
+      );
+      // Record a failure on the lead's own timeline (reason code only, no PII)
+      // so a lead that never reached GHL is findable. Unset config is not a failure.
+      if (!ghl.sent && ghl.reason !== "not-configured") {
+        await sql`
+          insert into lead_events (lead_id, stage, note, actor)
+          values (${id}, ${"new"}, ${`GHL sync failed: ${ghl.reason}`}, ${"site"})
+        `;
+      }
+    } catch {
+      /* Lead is saved locally. GHL sync must not fail the consumer. */
     }
     return { id };
   });

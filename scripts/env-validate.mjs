@@ -33,6 +33,8 @@ export const ENV_SCHEMA = [
   { key: "VITE_BRIDGET_CONSOLE_URL", group: "bridget", format: "https", when: "cluster" },
   { key: "BRIDGET_INGEST_API_KEY", group: "bridget", format: "token", when: "cluster" },
   { key: "VITE_BRIDGET_TENANT_SLUG", group: "bridget", format: "slug", when: "if-set" },
+  { key: "GHL_API_KEY", group: "ghl", format: "token", when: "cluster" },
+  { key: "GHL_LOCATION_ID", group: "ghl", format: "token", when: "cluster" },
 ];
 
 const RESEND_CLUSTER = [
@@ -56,6 +58,11 @@ const RESEND_CLUSTER = [
 // wrong for production: leads land in ops_requests and never reach the BRIDGEt
 // staff desk, with no error and no log line. These two are all-or-nothing.
 const BRIDGET_REQUIRED_PAIR = ["VITE_BRIDGET_CONSOLE_URL", "BRIDGET_INGEST_API_KEY"];
+
+// syncLeadToGhl() in scripts/ghl-lead.mjs no-ops without both. Unlike BRIDGEt
+// there is deliberately no production warning when both are unset: strict
+// production builds treat warnings as failures, and GHL push is opt-in.
+const GHL_REQUIRED_PAIR = ["GHL_API_KEY", "GHL_LOCATION_ID"];
 
 function trim(env, key) {
   return String(env[key] ?? "").trim();
@@ -175,6 +182,20 @@ export function validateEnv(env = {}, { production = isProduction(env) } = {}) {
     });
   }
 
+  const ghlSet = GHL_REQUIRED_PAIR.filter((k) => trim(env, k));
+  const ghlMissing = GHL_REQUIRED_PAIR.filter((k) => !trim(env, k));
+  if (ghlSet.length && ghlMissing.length) {
+    for (const missing of ghlMissing) {
+      errors.push({
+        key: missing,
+        message: `required because ${ghlSet[0]} is set — syncLeadToGhl() no-ops silently without it`,
+      });
+    }
+  }
+  const ghlOk =
+    ghlMissing.length === 0 &&
+    !errors.some((e) => ENV_SCHEMA.find((s) => s.key === e.key)?.group === "ghl");
+
   if (production && !webhookOk && !resendOk) {
     warnings.push({
       key: "LEAD_ALERT_WEBHOOK",
@@ -196,6 +217,7 @@ export function validateEnv(env = {}, { production = isProduction(env) } = {}) {
       resend: !key ? "missing" : resendOk ? "ok" : "invalid",
       webhook: !webhook ? "missing" : webhookOk ? "ok" : "invalid",
       bridget: !bridgetSet.length ? "missing" : bridgetOk ? "ok" : "invalid",
+      ghl: !ghlSet.length ? "missing" : ghlOk ? "ok" : "invalid",
     },
   };
 }
