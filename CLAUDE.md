@@ -154,7 +154,7 @@ Copy lives in `src/lib/compliance.ts`. Footer always renders TPMO via `TpmoDiscl
 - `/portal` — public, no auth. Static "beneficiaryCONNECT — client portal coming soon" page. The old fileBRIDGE consumer app (file/agency/share/help, sign-in gate) has been removed.
 - `/console` — no longer a staff desk in this repo. Redirects to **BRIDGEt Console** (separate multi-tenant product, own repo/DB, auth scoped per tenant). `/team` redirects here too.
 - Staff can still open legacy share codes at `/console/leads`'s old backend — `src/lib/portal.ts` (`TeamShareLookup` component still exists in `src/components/portal-share.tsx` but currently has no route rendering it since `/console/leads` was removed; it is untouched and could be re-mounted somewhere if that lookup is still needed) — `staffMiddleware`/`isStaffEmail` (`src/lib/staff.ts`, `src/lib/staff-middleware.ts`) stay for that and for the header's staff-only "Console" link.
-- Migrations `0002_portal.sql`, `0003_portal_shares.sql`, `0004_ops_requests.sql`, `0005_ops_lead_status.sql` remain (untouched) for the staff-side share-code lookup above and for `ops_requests`/`lead_events`, which this repo still writes to on every public lead submission (`src/lib/ops.ts` → `submitOpsRequest`) — kept as the local system of record for email/webhook alerts. Every new lead is ALSO forwarded to BRIDGEt Console (`src/lib/bridget-console.ts` → `forwardLeadToBridget`, best-effort, needs `VITE_BRIDGET_CONSOLE_URL` + server-only `BRIDGET_INGEST_API_KEY` set) so it shows up in the tenant-scoped staff desk there. No new UI reads these tables in this repo — that's BRIDGEt's job now.
+- Migrations `0002_portal.sql`, `0003_portal_shares.sql`, `0004_ops_requests.sql`, `0005_ops_lead_status.sql` remain (untouched) for the staff-side share-code lookup above and for `ops_requests`/`lead_events`, which this repo still writes to on every public lead submission (`src/lib/ops.ts` → `submitOpsRequest`) — kept as the local system of record for email/webhook alerts. Every new lead is ALSO forwarded to BRIDGEt Console (`src/lib/bridget-console.ts` → `forwardLeadToBridget`, best-effort, needs `VITE_BRIDGET_CONSOLE_URL` + server-only `BRIDGET_INGEST_API_KEY` set) so it shows up in the tenant-scoped staff desk there, and pushed to GoHighLevel as a contact (`scripts/ghl-lead.mjs` → `syncLeadToGhl`, best-effort, needs `GHL_API_KEY` + `GHL_LOCATION_ID`; never sends doctors/medications/budget/notes — ADR-0015). No new UI reads these tables in this repo — that's BRIDGEt's job now.
 
 ---
 
@@ -168,6 +168,7 @@ src/lib/hipaa.ts                    HIPAA control map (public proof)
 src/lib/glba.ts                     GLBA / NAIC 672 privacy notice copy
 src/lib/isp.ts                      NAIC 673 information-security program + BAA policy
 scripts/lead-alert.mjs              team webhook/email on new lead (no PHI in the alert)
+scripts/ghl-lead.mjs                push each new lead to GoHighLevel (/contacts/upsert); needs GHL_API_KEY + GHL_LOCATION_ID (ADR-0015)
 scripts/env-validate.mjs            Vercel env format + Resend cluster checks
 npm run env:check                   validate env (no secret values logged)
 emails/                             paste-ready Resend dashboard templates
