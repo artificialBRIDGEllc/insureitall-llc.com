@@ -3,6 +3,11 @@ import assert from "node:assert/strict";
 
 assert.equal(sanitizeFeedback({ event: "page_view", path: "/compare" }).ok, true);
 assert.equal(sanitizeFeedback({ event: "page_view", path: "/portal" }).ok, false);
+assert.deepEqual(sanitizeFeedback({ event: "enroll_purl_click", path: "/enroll" }), {
+  ok: true,
+  data: { event: "enroll_purl_click", path: "/enroll", payload: {} },
+});
+assert.equal(sanitizeFeedback({ event: "page_view", path: "/enroll" }).ok, true);
 assert.equal(
   sanitizeFeedback({
     event: "lead_kind",
