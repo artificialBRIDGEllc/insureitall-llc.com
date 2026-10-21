@@ -14,10 +14,12 @@
 const raw = (import.meta.env as Record<string, string | undefined>).VITE_SUNFIRE_PURL?.trim();
 
 function parsePurl(value: string | undefined): string | null {
-  if (!value) return null;
+  if (!value || /\s/.test(value)) return null;
   try {
-    const url = new URL(value);
-    return url.protocol === "https:" ? url.toString() : null;
+    // Parse only to validate. Return the issued string untouched: the URL
+    // serializer can rewrite it (trailing slash, casing, ports) and break
+    // Sunfire's agent attribution.
+    return new URL(value).protocol === "https:" ? value : null;
   } catch {
     return null;
   }
