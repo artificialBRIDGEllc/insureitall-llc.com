@@ -33,6 +33,7 @@ export const ENV_SCHEMA = [
   { key: "VITE_BRIDGET_CONSOLE_URL", group: "bridget", format: "https", when: "cluster" },
   { key: "BRIDGET_INGEST_API_KEY", group: "bridget", format: "token", when: "cluster" },
   { key: "VITE_BRIDGET_TENANT_SLUG", group: "bridget", format: "slug", when: "if-set" },
+  { key: "VITE_SUNFIRE_PURL", group: "enroll", format: "https", when: "if-set" },
   { key: "GHL_API_KEY", group: "ghl", format: "token", when: "cluster" },
   { key: "GHL_LOCATION_ID", group: "ghl", format: "token", when: "cluster" },
 ];

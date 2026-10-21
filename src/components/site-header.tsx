@@ -8,8 +8,10 @@ import { CallLink } from "@/components/call-link";
 import { Button } from "@/components/ui/button";
 import { HOURS, PHONE_DISPLAY } from "@/lib/utils";
 import { isStaffUser } from "@/lib/staff";
+import { enrollEnabled } from "@/lib/enroll";
 
 const nav = [
+  ...(enrollEnabled ? [{ to: "/enroll", label: "Enroll Online" }] : []),
   { to: "/needs-analysis", label: "Needs Analysis" },
   { to: "/compare", label: "Plan Choice Audit" },
   { to: "/bridget", label: "BRIDGEt" },
