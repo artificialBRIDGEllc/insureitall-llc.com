@@ -66,7 +66,7 @@ Must remain true:
 
 ## Pages you may touch
 
-`/`, `/bridget`, `/compare` (Plan Choice Audit — type ledger, not every plan), `/contact`, `/lead`, `/medicare-basics` (includes plan-type table), `/needs-analysis`, `/privacy`, `/hipaa`, `/glba`, `/security`, `/terms`, `/ai-disclosure`, `/accessibility`, `/portal` (beneficiaryCONNECT — "coming soon" placeholder, no auth gate), `/console` (redirects to BRIDGEt Console, a separate repo — no staff UI here), plus chrome (`site-shell`, header, footer, widget, ident). **`/screener` (beneFIT) is held — not licensed this phase; old URL redirects home.**
+`/`, `/bridget`, `/compare` (Plan Choice Audit — type ledger, not every plan), `/contact`, `/enroll` (Sunfire PURL self-enroll — gated on `VITE_SUNFIRE_PURL` and pending CCO Phase R sign-off; PURL used verbatim, no params), `/lead`, `/medicare-basics` (includes plan-type table), `/needs-analysis`, `/privacy`, `/hipaa`, `/glba`, `/security`, `/terms`, `/ai-disclosure`, `/accessibility`, `/portal` (beneficiaryCONNECT — "coming soon" placeholder, no auth gate), `/console` (redirects to BRIDGEt Console, a separate repo — no staff UI here), plus chrome (`site-shell`, header, footer, widget, ident). **`/screener` (beneFIT) is held — not licensed this phase; old URL redirects home.**
 
 `/portal` (beneficiaryCONNECT coming-soon placeholder) and `/console` (redirects to BRIDGEt Console). `/team` redirects to `/console`.
 

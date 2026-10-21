@@ -6,7 +6,7 @@ import { PageHero } from "@/components/page-hero";
 import { SiteShell } from "@/components/site-shell";
 import { TpmoDisclaimer } from "@/components/tpmo-disclaimer";
 import { Button } from "@/components/ui/button";
-import { ENROLL_URL } from "@/lib/enroll";
+import { ENROLL_URL, enrollEnabled } from "@/lib/enroll";
 import { pageHead } from "@/lib/seo";
 import { track } from "@/lib/track";
 import { HOURS, PHONE_DISPLAY, TTY } from "@/lib/utils";
@@ -18,6 +18,8 @@ export const Route = createFileRoute("/enroll")({
       title: "Compare and enroll in a Medicare plan online",
       description: `Shop and enroll in Medicare plans online on your own schedule, with a licensed INSUREitALL agent behind you. Prefer to talk? Call ${PHONE_DISPLAY}.`,
       path: "/enroll",
+      // Don't advertise enrollment to search engines while the PURL is unset.
+      index: enrollEnabled,
     }),
 });
 
