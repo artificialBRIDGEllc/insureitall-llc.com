@@ -83,7 +83,7 @@ test("strict production failure is clearly reported to stderr", () => {
 });
 
 test("VITE_SUNFIRE_PURL must be a well-formed https URL", () => {
-  for (const bad of ["https://s /agent", "https://sunfire.example /agent", "http://sunfire.example/agent", "not a url"]) {
+  for (const bad of ["https:sunfire.example/agent", "https:/sunfire.example/agent", "https://s /agent", "https://sunfire.example /agent", "http://sunfire.example/agent", "not a url"]) {
     const report = validateEnv({ VITE_SUNFIRE_PURL: bad }, { production: false });
     assert.equal(report.ok, false, bad);
     assert.equal(report.errors[0].key, "VITE_SUNFIRE_PURL");

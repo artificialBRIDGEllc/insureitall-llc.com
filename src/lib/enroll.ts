@@ -14,7 +14,9 @@
 const raw = (import.meta.env as Record<string, string | undefined>).VITE_SUNFIRE_PURL?.trim();
 
 function parsePurl(value: string | undefined): string | null {
-  if (!value || /\s/.test(value)) return null;
+  // Require an absolute https:// URL: "https:host/path" parses as https but
+  // as an href resolves against this site's origin, not Sunfire.
+  if (!value || /\s/.test(value) || !/^https:\/\//i.test(value)) return null;
   try {
     // Parse only to validate. Return the issued string untouched: the URL
     // serializer can rewrite it (trailing slash, casing, ports) and break

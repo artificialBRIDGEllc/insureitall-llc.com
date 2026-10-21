@@ -86,7 +86,7 @@ function validPostgres(value) {
 }
 
 function validHttpsUrl(value) {
-  if (/\s/.test(value)) return false;
+  if (/\s/.test(value) || !/^https:\/\//i.test(value)) return false;
   try {
     return new URL(value).protocol === "https:";
   } catch {
