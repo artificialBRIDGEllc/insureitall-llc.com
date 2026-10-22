@@ -113,7 +113,7 @@ Six polymer-clay objects around her. Tap for her take. Hover/focus raise.
 | `/compare` | Plan **types**, not every plan in a zip. TPMO limits apply |
 | `/bridget` | Advocate + clay orbit + 3-question warm-up |
 | `/medicare-basics` | Original / Advantage / Supplement / Part D, jargon down |
-| `/enroll` | **Self-enroll via Sunfire PURL** (`VITE_SUNFIRE_PURL`, `src/lib/enroll.ts`). Third-party disclosure + TPMO. The enroll button opens a **leave-site popup** (`LeaveSiteDialog`, R9) naming SunFireMatrix as operator, its separate privacy terms, and the INSUREitALL phone before the Sunfire link. Unset = phone fallback, `noindex`, all Enroll Online links hidden. In `sitemap.xml`. PURL set in Vercel `insureitall-llc-com` (prod + preview) 2026-10-21. **CCO Phase R sign-off (R0/R8/R16) still to be filed.** |
+| `/enroll` | **Self-enroll via Sunfire PURL** (`VITE_SUNFIRE_PURL`, `src/lib/enroll.ts`). Third-party disclosure + TPMO. The enroll button opens a **leave-site popup** (`LeaveSiteDialog`; enrollment leave-site control, separate from Phase R gate R9) naming SunFireMatrix as operator, its separate privacy terms, and the INSUREitALL phone before the Sunfire link. Unset = phone fallback, `noindex`, all Enroll Online links hidden. In `sitemap.xml`. PURL set in Vercel `insureitall-llc-com` (prod + preview) 2026-10-21. **CCO Phase R sign-off (R0/R8/R16) still to be filed.** |
 | `/contact` | Phone, email, HQ |
 | `/lead` | Call-back request + TCPA consent |
 | `/privacy` | Privacy policy |
