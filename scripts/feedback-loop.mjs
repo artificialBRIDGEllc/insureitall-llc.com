@@ -14,6 +14,7 @@ export const FEEDBACK_EVENTS = [
   "lead_kind",
   "voice_transcript",
   "enroll_purl_click",
+  "enroll_leave_prompt",
 ];
 
 const PATHS = new Set([
