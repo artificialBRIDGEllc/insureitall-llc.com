@@ -2,8 +2,8 @@ import * as AlertDialog from "@radix-ui/react-alert-dialog";
 import { ExternalLink } from "lucide-react";
 import type { ReactNode } from "react";
 import { CallLink } from "@/components/call-link";
+import { TpmoDisclaimer } from "@/components/tpmo-disclaimer";
 import { Button } from "@/components/ui/button";
-import { TPMO_DISCLAIMER } from "@/lib/compliance";
 import { track } from "@/lib/track";
 import { PHONE_DISPLAY } from "@/lib/utils";
 
@@ -49,7 +49,7 @@ export function LeaveSiteDialog({ href, children }: { href: string; children: Re
                 </li>
                 <li>You enroll yourself there. You can stop at any time before you submit.</li>
               </ul>
-              <p className="text-xs text-muted">{TPMO_DISCLAIMER}</p>
+              <TpmoDisclaimer className="text-muted" />
             </div>
           </AlertDialog.Description>
           <div className="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
