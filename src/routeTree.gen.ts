@@ -17,6 +17,7 @@ import { Route as BridgetRouteImport } from './routes/bridget'
 import { Route as CompareRouteImport } from './routes/compare'
 import { Route as ConsoleRouteImport } from './routes/console'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as EnrollRouteImport } from './routes/enroll'
 import { Route as GlbaRouteImport } from './routes/glba'
 import { Route as HipaaRouteImport } from './routes/hipaa'
 import { Route as LeadRouteImport } from './routes/lead'
@@ -74,6 +75,11 @@ const ConsoleRoute = ConsoleRouteImport.update({
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EnrollRoute = EnrollRouteImport.update({
+  id: '/enroll',
+  path: '/enroll',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GlbaRoute = GlbaRouteImport.update({
@@ -176,6 +182,7 @@ export interface FileRoutesByFullPath {
   '/compare': typeof CompareRoute
   '/console': typeof ConsoleRoute
   '/contact': typeof ContactRoute
+  '/enroll': typeof EnrollRoute
   '/glba': typeof GlbaRoute
   '/hipaa': typeof HipaaRoute
   '/lead': typeof LeadRoute
@@ -203,6 +210,7 @@ export interface FileRoutesByTo {
   '/compare': typeof CompareRoute
   '/console': typeof ConsoleRoute
   '/contact': typeof ContactRoute
+  '/enroll': typeof EnrollRoute
   '/glba': typeof GlbaRoute
   '/hipaa': typeof HipaaRoute
   '/lead': typeof LeadRoute
@@ -232,6 +240,7 @@ export interface FileRoutesById {
   '/compare': typeof CompareRoute
   '/console': typeof ConsoleRoute
   '/contact': typeof ContactRoute
+  '/enroll': typeof EnrollRoute
   '/glba': typeof GlbaRoute
   '/hipaa': typeof HipaaRoute
   '/lead': typeof LeadRoute
@@ -262,6 +271,7 @@ export interface FileRouteTypes {
     | '/compare'
     | '/console'
     | '/contact'
+    | '/enroll'
     | '/glba'
     | '/hipaa'
     | '/lead'
@@ -289,6 +299,7 @@ export interface FileRouteTypes {
     | '/compare'
     | '/console'
     | '/contact'
+    | '/enroll'
     | '/glba'
     | '/hipaa'
     | '/lead'
@@ -317,6 +328,7 @@ export interface FileRouteTypes {
     | '/compare'
     | '/console'
     | '/contact'
+    | '/enroll'
     | '/glba'
     | '/hipaa'
     | '/lead'
@@ -346,6 +358,7 @@ export interface RootRouteChildren {
   CompareRoute: typeof CompareRoute
   ConsoleRoute: typeof ConsoleRoute
   ContactRoute: typeof ContactRoute
+  EnrollRoute: typeof EnrollRoute
   GlbaRoute: typeof GlbaRoute
   HipaaRoute: typeof HipaaRoute
   LeadRoute: typeof LeadRoute
@@ -419,6 +432,13 @@ declare module '@tanstack/react-router' {
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/enroll': {
+      id: '/enroll'
+      path: '/enroll'
+      fullPath: '/enroll'
+      preLoaderRoute: typeof EnrollRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/glba': {
@@ -573,6 +593,7 @@ const rootRouteChildren: RootRouteChildren = {
   CompareRoute: CompareRoute,
   ConsoleRoute: ConsoleRoute,
   ContactRoute: ContactRoute,
+  EnrollRoute: EnrollRoute,
   GlbaRoute: GlbaRoute,
   HipaaRoute: HipaaRoute,
   LeadRoute: LeadRoute,

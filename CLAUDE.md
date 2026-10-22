@@ -113,6 +113,7 @@ Six polymer-clay objects around her. Tap for her take. Hover/focus raise.
 | `/compare` | Plan **types**, not every plan in a zip. TPMO limits apply |
 | `/bridget` | Advocate + clay orbit + 3-question warm-up |
 | `/medicare-basics` | Original / Advantage / Supplement / Part D, jargon down |
+| `/enroll` | **Self-enroll via Sunfire PURL** (`VITE_SUNFIRE_PURL`, `src/lib/enroll.ts`). Third-party disclosure + TPMO. Unset = phone fallback, `noindex`, all Enroll Online links hidden. In `sitemap.xml`. PURL set in Vercel `insureitall-llc-com` (prod + preview) 2026-10-21. **CCO Phase R sign-off (R0/R8/R16) still to be filed.** |
 | `/contact` | Phone, email, HQ |
 | `/lead` | Call-back request + TCPA consent |
 | `/privacy` | Privacy policy |
@@ -128,7 +129,7 @@ Six polymer-clay objects around her. Tap for her take. Hover/focus raise.
 | `/team` | Redirects to `/console` |
 | `/login` | Redirects to `/portal` |
 
-Nav (header): Needs Analysis, Plan Choice Audit, BRIDGEt, Medicare Basics, Contact. Phone CTA always present.
+Nav (header): Enroll Online (only when `VITE_SUNFIRE_PURL` is set), Needs Analysis, Plan Choice Audit, BRIDGEt, Medicare Basics, Contact. Phone CTA always present. `CtaBand` also shows Enroll Online when configured.
 
 Home kicker under the consumer-portal paragraph: italic Fraunces **Welcome home.** (class `.welcome-home`).
 

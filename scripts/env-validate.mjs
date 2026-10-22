@@ -33,6 +33,7 @@ export const ENV_SCHEMA = [
   { key: "VITE_BRIDGET_CONSOLE_URL", group: "bridget", format: "https", when: "cluster" },
   { key: "BRIDGET_INGEST_API_KEY", group: "bridget", format: "token", when: "cluster" },
   { key: "VITE_BRIDGET_TENANT_SLUG", group: "bridget", format: "slug", when: "if-set" },
+  { key: "VITE_SUNFIRE_PURL", group: "enroll", format: "https-url", when: "if-set" },
   { key: "GHL_API_KEY", group: "ghl", format: "token", when: "cluster" },
   { key: "GHL_LOCATION_ID", group: "ghl", format: "token", when: "cluster" },
 ];
@@ -84,6 +85,15 @@ function validPostgres(value) {
   return /^(postgres|postgresql)(\+.+)?:\/\//i.test(value);
 }
 
+function validHttpsUrl(value) {
+  if (/\s/.test(value) || !/^https:\/\//i.test(value)) return false;
+  try {
+    return new URL(value).protocol === "https:";
+  } catch {
+    return false;
+  }
+}
+
 function checkFormat(format, value) {
   switch (format) {
     case "email":
@@ -92,6 +102,10 @@ function checkFormat(format, value) {
       return validFrom(value) ? null : "must be an email or Name <email@domain>";
     case "https":
       return HTTPS_RE.test(value) ? null : "must be an https URL";
+    case "https-url":
+      // Same rule as src/lib/enroll.ts parsePurl, so a value that passes here
+      // can't be silently rejected at runtime.
+      return validHttpsUrl(value) ? null : "must be a well-formed https URL with no spaces";
     case "resend-key":
       return RESEND_KEY_RE.test(value) ? null : "must start with re_";
     case "template":

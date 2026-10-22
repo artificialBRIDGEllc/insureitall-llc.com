@@ -81,3 +81,16 @@ test("strict production failure is clearly reported to stderr", () => {
   );
   assert.ok(result.stderr.includes("warn   DATABASE_URL:"));
 });
+
+test("VITE_SUNFIRE_PURL must be a well-formed https URL", () => {
+  for (const bad of ["https:sunfire.example/agent", "https:/sunfire.example/agent", "https://s /agent", "https://sunfire.example /agent", "http://sunfire.example/agent", "not a url"]) {
+    const report = validateEnv({ VITE_SUNFIRE_PURL: bad }, { production: false });
+    assert.equal(report.ok, false, bad);
+    assert.equal(report.errors[0].key, "VITE_SUNFIRE_PURL");
+  }
+  const ok = validateEnv(
+    { VITE_SUNFIRE_PURL: "https://www.sunfirematrix.com/app/consumer/agency/123?code=abc" },
+    { production: false },
+  );
+  assert.equal(ok.ok, true);
+});

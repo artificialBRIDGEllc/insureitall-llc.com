@@ -13,6 +13,7 @@ export const FEEDBACK_EVENTS = [
   "audit_complete",
   "lead_kind",
   "voice_transcript",
+  "enroll_purl_click",
 ];
 
 const PATHS = new Set([
@@ -20,6 +21,7 @@ const PATHS = new Set([
   "/bridget",
   "/compare",
   "/contact",
+  "/enroll",
   "/lead",
   "/medicare-basics",
   "/needs-analysis",
