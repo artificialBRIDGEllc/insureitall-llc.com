@@ -8,6 +8,7 @@ assert.deepEqual(sanitizeFeedback({ event: "enroll_purl_click", path: "/enroll" 
   data: { event: "enroll_purl_click", path: "/enroll", payload: {} },
 });
 assert.equal(sanitizeFeedback({ event: "page_view", path: "/enroll" }).ok, true);
+assert.equal(sanitizeFeedback({ event: "enroll_leave_prompt", path: "/enroll" }).ok, true);
 assert.equal(
   sanitizeFeedback({
     event: "lead_kind",

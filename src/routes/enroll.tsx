@@ -2,13 +2,13 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ExternalLink } from "lucide-react";
 import { CtaBand } from "@/components/cta-band";
 import { CallLink } from "@/components/call-link";
+import { LeaveSiteDialog } from "@/components/leave-site-dialog";
 import { PageHero } from "@/components/page-hero";
 import { SiteShell } from "@/components/site-shell";
 import { TpmoDisclaimer } from "@/components/tpmo-disclaimer";
 import { Button } from "@/components/ui/button";
 import { ENROLL_URL, enrollEnabled } from "@/lib/enroll";
 import { pageHead } from "@/lib/seo";
-import { track } from "@/lib/track";
 import { HOURS, PHONE_DISPLAY, TTY } from "@/lib/utils";
 
 export const Route = createFileRoute("/enroll")({
@@ -54,18 +54,12 @@ function EnrollPage() {
                   you enroll — at no cost to you.
                 </li>
               </ul>
-              <Button asChild className="mt-8 w-full" size="lg" variant="blue">
-                <a
-                  href={ENROLL_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => track("enroll_purl_click")}
-                >
+              <LeaveSiteDialog href={ENROLL_URL}>
+                <Button className="mt-8 w-full" size="lg" variant="blue">
                   Compare plans and enroll
                   <ExternalLink className="ml-2 size-4" aria-hidden="true" />
-                  <span className="sr-only"> (opens in a new tab)</span>
-                </a>
-              </Button>
+                </Button>
+              </LeaveSiteDialog>
               <p className="mt-6 text-center text-sm text-muted">
                 Rather talk it through?{" "}
                 <CallLink className="font-medium text-blue">Call {PHONE_DISPLAY}</CallLink>

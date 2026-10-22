@@ -11,7 +11,8 @@ export type FeedbackEvent =
   | "audit_complete"
   | "lead_kind"
   | "voice_transcript"
-  | "enroll_purl_click";
+  | "enroll_purl_click"
+  | "enroll_leave_prompt";
 
 function clientKey() {
   try {
