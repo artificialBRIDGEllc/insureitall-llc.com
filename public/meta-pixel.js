@@ -20,6 +20,17 @@
   fbq('init', '1456788026637585');
   fbq('track', 'PageView');
 
+  // Standard "Lead" does not reach Meta from this site (verified 2026-11-02), so each
+  // conversion is also sent as a custom event; ads optimize on custom conversions built on them.
+  var lastEnroll = 0;
+  function enrollClick() {
+    var now = Date.now();
+    if (now - lastEnroll < 1500) return; // link click + window.open can both fire for one click
+    lastEnroll = now;
+    fbq('track', 'Lead', { content_name: 'enroll_click' });
+    fbq('trackCustom', 'EnrollClick');
+  }
+
   var isEnroll = function () { return /^\/enroll\/?$/.test(location.pathname); };
   if (isEnroll()) fbq('track', 'ViewContent', { content_name: 'enroll_page' });
 
@@ -42,15 +53,16 @@
     var href = a.getAttribute('href') || '';
     if (href.indexOf('tel:') === 0) {
       fbq('track', 'Contact', { content_name: 'phone_call' });
+      fbq('trackCustom', 'PhoneTap');
     } else if (/sunfire/i.test(href)) {
-      fbq('track', 'Lead', { content_name: 'enroll_click' });
+      enrollClick();
     }
   }, true);
 
   // /enroll opens Sunfire via a leave-site dialog that may use window.open instead of a link.
   var origOpen = window.open;
   window.open = function (url) {
-    try { if (url && /sunfire/i.test(String(url))) fbq('track', 'Lead', { content_name: 'enroll_click' }); } catch (err) {}
+    try { if (url && /sunfire/i.test(String(url))) enrollClick(); } catch (err) {}
     return origOpen.apply(this, arguments);
   };
 
@@ -58,6 +70,7 @@
     var form = e.target;
     if (form && /\/lead/.test(form.getAttribute('action') || location.pathname)) {
       fbq('track', 'Lead', { content_name: 'callback_request' });
+      fbq('trackCustom', 'CallbackRequest');
     }
   }, true);
 })();
