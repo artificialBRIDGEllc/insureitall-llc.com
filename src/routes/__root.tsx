@@ -46,6 +46,8 @@ export const Route = createRootRoute({
     <html lang="en" className="antialiased" suppressHydrationWarning>
       <head>
         <HeadContent />
+        {/* Meta Pixel (dataset 1456788026637585) - see public/meta-pixel.js */}
+        <script src="/meta-pixel.js" defer />
       </head>
       <body>
         <PreviewHostBridge />
