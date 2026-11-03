@@ -107,7 +107,7 @@ Six polymer-clay objects around her. Tap for her take. Hover/focus raise.
 
 | Route | Purpose |
 |---|---|
-| `/` | Navy hero, phone card, plan types, FAQ, **Welcome home.** portal band, BRIDGEt teaser |
+| `/` | Navy hero (gold **Self-Enroll Online** button first when `VITE_SUNFIRE_PURL` is set — opens the same `LeaveSiteDialog` straight to Sunfire), phone card, plan types, FAQ, **Welcome home.** portal band, BRIDGEt teaser |
 | `/needs-analysis` | Guided needs flow → licensed agent |
 | `/screener` | Redirects home. **beneFIT held** — not on this site, next billing phase. |
 | `/compare` | Plan **types**, not every plan in a zip. TPMO limits apply |

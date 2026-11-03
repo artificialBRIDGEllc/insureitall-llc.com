@@ -1,19 +1,15 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import {
-  Check,
-  HeartHandshake,
-  Phone,
-  ShieldCheck,
-  Sparkles,
-} from "lucide-react";
+import { ArrowRight, Check, HeartHandshake, Phone, ShieldCheck, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { CtaBand } from "@/components/cta-band";
 import { CallLink } from "@/components/call-link";
+import { LeaveSiteDialog } from "@/components/leave-site-dialog";
 import { SiteShell } from "@/components/site-shell";
 import { TpmoDisclaimer } from "@/components/tpmo-disclaimer";
 import { Button } from "@/components/ui/button";
 import { JsonLd } from "@/components/json-ld";
 import { BRIDGET_AVATAR } from "@/lib/bridget-assets";
+import { ENROLL_URL } from "@/lib/enroll";
 import { HOME_FAQS, faqJsonLd, pageHead } from "@/lib/seo";
 import { HOURS, PHONE_DISPLAY, TTY } from "@/lib/utils";
 
@@ -63,12 +59,24 @@ function Home() {
               We do the <em className="italic text-mist">hard part.</em>
             </h1>
             <p className="mt-5 max-w-xl text-lg leading-relaxed text-elevated/80">
-              Medicare is genuinely complicated. Comparing plans, checking whether
-              your doctors are in network, tracking which prescriptions are covered,
-              catching the deadlines — that part is ours. Yours is to tell us what
-              matters to you.
+              Medicare is genuinely complicated. Comparing plans, checking whether your doctors are
+              in network, tracking which prescriptions are covered, catching the deadlines — that
+              part is ours. Yours is to tell us what matters to you.
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
+            {ENROLL_URL ? (
+              <div className="mt-8">
+                <LeaveSiteDialog href={ENROLL_URL}>
+                  <Button size="lg" variant="gold" className="w-full text-lg sm:w-auto sm:px-8">
+                    Self-Enroll Online
+                    <ArrowRight className="size-5" aria-hidden="true" />
+                  </Button>
+                </LeaveSiteDialog>
+                <p className="mt-2 text-sm text-elevated/70">
+                  Compare plans and enroll on your own schedule.
+                </p>
+              </div>
+            ) : null}
+            <div className={ENROLL_URL ? "mt-6 flex flex-wrap gap-3" : "mt-8 flex flex-wrap gap-3"}>
               <Button asChild size="lg" variant="blue">
                 <CallLink>
                   <Phone className="size-4" />
@@ -90,8 +98,8 @@ function Home() {
             </p>
             <h2 className="mt-2 font-display text-2xl text-navy">We start by listening.</h2>
             <p className="mt-3 text-ink">
-              No scripts. A licensed agent takes the time to understand your doctors,
-              medications, and budget — before mentioning a single plan.
+              No scripts. A licensed agent takes the time to understand your doctors, medications,
+              and budget — before mentioning a single plan.
             </p>
             <p className="mt-6 text-center font-display text-3xl text-navy">{PHONE_DISPLAY}</p>
             <p className="mt-1 text-center text-sm text-muted">
@@ -134,9 +142,9 @@ function Home() {
               Audit the type. Then talk to a <em className="italic text-blue">human.</em>
             </h2>
             <p className="mt-4 max-w-xl text-ink">
-              The Plan Choice Audit is a trade-off ledger for Advantage, Original
-              Medicare, and Supplement — gained, sacrificed, watch. Not every plan
-              in your zip. A licensed agent compares what is actually offered.
+              The Plan Choice Audit is a trade-off ledger for Advantage, Original Medicare, and
+              Supplement — gained, sacrificed, watch. Not every plan in your zip. A licensed agent
+              compares what is actually offered.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
               <Button asChild variant="blue">
@@ -151,12 +159,14 @@ function Home() {
             <p className="font-display text-xl text-navy">Takes a few minutes.</p>
             <p className="mt-2 text-ink">No Medicare number. No enrollment.</p>
             <ul className="mt-6 space-y-3 text-sm text-ink">
-              {["What you have now", "Doctors, drugs, travel", "Gained / sacrificed / watch"].map((t) => (
-                <li key={t} className="flex items-center gap-2">
-                  <Check className="size-4 text-blue" />
-                  {t}
-                </li>
-              ))}
+              {["What you have now", "Doctors, drugs, travel", "Gained / sacrificed / watch"].map(
+                (t) => (
+                  <li key={t} className="flex items-center gap-2">
+                    <Check className="size-4 text-blue" />
+                    {t}
+                  </li>
+                ),
+              )}
             </ul>
           </div>
         </div>
@@ -164,7 +174,9 @@ function Home() {
 
       <section className="bg-elevated py-16">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <p className="text-xs font-semibold tracking-[0.16em] text-blue uppercase">How it works</p>
+          <p className="text-xs font-semibold tracking-[0.16em] text-blue uppercase">
+            How it works
+          </p>
           <h2 className="mt-3 font-display text-3xl text-navy sm:text-4xl">
             Three simple <em className="italic text-blue">steps.</em>
           </h2>
@@ -199,7 +211,9 @@ function Home() {
       </section>
 
       <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-        <p className="text-xs font-semibold tracking-[0.16em] text-blue uppercase">What we help with</p>
+        <p className="text-xs font-semibold tracking-[0.16em] text-blue uppercase">
+          What we help with
+        </p>
         <h2 className="mt-3 font-display text-3xl text-navy sm:text-4xl">
           The Medicare plan <em className="italic text-blue">types.</em>
         </h2>
@@ -217,14 +231,16 @@ function Home() {
       <section className="bg-navy py-16 text-elevated">
         <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-2">
           <div>
-            <p className="text-xs font-semibold tracking-[0.16em] text-mist uppercase">Why Insure It All</p>
+            <p className="text-xs font-semibold tracking-[0.16em] text-mist uppercase">
+              Why Insure It All
+            </p>
             <h2 className="mt-3 font-display text-3xl sm:text-4xl">
               Guidance you can <em className="italic">actually talk to.</em>
             </h2>
             <p className="mt-4 leading-relaxed text-elevated/80">
-              Our CEO Ryan Butterfield spent 20 years inside Medicare — first as an
-              agent, then as a carrier executive. He built INSUREitALL to be the
-              opposite of the industry's worst habits.
+              Our CEO Ryan Butterfield spent 20 years inside Medicare — first as an agent, then as a
+              carrier executive. He built INSUREitALL to be the opposite of the industry's worst
+              habits.
             </p>
             <ul className="mt-6 space-y-3 text-sm">
               {[
@@ -287,9 +303,8 @@ function Home() {
               Continuity when the <em className="italic">relationship changes.</em>
             </h2>
             <p className="mt-4 leading-relaxed text-elevated/80">
-              beneficiaryCONNECT is a separate client portal that will connect
-              with your INSUREitALL coverage file. It's coming soon — not live
-              yet.
+              beneficiaryCONNECT is a separate client portal that will connect with your INSUREitALL
+              coverage file. It's coming soon — not live yet.
             </p>
             <p className="welcome-home">Welcome home.</p>
           </div>
@@ -322,8 +337,8 @@ function Home() {
                 Warm up with <em className="italic text-blue">BRIDGEt</em> first.
               </h2>
               <p className="mt-3 text-ink">
-                The older sister who keeps you on task. A few questions, a little
-                humor, then a licensed agent when you’re ready. No-cost, no-obligation.
+                The older sister who keeps you on task. A few questions, a little humor, then a
+                licensed agent when you’re ready. No-cost, no-obligation.
               </p>
             </div>
             <Button asChild size="lg" variant="blue">
