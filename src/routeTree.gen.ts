@@ -35,6 +35,8 @@ import { Route as AbPrivacyRouteImport } from './routes/ab/privacy'
 import { Route as AbTermsRouteImport } from './routes/ab/terms'
 import { Route as ApiBridgetVoiceRouteImport } from './routes/api/bridget-voice'
 import { Route as ApiLeadIntakeRouteImport } from './routes/api/lead-intake'
+import { Route as OnboardingIndexRouteImport } from './routes/onboarding/index'
+import { Route as OnboardingAdminRouteImport } from './routes/onboarding/admin'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 
 const IndexRoute = IndexRouteImport.update({
@@ -167,6 +169,16 @@ const ApiLeadIntakeRoute = ApiLeadIntakeRouteImport.update({
   path: '/api/lead-intake',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OnboardingIndexRoute = OnboardingIndexRouteImport.update({
+  id: '/onboarding/',
+  path: '/onboarding/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OnboardingAdminRoute = OnboardingAdminRouteImport.update({
+  id: '/onboarding/admin',
+  path: '/onboarding/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: '/api/auth/$',
   path: '/api/auth/$',
@@ -199,7 +211,9 @@ export interface FileRoutesByFullPath {
   '/ab/terms': typeof AbTermsRoute
   '/api/bridget-voice': typeof ApiBridgetVoiceRoute
   '/api/lead-intake': typeof ApiLeadIntakeRoute
+  '/onboarding/admin': typeof OnboardingAdminRoute
   '/ab/': typeof AbIndexRoute
+  '/onboarding/': typeof OnboardingIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRoutesByTo {
@@ -227,7 +241,9 @@ export interface FileRoutesByTo {
   '/ab/terms': typeof AbTermsRoute
   '/api/bridget-voice': typeof ApiBridgetVoiceRoute
   '/api/lead-intake': typeof ApiLeadIntakeRoute
+  '/onboarding/admin': typeof OnboardingAdminRoute
   '/ab': typeof AbIndexRoute
+  '/onboarding': typeof OnboardingIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRoutesById {
@@ -257,7 +273,9 @@ export interface FileRoutesById {
   '/ab/terms': typeof AbTermsRoute
   '/api/bridget-voice': typeof ApiBridgetVoiceRoute
   '/api/lead-intake': typeof ApiLeadIntakeRoute
+  '/onboarding/admin': typeof OnboardingAdminRoute
   '/ab/': typeof AbIndexRoute
+  '/onboarding/': typeof OnboardingIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRouteTypes {
@@ -288,7 +306,9 @@ export interface FileRouteTypes {
     | '/ab/terms'
     | '/api/bridget-voice'
     | '/api/lead-intake'
+    | '/onboarding/admin'
     | '/ab/'
+    | '/onboarding/'
     | '/api/auth/$'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -316,7 +336,9 @@ export interface FileRouteTypes {
     | '/ab/terms'
     | '/api/bridget-voice'
     | '/api/lead-intake'
+    | '/onboarding/admin'
     | '/ab'
+    | '/onboarding'
     | '/api/auth/$'
   id:
     | '__root__'
@@ -345,7 +367,9 @@ export interface FileRouteTypes {
     | '/ab/terms'
     | '/api/bridget-voice'
     | '/api/lead-intake'
+    | '/onboarding/admin'
     | '/ab/'
+    | '/onboarding/'
     | '/api/auth/$'
   fileRoutesById: FileRoutesById
 }
@@ -373,6 +397,8 @@ export interface RootRouteChildren {
   TermsRoute: typeof TermsRoute
   ApiBridgetVoiceRoute: typeof ApiBridgetVoiceRoute
   ApiLeadIntakeRoute: typeof ApiLeadIntakeRoute
+  OnboardingAdminRoute: typeof OnboardingAdminRoute
+  OnboardingIndexRoute: typeof OnboardingIndexRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
 }
 
@@ -560,6 +586,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiLeadIntakeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/onboarding/': {
+      id: '/onboarding/'
+      path: '/onboarding'
+      fullPath: '/onboarding/'
+      preLoaderRoute: typeof OnboardingIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/onboarding/admin': {
+      id: '/onboarding/admin'
+      path: '/onboarding/admin'
+      fullPath: '/onboarding/admin'
+      preLoaderRoute: typeof OnboardingAdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/auth/$': {
       id: '/api/auth/$'
       path: '/api/auth/$'
@@ -608,6 +648,8 @@ const rootRouteChildren: RootRouteChildren = {
   TermsRoute: TermsRoute,
   ApiBridgetVoiceRoute: ApiBridgetVoiceRoute,
   ApiLeadIntakeRoute: ApiLeadIntakeRoute,
+  OnboardingAdminRoute: OnboardingAdminRoute,
+  OnboardingIndexRoute: OnboardingIndexRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
 }
 export const routeTree = rootRouteImport
